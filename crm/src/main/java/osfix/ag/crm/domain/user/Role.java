@@ -1,6 +1,5 @@
-package osfix.ag.crm.domain;
+package osfix.ag.crm.domain.user;
 
-import jdk.jfr.DataAmount;
 import lombok.Data;
 
 import javax.persistence.*;

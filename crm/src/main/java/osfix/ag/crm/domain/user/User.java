@@ -1,4 +1,4 @@
-package osfix.ag.crm.domain;
+package osfix.ag.crm.domain.user;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "usr")
+@Table(name = "users")
 @Data
 public class User {
     @Id
@@ -22,10 +22,10 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "username")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "password")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
