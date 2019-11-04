@@ -26,5 +26,5 @@ public class Client {
 
     @Column(name="smpl")
     Boolean smpl;
-    
+
 }
