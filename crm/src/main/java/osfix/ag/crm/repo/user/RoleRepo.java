@@ -1,4 +1,4 @@
-package osfix.ag.crm.repo;
+package osfix.ag.crm.repo.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import osfix.ag.crm.domain.user.Role;

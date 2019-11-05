@@ -1,12 +1,9 @@
 package osfix.ag.crm.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Client;
-import osfix.ag.crm.repo.ClientRepo;
 import osfix.ag.crm.service.ClientService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
