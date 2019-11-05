@@ -7,6 +7,7 @@ import osfix.ag.crm.service.impl.RequestServiceImpl;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/request")
 public class RequestController {

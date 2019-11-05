@@ -6,6 +6,7 @@ import osfix.ag.crm.service.DocumentService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/document")
 public class DocumentController {
