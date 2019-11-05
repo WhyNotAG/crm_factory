@@ -2,26 +2,24 @@ package osfix.ag.crm.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import osfix.ag.crm.domain.Client;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.service.RequestService;
-
 import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
 
-    @Override
-    public List<Request> findAll() {
-        return requestRepo.findAll();
+    public RequestServiceImpl(RequestRepo requestRepo) {
+        this.requestRepo = requestRepo;
     }
 
     @Override
-    public Request findById(Long id) {
-        return findId(id);
-    }
+    public List<Request> findAll() { return requestRepo.findAll(); }
+
+    @Override
+    public Request findById(Long id) { return findId(id); }
 
     @Override
     public Request update(Long id, Request request) {
