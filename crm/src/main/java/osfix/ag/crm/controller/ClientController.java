@@ -6,7 +6,6 @@ import osfix.ag.crm.service.ClientService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -18,7 +17,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<Client> getAllClients() { return clientService.findAll();}
 
     @GetMapping("/{id}")

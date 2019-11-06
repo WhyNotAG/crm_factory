@@ -10,7 +10,6 @@ import osfix.ag.crm.repo.UserRepo;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
