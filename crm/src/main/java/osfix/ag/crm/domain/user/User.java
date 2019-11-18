@@ -1,8 +1,11 @@
 package osfix.ag.crm.domain.user;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,6 +30,19 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+    @CreatedDate
+    @Column(name = "created")
+    private Date created;
+
+    @LastModifiedDate
+    @Column(name = "updated")
+    private Date updated;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
