@@ -45,8 +45,7 @@ public class JwtRefreshTokenServiceImpl implements JwtRefreshTokenService {
 
     @Override
     public void delete(JwtRefreshToken token) {
-        if (token == null)
-            return;
+        if (token == null) { return; }
 
         jwtRefreshTokenRepository.delete(token);
     }
