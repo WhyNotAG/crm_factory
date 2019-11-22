@@ -82,7 +82,7 @@ public class AuthenticationController {
     }
 
 
-    @PostMapping("/refreshToken")
+    @PostMapping("refreshToken")
     public ResponseEntity<SignInResponseDTO> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
         return jwtRefreshTokenService.findById(refreshTokenDto.getRefreshToken()).map(jwtRefreshToken -> {
             jwtRefreshTokenService.delete(jwtRefreshToken);
