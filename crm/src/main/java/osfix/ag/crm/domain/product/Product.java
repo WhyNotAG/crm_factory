@@ -30,7 +30,7 @@ public class Product {
 
     @Column(name = "packaging")
     private String packaging;
-    
+
     @Column(name = "comment")
     private String comment;
 
