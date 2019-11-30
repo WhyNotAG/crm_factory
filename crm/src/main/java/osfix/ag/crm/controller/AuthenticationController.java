@@ -15,18 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import osfix.ag.crm.domain.JwtRefreshToken;
 import osfix.ag.crm.domain.user.User;
-import osfix.ag.crm.dto.AuthenticationRequestDto;
-import osfix.ag.crm.dto.RefreshTokenDto;
-import osfix.ag.crm.dto.SignInResponseDTO;
-import osfix.ag.crm.dto.UserDto;
+import osfix.ag.crm.service.dto.AuthenticationRequestDTO;
+import osfix.ag.crm.service.dto.RefreshTokenDTO;
+import osfix.ag.crm.service.dto.SignInResponseDTO;
+import osfix.ag.crm.service.dto.UserDTO;
 import osfix.ag.crm.security.jwt.AccessToken;
 import osfix.ag.crm.security.jwt.JwtAuthenticationException;
 import osfix.ag.crm.security.jwt.JwtTokenProvider;
 import osfix.ag.crm.service.JwtRefreshTokenService;
 import osfix.ag.crm.service.UserService;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -48,7 +45,7 @@ public class AuthenticationController {
 
 
     @PostMapping("login")
-    public ResponseEntity<SignInResponseDTO> login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<SignInResponseDTO> login(@RequestBody AuthenticationRequestDTO requestDto) {
         String username = requestDto.getUsername();
         User loadedUser;
         if (username == null) {
@@ -73,7 +70,7 @@ public class AuthenticationController {
             response.setAccessToken(accessToken.getToken());
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
-            response.setUser(UserDto.fromUser(loadedUser));
+            response.setUser(UserDTO.fromUser(loadedUser));
 
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
@@ -83,7 +80,7 @@ public class AuthenticationController {
 
 
     @PostMapping("refreshToken")
-    public ResponseEntity<SignInResponseDTO> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
+    public ResponseEntity<SignInResponseDTO> refreshToken(@RequestBody RefreshTokenDTO refreshTokenDto) {
         return jwtRefreshTokenService.findById(refreshTokenDto.getRefreshToken()).map(jwtRefreshToken -> {
             jwtRefreshTokenService.delete(jwtRefreshToken);
 
@@ -95,7 +92,7 @@ public class AuthenticationController {
             response.setAccessToken(accessToken.getToken());
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
-            response.setUser(UserDto.fromUser(user));
+            response.setUser(UserDTO.fromUser(user));
 
             return ResponseEntity.ok().body(response);
         }).orElseThrow(() -> new JwtAuthenticationException("Invalid refresh token"));

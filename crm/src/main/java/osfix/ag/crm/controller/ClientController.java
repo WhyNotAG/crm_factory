@@ -7,7 +7,7 @@ import osfix.ag.crm.service.ClientService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/api/v1/client")
 public class ClientController {
 
     public ClientService clientService;

@@ -34,6 +34,4 @@ public class Product {
     @Column(name = "comment")
     private String comment;
 
-
-
 }

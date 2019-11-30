@@ -7,7 +7,7 @@ import osfix.ag.crm.service.DocumentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/document")
+@RequestMapping("/api/v1/document")
 public class DocumentController {
     private DocumentService documentService;
 

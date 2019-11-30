@@ -1,11 +1,11 @@
-package osfix.ag.crm.dto;
+package osfix.ag.crm.service.dto;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class RefreshTokenDto {
+public class RefreshTokenDTO {
     @NotBlank
     private String refreshToken;
 }

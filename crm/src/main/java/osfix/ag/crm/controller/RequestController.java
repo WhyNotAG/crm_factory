@@ -8,7 +8,7 @@ import osfix.ag.crm.service.impl.RequestServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/request")
+@RequestMapping("/api/v1/request")
 public class RequestController {
     private RequestService requestService;
 

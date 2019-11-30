@@ -1,5 +1,6 @@
 package osfix.ag.crm.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -31,6 +32,7 @@ public class Role {
     @Column(name = "status")
     private Status status;
 
+    @JsonIgnoreProperties("roles")
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 }

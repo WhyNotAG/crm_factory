@@ -4,48 +4,40 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import osfix.ag.crm.domain.Client;
 import osfix.ag.crm.domain.user.Role;
 import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.repo.user.RoleRepo;
 import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.UserService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserRepo userRepo;
-    private RoleRepo roleRepo;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Override
+    public User save(User user) {
+        userRepo.save(user);
+        return user;
+    }
+
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User register(User user) {
-        Role roleUser = roleRepo.findByName("USER");
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
-
-        User registeredUser = userRepo.save(user);
-        log.info("In register - user: {} successfully registered", registeredUser);
-        return null;
-    }
-
-    @Override
-    public List<User> getAll() {
-        return userRepo.findAll();
-    }
+    public List<User> getAll() { return userRepo.findAll(); }
 
     @Override
     public User findByUsername(String username) {

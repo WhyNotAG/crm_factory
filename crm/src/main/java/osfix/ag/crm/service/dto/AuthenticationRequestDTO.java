@@ -1,9 +1,9 @@
-package osfix.ag.crm.dto;
+package osfix.ag.crm.service.dto;
 
 import lombok.Data;
 
 @Data
-public class AuthenticationRequestDto {
+public class AuthenticationRequestDTO {
     private String username;
     private String password;
 }
