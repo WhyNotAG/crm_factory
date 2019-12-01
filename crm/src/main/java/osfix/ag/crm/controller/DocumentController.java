@@ -25,7 +25,7 @@ public class DocumentController {
         return documentService.findById(id);
     }
 
-    @PostMapping()
+    @PostMapping("/")
     public Document create(@RequestBody Document document) {
         return documentService.save(document);
     }

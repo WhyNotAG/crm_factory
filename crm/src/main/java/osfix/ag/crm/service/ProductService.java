@@ -1,12 +1,13 @@
 package osfix.ag.crm.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import osfix.ag.crm.domain.Document;
 import osfix.ag.crm.domain.product.Product;
 
-import java.util.Set;
-
-@Service
 public interface ProductService {
-    Set<Product>findAll();
-    Product findById(String id);
+    Product findById(Long id);
+    Product save(Product product);
+    void delete(Long id);
+    Product update(Long id, Product product);
+    List<Product> findAll();
 }

@@ -3,7 +3,6 @@ package osfix.ag.crm.service;
 import osfix.ag.crm.domain.user.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
 
