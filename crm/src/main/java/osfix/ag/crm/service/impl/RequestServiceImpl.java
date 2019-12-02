@@ -25,7 +25,6 @@ public class RequestServiceImpl implements RequestService {
     public Request update(Long id, Request request) {
         Request requestFromDb = findId(id);
         BeanUtils.copyProperties(request,requestFromDb, "id");
-        requestRepo.save(requestFromDb);
         return requestFromDb;
     }
 
