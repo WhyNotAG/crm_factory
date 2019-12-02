@@ -3,8 +3,6 @@ package osfix.ag.crm.domain.product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import osfix.ag.crm.domain.Request;
-import osfix.ag.crm.domain.user.Role;
-import osfix.ag.crm.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,13 +29,15 @@ public class Product {
     private String unit;
 
     @Column(name = "weight")
-    private Integer weight;
+    private Float weight;
 
     @Column(name = "packaging")
     private String packaging;
 
     @Column(name = "comment")
     private String comment;
+
+    //add vendor
 
     @JsonIgnoreProperties("products")
     @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)

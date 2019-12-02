@@ -13,4 +13,5 @@ public interface RequestService {
     Request update(Long id, Request request);
     Request save(Request request);
     void delete(Long id);
+    void changeStatus(Long id, String status);
 }

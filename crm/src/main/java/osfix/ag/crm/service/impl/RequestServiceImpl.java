@@ -46,4 +46,11 @@ public class RequestServiceImpl implements RequestService {
             return request;
         }
     }
+
+    @Override
+    public void changeStatus(Long id, String status) {
+        Request request = requestRepo.findById(id).orElse(null);
+        request.setStatus(status);
+        requestRepo.save(request);
+    }
 }

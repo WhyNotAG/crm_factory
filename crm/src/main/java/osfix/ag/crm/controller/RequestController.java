@@ -30,6 +30,11 @@ public class RequestController {
         return requestService.update(id, request);
     }
 
+    @PutMapping("/status/{id}")
+    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody Request request) {
+        requestService.changeStatus(id, request.getStatus());
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") long id) { requestService.delete(id);}
 
