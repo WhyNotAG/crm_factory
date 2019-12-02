@@ -14,7 +14,7 @@ import java.util.List;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     @Column(name = "date")
     String date;

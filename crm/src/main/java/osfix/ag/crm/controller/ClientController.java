@@ -32,7 +32,7 @@ public class ClientController {
     public void delete(@PathVariable(name="id") long id) { clientService.delete(id);}
 
     @PutMapping("/{id}")
-    public Client update(@PathVariable(name="id") long id, @RequestBody Client client) {
+    public Client update(@PathVariable(name="id") Long id, @RequestBody Client client) {
         return clientService.update(id, client);
     }
 

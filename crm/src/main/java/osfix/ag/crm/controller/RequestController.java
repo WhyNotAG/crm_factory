@@ -26,7 +26,7 @@ public class RequestController {
     public Request create(@RequestBody Request request) {return requestService.save(request); }
 
     @PutMapping("/{id}")
-    public Request update(@PathVariable(name = "id") long id, @RequestBody Request request) {
+    public Request update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
         return requestService.update(id, request);
     }
 

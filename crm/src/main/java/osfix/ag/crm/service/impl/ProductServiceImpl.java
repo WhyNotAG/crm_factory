@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     public Product update(Long id, Product product) {
         Product productFromDb = productRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(product,productFromDb, "id");
-        productRepo.deleteById(product.getId());
-        return productRepo.save(product);
+        Product result = productRepo.save(productFromDb);
+        return result;
     }
 }

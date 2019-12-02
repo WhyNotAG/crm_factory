@@ -11,7 +11,7 @@ import java.util.List;
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     @Column(name = "date")
     String date;
@@ -23,10 +23,10 @@ public class Document {
     String client;
 
     @Column(name = "price")
-    double price;
+    Double price;
 
     @Column(name = "days_left")
-    int daysLeft;
+    Integer daysLeft;
 
     @Column(name = "deadline")
     String deadline;

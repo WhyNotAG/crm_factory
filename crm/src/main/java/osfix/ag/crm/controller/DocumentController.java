@@ -31,7 +31,7 @@ public class DocumentController {
     }
 
     @PutMapping("/{id}")
-    public Document update(@PathVariable(name = "id") long id, @RequestBody Document document) {
+    public Document update(@PathVariable(name = "id") Long id, @RequestBody Document document) {
         return documentService.update(id, document);
     }
 
