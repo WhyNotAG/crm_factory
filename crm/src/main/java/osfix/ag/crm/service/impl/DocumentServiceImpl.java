@@ -29,6 +29,7 @@ public class DocumentServiceImpl implements DocumentService {
     public Document update(Long id, Document document) {
         Document documentFromDB = findId(id);
         BeanUtils.copyProperties(document, documentFromDB);
+        documentRepo.deleteById(document.getId());
         return documentRepo.save(document);
     }
 
