@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService {
     public Client update(Long id, Client client) {
         Client clientFromDb = findId(id);
         BeanUtils.copyProperties(client,clientFromDb, "id");
-        return client;
+        return clientRepo.save(client);
     }
 
     @Override
