@@ -24,6 +24,7 @@ import osfix.ag.crm.security.jwt.JwtAuthenticationException;
 import osfix.ag.crm.security.jwt.JwtTokenProvider;
 import osfix.ag.crm.service.JwtRefreshTokenService;
 import osfix.ag.crm.service.UserService;
+import osfix.ag.crm.service.mapper.UserMapper;
 
 @Slf4j
 @RestController
@@ -34,13 +35,17 @@ public class AuthenticationController {
     private JwtTokenProvider jwtTokenProvider;
     private UserService userService;
     private JwtRefreshTokenService jwtRefreshTokenService;
+    private UserMapper userMapper;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService, JwtRefreshTokenService jwtRefreshTokenService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider,
+                                    UserService userService, JwtRefreshTokenService jwtRefreshTokenService,
+                                    UserMapper userMapper) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
         this.jwtRefreshTokenService = jwtRefreshTokenService;
+        this.userMapper = userMapper;
     }
 
 
@@ -70,7 +75,7 @@ public class AuthenticationController {
             response.setAccessToken(accessToken.getToken());
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
-            response.setUser(UserDTO.fromUser(loadedUser));
+            response.setUser(userMapper.fromEntity(loadedUser));
 
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
@@ -85,6 +90,7 @@ public class AuthenticationController {
             jwtRefreshTokenService.delete(jwtRefreshToken);
 
             User user = jwtRefreshToken.getUser();
+            log.info("roles", user.getRoles());
             AccessToken accessToken = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
             JwtRefreshToken refreshToken = createRefreshToken(user);
 
@@ -92,7 +98,7 @@ public class AuthenticationController {
             response.setAccessToken(accessToken.getToken());
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
-            response.setUser(UserDTO.fromUser(user));
+            response.setUser(userMapper.fromEntity(user));
 
             return ResponseEntity.ok().body(response);
         }).orElseThrow(() -> new JwtAuthenticationException("Invalid refresh token"));
