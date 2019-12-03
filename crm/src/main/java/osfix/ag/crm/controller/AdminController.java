@@ -73,5 +73,14 @@ public class AdminController {
         return ResponseEntity.ok().body(userMapper.fromEntity(result));
     }
 
+    @PutMapping("/user/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
+        return ResponseEntity.ok().body(userMapper.fromEntity(userService.update(id, user)));
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void delete(@PathVariable(name = "id") Long id) {
+        userService.delete(id);
+    }
 
 }

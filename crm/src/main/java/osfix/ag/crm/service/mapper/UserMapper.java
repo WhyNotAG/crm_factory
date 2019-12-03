@@ -1,14 +1,17 @@
 package osfix.ag.crm.service.mapper;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.service.dto.UserDTO;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class UserMapper implements EntityMapper<User, UserDTO> {
+
     @Override
     public User toEntity(UserDTO dto) {
         User user = new User();

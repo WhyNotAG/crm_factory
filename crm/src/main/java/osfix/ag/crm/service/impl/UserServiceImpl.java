@@ -1,6 +1,8 @@
 package osfix.ag.crm.service.impl;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,7 @@ import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.UserService;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -52,5 +51,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         userRepo.deleteById(id);
+    }
+
+    @Override
+    public User update(Long id, User user) {
+        User userFromDb = userRepo.findById(id).orElse(null);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        BeanUtils.copyProperties(user,userFromDb,"id","created","status");
+        userFromDb.setUpdated(new Date());
+        return userRepo.save(userFromDb);
     }
 }
