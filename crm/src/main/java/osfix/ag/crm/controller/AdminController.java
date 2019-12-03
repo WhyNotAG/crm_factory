@@ -50,7 +50,7 @@ public class AdminController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        UserDTO result = UserDTO.fromUser(user);
+        UserDTO result = userMapper.fromEntity(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
