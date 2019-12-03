@@ -74,7 +74,7 @@ public class AdminController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
+    public ResponseEntity<UserDTO> update(@PathVariable(name = "id") Long id, @RequestBody AddUserDTO user) {
         return ResponseEntity.ok().body(userMapper.fromEntity(userService.update(id, user)));
     }
 

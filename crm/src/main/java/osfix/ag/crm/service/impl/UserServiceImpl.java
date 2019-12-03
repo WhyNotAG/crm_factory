@@ -11,6 +11,8 @@ import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.repo.user.RoleRepo;
 import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.UserService;
+import osfix.ag.crm.service.dto.AddUserDTO;
+import osfix.ag.crm.service.dto.UserDTO;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -21,6 +23,7 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private UserRepo userRepo;
+    private RoleRepo roleRepo;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -30,8 +33,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder,RoleRepo roleRepo) {
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -54,10 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(Long id, User user) {
+    public User update(Long id, AddUserDTO user) {
         User userFromDb = userRepo.findById(id).orElse(null);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        BeanUtils.copyProperties(user,userFromDb,"id","created","status");
+        userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
+        BeanUtils.copyProperties(user,userFromDb,"id","created","status","roles");
         userFromDb.setUpdated(new Date());
         return userRepo.save(userFromDb);
     }

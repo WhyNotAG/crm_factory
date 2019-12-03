@@ -25,7 +25,7 @@ public class Request {
     @Column(name = "code_word") //кодовое слово
     String codeWord;
 
-    @Column(name = "status") //кто отвественный
+    @Column(name = "status")
     String status;
 
     @Column(name = "responsible") //кто отвественный
