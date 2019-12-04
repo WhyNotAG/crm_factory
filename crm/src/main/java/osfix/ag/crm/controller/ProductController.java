@@ -1,6 +1,6 @@
 package osfix.ag.crm.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.service.ProductService;
@@ -26,16 +26,19 @@ public class ProductController {
         return productService.findById(id);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/")
     public Product add(@RequestBody Product product) {
         return productService.save(product);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
     public Product update(@PathVariable(name = "id") Long id, @RequestBody Product product) {
         return productService.update(id,product);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         productService.delete(id);

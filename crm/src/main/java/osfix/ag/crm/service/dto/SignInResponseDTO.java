@@ -11,5 +11,4 @@ public class SignInResponseDTO {
     private String refreshToken;
     private Long expiredIn;
     private UserDTO user;
-    private List<Role> roles;
 }

@@ -1,9 +1,9 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.service.RequestService;
-import osfix.ag.crm.service.impl.RequestServiceImpl;
 
 import java.util.List;
 
@@ -22,9 +22,11 @@ public class RequestController {
     @GetMapping("/{id}")
     public Request getClient(@PathVariable(name = "id") long id) {return  requestService.findById(id); }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
     public Request create(@RequestBody Request request) {return requestService.save(request); }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
     public Request update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
         return requestService.update(id, request);
@@ -35,6 +37,7 @@ public class RequestController {
         requestService.changeStatus(id, request.getStatus());
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") long id) { requestService.delete(id);}
 

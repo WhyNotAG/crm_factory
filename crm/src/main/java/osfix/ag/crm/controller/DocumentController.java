@@ -1,5 +1,6 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Document;
 import osfix.ag.crm.service.DocumentService;
@@ -25,16 +26,18 @@ public class DocumentController {
         return documentService.findById(id);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/")
     public Document create(@RequestBody Document document) {
         return documentService.save(document);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
     public Document update(@PathVariable(name = "id") Long id, @RequestBody Document document) {
         return documentService.update(id, document);
     }
-
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") long id) { documentService.delete(id); }
 }

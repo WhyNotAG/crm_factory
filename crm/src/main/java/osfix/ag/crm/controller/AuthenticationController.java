@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import osfix.ag.crm.domain.JwtRefreshToken;
 import osfix.ag.crm.domain.user.User;
-import osfix.ag.crm.service.dto.AuthenticationRequestDTO;
-import osfix.ag.crm.service.dto.RefreshTokenDTO;
-import osfix.ag.crm.service.dto.SignInResponseDTO;
-import osfix.ag.crm.service.dto.UserDTO;
 import osfix.ag.crm.security.jwt.AccessToken;
 import osfix.ag.crm.security.jwt.JwtAuthenticationException;
 import osfix.ag.crm.security.jwt.JwtTokenProvider;
 import osfix.ag.crm.service.JwtRefreshTokenService;
 import osfix.ag.crm.service.UserService;
+import osfix.ag.crm.service.dto.AuthenticationRequestDTO;
+import osfix.ag.crm.service.dto.RefreshTokenDTO;
+import osfix.ag.crm.service.dto.SignInResponseDTO;
 import osfix.ag.crm.service.mapper.UserMapper;
 
 @Slf4j

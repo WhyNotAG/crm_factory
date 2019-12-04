@@ -22,8 +22,9 @@ public class JwtRefreshTokenServiceImpl implements JwtRefreshTokenService {
 
     @Override
     public JwtRefreshToken save(JwtRefreshToken token) {
-        if (token == null)
+        if (token == null) {
             return null;
+        }
 
         clearTokenForUser(token.getUser());
 

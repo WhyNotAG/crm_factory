@@ -10,15 +10,14 @@ import osfix.ag.crm.domain.user.Role;
 import osfix.ag.crm.domain.user.Status;
 import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.repo.user.RoleRepo;
+import osfix.ag.crm.service.UserService;
 import osfix.ag.crm.service.dto.AddUserDTO;
 import osfix.ag.crm.service.dto.UserDTO;
-import osfix.ag.crm.service.UserService;
 import osfix.ag.crm.service.mapper.UserMapper;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RestController
