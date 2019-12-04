@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public User update(Long id, AddUserDTO user) {
         User userFromDb = userRepo.findById(id).orElse(null);
         userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
-        BeanUtils.copyProperties(user,userFromDb,"id","created","status","roles");
+        BeanUtils.copyProperties(user,userFromDb,"id","created","status","roles", "password");
         userFromDb.setUpdated(new Date());
         return userRepo.save(userFromDb);
     }
