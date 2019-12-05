@@ -1,8 +1,14 @@
 package osfix.ag.crm.domain.product;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.RequestProduct;
+import osfix.ag.crm.domain.user.Role;
+import osfix.ag.crm.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,9 +43,11 @@ public class Product {
     @Column(name = "comment")
     private String comment;
 
-    //add vendor
+    @Column(name = "vendor")
+    private String vendor;
 
-    @JsonIgnoreProperties("products")
-    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
-    private List<Request> requests;
+
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    private List<RequestProduct> requestProducts;
 }

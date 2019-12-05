@@ -1,7 +1,6 @@
 package osfix.ag.crm.service;
 
 import org.springframework.stereotype.Service;
-import osfix.ag.crm.domain.Client;
 import osfix.ag.crm.domain.Request;
 
 import java.util.List;
@@ -14,4 +13,5 @@ public interface RequestService {
     Request save(Request request);
     void delete(Long id);
     void changeStatus(Long id, String status);
+    Request addProduct(Long id, List<Long> products_id, List<String> quantity, List<String> packing);
 }

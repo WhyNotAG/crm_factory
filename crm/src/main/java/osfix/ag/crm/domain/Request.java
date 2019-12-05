@@ -1,6 +1,9 @@
 package osfix.ag.crm.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.user.Role;
@@ -31,11 +34,9 @@ public class Request {
     @Column(name = "responsible") //кто отвественный
     String responsible;
 
-    @JsonIgnoreProperties("requests")
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "request_products", joinColumns = {@JoinColumn(name = "request_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
-    private List<Product> products;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
+    private List<RequestProduct> requestProducts;
 
 
 }

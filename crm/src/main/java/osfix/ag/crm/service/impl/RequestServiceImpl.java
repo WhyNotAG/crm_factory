@@ -3,16 +3,24 @@ package osfix.ag.crm.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.RequestProduct;
+import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.repo.ProductRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.service.RequestService;
+import osfix.ag.crm.service.mapper.RequestMapper;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
+    private ProductRepo productRepo;
 
-    public RequestServiceImpl(RequestRepo requestRepo) {
+    public RequestServiceImpl(RequestRepo requestRepo, ProductRepo productRepo) {
         this.requestRepo = requestRepo;
+        this.productRepo = productRepo;
     }
 
     @Override
@@ -52,5 +60,24 @@ public class RequestServiceImpl implements RequestService {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);
         requestRepo.save(request);
+    }
+
+    @Override
+    public Request addProduct(Long id, List<Long> products_id, List<String> quantity, List<String> packing) {
+        Request request = requestRepo.findById(id).orElse(null);
+        RequestProduct requestProduct = new RequestProduct();
+        List<RequestProduct> requestProducts = new ArrayList<>();
+
+        for (Long pI : products_id) {
+            requestProduct.setProduct(productRepo.findById(pI).orElse(null));
+            requestProduct.setQuantity(quantity.get(requestProducts.size()));
+            requestProduct.setPacking(packing.get(requestProducts.size()));
+            requestProducts.add(requestProduct);
+        }
+
+        requestProduct.setRequest(request);
+        request.setRequestProducts(requestProducts);
+        requestRepo.save(request);
+        return request;
     }
 }

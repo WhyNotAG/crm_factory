@@ -1,9 +1,13 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.service.RequestService;
+import osfix.ag.crm.service.dto.request.AddProductsDTO;
+import osfix.ag.crm.service.dto.request.RequestDTO;
+import osfix.ag.crm.service.mapper.RequestMapper;
 
 import java.util.List;
 
@@ -11,25 +15,35 @@ import java.util.List;
 @RequestMapping("/api/v1/request")
 public class RequestController {
     private RequestService requestService;
+    private RequestMapper requestMapper;
 
-    public RequestController(RequestService requestService) {
+    public RequestController(RequestService requestService, RequestMapper requestMapper) {
         this.requestService = requestService;
+        this.requestMapper = requestMapper;
     }
 
     @GetMapping("/")
-    public List<Request> getAllClients() { return requestService.findAll(); }
+    public ResponseEntity<List<Request>> getAllClients() {
+        return ResponseEntity.ok().body(requestService.findAll());
+    }
 
     @GetMapping("/{id}")
-    public Request getClient(@PathVariable(name = "id") long id) {return  requestService.findById(id); }
+    public ResponseEntity<Request> getClient(@PathVariable(name = "id") long id) {
+        return  ResponseEntity.ok().body(requestService.findById(id));
+    }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public Request create(@RequestBody Request request) {return requestService.save(request); }
+    public ResponseEntity<Request> create(@RequestBody RequestDTO request) {
+        Request result = requestService.save(requestMapper.toEntity(request));
+        return ResponseEntity.ok().body(result);
+    }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Request update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
-        return requestService.update(id, request);
+    public ResponseEntity<Request> update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
+        Request result =  requestService.update(id, request);
+        return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("/status/{id}")
@@ -41,5 +55,10 @@ public class RequestController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") long id) { requestService.delete(id);}
 
+    @PostMapping("/{id}")
+    public ResponseEntity<Request> addProducts(@PathVariable(name = "id") Long id, @RequestBody AddProductsDTO addProductsDTO) {
+        Request request = requestService.addProduct(id, addProductsDTO.getProductsId(), addProductsDTO.getQuantity(), addProductsDTO.getPacking());
+        return ResponseEntity.ok().body(request);
+    }
 
 }
