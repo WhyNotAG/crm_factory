@@ -11,10 +11,10 @@ import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/api/v1/lemz")
-public class LEMZConrtoller {
+public class LEMZController {
     private LEMZService lemzService;
 
-    public LEMZConrtoller(LEMZService lemzService) {
+    public LEMZController(LEMZService lemzService) {
         this.lemzService = lemzService;
     }
 
