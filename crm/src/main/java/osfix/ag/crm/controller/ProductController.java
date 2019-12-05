@@ -1,9 +1,13 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.service.ProductService;
+import osfix.ag.crm.service.dto.ProductsDTO;
+import osfix.ag.crm.service.mapper.ProductMapper;
 
 import java.util.List;
 
@@ -11,31 +15,33 @@ import java.util.List;
 @RequestMapping("/api/v1/product")
 public class ProductController {
     private ProductService productService;
+    private ProductMapper productMapper;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductMapper productMapper) {
         this.productService = productService;
+        this.productMapper = productMapper;
     }
 
     @GetMapping("/")
-    public List<Product> findAll(){
-        return productService.findAll();
+    public ResponseEntity<List<Product>> findAll(){
+        return ResponseEntity.ok().body(productService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Product findById(@PathVariable(name = "id") Long id) {
-        return productService.findById(id);
+    public ResponseEntity<Product> findById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(productService.findById(id));
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/")
-    public Product add(@RequestBody Product product) {
-        return productService.save(product);
+    public ResponseEntity<Product> add(@RequestBody ProductsDTO product) {
+        return ResponseEntity.ok().body(productService.save(productMapper.toEntity(product)));
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Product update(@PathVariable(name = "id") Long id, @RequestBody Product product) {
-        return productService.update(id,product);
+    public ResponseEntity<Product> update(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO product) {
+        return ResponseEntity.ok().body(productService.update(id,productMapper.toEntity(product)));
     }
 
     @Secured("ROLE_ADMIN")
