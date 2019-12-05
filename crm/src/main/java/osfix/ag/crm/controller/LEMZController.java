@@ -3,6 +3,7 @@ package osfix.ag.crm.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.LEMZ;
+import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.service.LEMZService;
 
 import javax.persistence.Column;
@@ -41,18 +42,8 @@ public class LEMZController {
         lemzService.delete(id);
     }
 
-    @Column(name = "date")
-    String date;
-
-    @Column(name = "quantity")
-    String quantity;
-
-    @Column(name = "code_word") //кодовое слово
-            String codeWord;
-
-    @Column(name = "status")
-    String status;
-
-    @Column(name = "responsible") //кто отвественный
-            String responsible;
+    @PutMapping("/status/{id}")
+    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody LEMZ lemz) {
+        lemzService.changeStatus(id, lemz.getStatus());
+    }
 }
