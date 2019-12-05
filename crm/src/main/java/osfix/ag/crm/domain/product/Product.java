@@ -29,7 +29,7 @@ public class Product {
     private TypeOfProduct typeOfProduct;
 
     @Column(name = "photo")
-    private Byte photo;
+    private String photo;
 
     @Column(name = "unit")
     private String unit;
