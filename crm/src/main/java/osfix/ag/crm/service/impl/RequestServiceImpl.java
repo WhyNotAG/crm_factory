@@ -64,9 +64,14 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request addProduct(Long id, List<Long> products_id, List<String> quantity, List<String> packaging) {
-        Request request = requestRepo.findById(id).orElse(null);
         RequestProduct requestProduct = new RequestProduct();
-        List<RequestProduct> requestProducts = new ArrayList<>();
+        Request request = requestRepo.findById(id).orElse(null);
+        List<RequestProduct> requestProducts = request.getRequestProducts();
+        for (RequestProduct requestProductT:requestProducts){
+            requestProductT.setProduct(null);
+            requestProductT.setRequest(null);
+        }
+        requestProducts = new ArrayList<>();
         int length = 0;
         for (Long pI : products_id) {
             requestProduct.setProduct(productRepo.findById(pI).orElse(null));

@@ -47,7 +47,7 @@ public class Product {
     private String vendor;
 
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     @JsonBackReference
     private List<RequestProduct> requestProducts;
 }
