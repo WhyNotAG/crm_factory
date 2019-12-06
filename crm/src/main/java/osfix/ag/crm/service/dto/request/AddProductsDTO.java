@@ -8,5 +8,5 @@ import java.util.List;
 public class AddProductsDTO {
     List<Long> productsId;
     List<String> quantity;
-    List<String> packing;
+    List<String> packaging;
 }

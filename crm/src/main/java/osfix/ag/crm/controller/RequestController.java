@@ -47,7 +47,7 @@ public class RequestController {
     }
 
     @PutMapping("/status/{id}")
-    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody Request request) {
+    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
         requestService.changeStatus(id, request.getStatus());
     }
 
@@ -57,7 +57,7 @@ public class RequestController {
 
     @PostMapping("/{id}")
     public ResponseEntity<Request> addProducts(@PathVariable(name = "id") Long id, @RequestBody AddProductsDTO addProductsDTO) {
-        Request request = requestService.addProduct(id, addProductsDTO.getProductsId(), addProductsDTO.getQuantity(), addProductsDTO.getPacking());
+        Request request = requestService.addProduct(id, addProductsDTO.getProductsId(), addProductsDTO.getQuantity(), addProductsDTO.getPackaging());
         return ResponseEntity.ok().body(request);
     }
 
