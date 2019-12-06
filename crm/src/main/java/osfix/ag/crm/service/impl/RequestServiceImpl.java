@@ -68,11 +68,15 @@ public class RequestServiceImpl implements RequestService {
         RequestProduct requestProduct = new RequestProduct();
         List<RequestProduct> requestProducts = new ArrayList<>();
 
+        int length = 0;
         for (Long pI : products_id) {
             requestProduct.setProduct(productRepo.findById(pI).orElse(null));
-            requestProduct.setQuantity(quantity.get(products_id.size()));
-            requestProduct.setPackaging(packaging.get(products_id.size()));
+            requestProduct.setQuantity(quantity.get(length));
+            requestProduct.setPackaging(packaging.get(length));
             requestProducts.add(requestProduct);
+            requestProduct.setRequest(request);
+            requestProduct = new RequestProduct();
+            length++;
         }
 
         requestProduct.setRequest(request);
