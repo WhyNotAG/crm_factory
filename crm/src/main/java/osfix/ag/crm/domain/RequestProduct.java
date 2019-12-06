@@ -28,6 +28,6 @@ public class RequestProduct {
     @Column(name = "quantity")
     String quantity;
 
-    @Column(name = "packing")
-    String packing;
+    @Column(name = "packaging")
+    String packaging;
 }
