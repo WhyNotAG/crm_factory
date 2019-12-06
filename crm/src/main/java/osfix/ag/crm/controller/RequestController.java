@@ -41,8 +41,8 @@ public class RequestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public ResponseEntity<Request> update(@PathVariable(name = "id") Long id, @RequestBody Request request) {
-        Request result =  requestService.update(id, request);
+    public ResponseEntity<Request> update(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
+        Request result =  requestService.update(id, requestMapper.toEntity(request));
         return ResponseEntity.ok().body(result);
     }
 
