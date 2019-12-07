@@ -4,11 +4,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.RequestProduct;
-import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.repo.ProductRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.service.RequestService;
-import osfix.ag.crm.service.mapper.RequestMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +65,7 @@ public class RequestServiceImpl implements RequestService {
         RequestProduct requestProduct = new RequestProduct();
         Request request = requestRepo.findById(id).orElse(null);
         List<RequestProduct> requestProducts = request.getRequestProducts();
+        request.getRequestProducts().remove(this);
         for (RequestProduct requestProductT:requestProducts){
             requestProductT.setProduct(null);
             requestProductT.setRequest(null);
@@ -87,5 +86,8 @@ public class RequestServiceImpl implements RequestService {
         request.setRequestProducts(requestProducts);
         requestRepo.save(request);
         return request;
+    }
+
+    public void deletePro(Long id) {
     }
 }

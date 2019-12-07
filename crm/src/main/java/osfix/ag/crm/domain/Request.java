@@ -35,7 +35,7 @@ public class Request {
     String responsible;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "request", cascade = CascadeType.REMOVE)
     private List<RequestProduct> requestProducts;
 
 

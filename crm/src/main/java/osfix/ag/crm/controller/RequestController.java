@@ -61,4 +61,9 @@ public class RequestController {
         return ResponseEntity.ok().body(request);
     }
 
+    @DeleteMapping("/pro/{id}")
+    public void deletePro(@PathVariable(name = "id") Long id) {
+        requestService.deletePro(id);
+    }
+
 }
