@@ -1,6 +1,6 @@
 package osfix.ag.crm.service;
 
-import osfix.ag.crm.domain.Detail;
+import osfix.ag.crm.domain.dispatcher.Detail;
 import java.util.List;
 
 public interface DetailService {

@@ -1,9 +1,8 @@
-package osfix.ag.crm.service.impl;
+package osfix.ag.crm.service.impl.dispatcher;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import osfix.ag.crm.domain.Client;
-import osfix.ag.crm.domain.Detail;
+import osfix.ag.crm.domain.dispatcher.Detail;
 import osfix.ag.crm.repo.DetailRepo;
 import osfix.ag.crm.service.DetailService;
 

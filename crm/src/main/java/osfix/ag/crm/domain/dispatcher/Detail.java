@@ -1,4 +1,4 @@
-package osfix.ag.crm.domain;
+package osfix.ag.crm.domain.dispatcher;
 
 import lombok.Data;
 

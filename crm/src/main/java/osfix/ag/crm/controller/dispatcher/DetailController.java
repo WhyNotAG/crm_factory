@@ -1,8 +1,8 @@
-package osfix.ag.crm.controller;
+package osfix.ag.crm.controller.dispatcher;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import osfix.ag.crm.domain.Detail;
+import osfix.ag.crm.domain.dispatcher.Detail;
 import osfix.ag.crm.service.DetailService;
 
 import java.util.List;
