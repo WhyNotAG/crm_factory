@@ -3,7 +3,8 @@ package osfix.ag.crm.domain.dispatcher;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Data
 @Entity
@@ -19,11 +20,11 @@ public class ShippingRegistry {
     @Column(name = "cargo")
     String cargo;
 
-    @Column(name = "from")
-    String from;
+    @Column(name = "sender")
+    String sender;
 
-    @Column(name = "to")
-    String to;
+    @Column(name = "recipient")
+    String recipient;
 
     @Column(name = "driver")
     String driver;

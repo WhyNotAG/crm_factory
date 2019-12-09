@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Generated;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -14,19 +14,19 @@ public class MainTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column("date_created")
+    @Column(name = "date_created")
     Date dateCreated;
 
-    @Column("description")
+    @Column(name = "description")
     String description;
 
-    @Column("responsible")
+    @Column(name = "responsible")
     String responsible;
 
-    @Column("date_control")
+    @Column(name = "date_control")
     Date dateControl;
 
-    @Column("status")
+    @Column(name = "status")
     String status;
 
 }
