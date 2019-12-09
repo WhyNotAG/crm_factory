@@ -16,7 +16,7 @@ public class DetailController {
         this.detailService = detailService;
     }
 
-    @GetMapping("/}")
+    @GetMapping("/")
     public ResponseEntity<List<Detail>> findAll() {
         return ResponseEntity.ok().body(detailService.findAll());
     }
