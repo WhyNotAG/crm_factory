@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class ShippingRegistryImpl implements ShippingRegistryService {
-    ShippingRegistryRepo shippingRegistryRepo;
+    private ShippingRegistryRepo shippingRegistryRepo;
 
     public ShippingRegistryImpl(ShippingRegistryRepo shippingRegistryRepo) { this.shippingRegistryRepo = shippingRegistryRepo; }
 
