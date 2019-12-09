@@ -15,7 +15,7 @@ public class ShippingRegistry {
     Long id;
 
     @Column(name = "date")
-    Date date;
+    String date;
 
     @Column(name = "cargo")
     String cargo;

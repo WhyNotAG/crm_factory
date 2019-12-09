@@ -15,7 +15,7 @@ public class MainTask {
     Long id;
 
     @Column(name = "date_created")
-    Date dateCreated;
+    String dateCreated;
 
     @Column(name = "description")
     String description;
@@ -24,7 +24,7 @@ public class MainTask {
     String responsible;
 
     @Column(name = "date_control")
-    Date dateControl;
+    String dateControl;
 
     @Column(name = "status")
     String status;
