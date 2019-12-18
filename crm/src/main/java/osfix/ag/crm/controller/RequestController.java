@@ -57,7 +57,7 @@ public class RequestController {
 
     @PostMapping("/{id}")
     public ResponseEntity<Request> addProducts(@PathVariable(name = "id") Long id, @RequestBody AddProductsDTO addProductsDTO) {
-        Request request = requestService.addProduct(id, addProductsDTO.getProductsId(), addProductsDTO.getQuantity(), addProductsDTO.getPackaging());
+        Request request = requestService.addProduct(id, addProductsDTO.getProductsName(), addProductsDTO.getQuantity(), addProductsDTO.getPackaging());
         return ResponseEntity.ok().body(request);
     }
 

@@ -3,7 +3,7 @@ package osfix.ag.crm.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.product.Product;
-import osfix.ag.crm.repo.ProductRepo;
+import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.ProductService;
 import java.util.List;
 

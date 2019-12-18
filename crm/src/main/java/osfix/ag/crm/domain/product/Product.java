@@ -1,14 +1,7 @@
 package osfix.ag.crm.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import osfix.ag.crm.domain.Request;
-import osfix.ag.crm.domain.RequestProduct;
-import osfix.ag.crm.domain.user.Role;
-import osfix.ag.crm.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -46,8 +39,4 @@ public class Product {
     @Column(name = "vendor")
     private String vendor;
 
-
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<RequestProduct> requestProducts;
 }

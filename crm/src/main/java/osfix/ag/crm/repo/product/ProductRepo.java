@@ -1,4 +1,4 @@
-package osfix.ag.crm.repo;
+package osfix.ag.crm.repo.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

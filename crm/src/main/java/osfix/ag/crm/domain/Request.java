@@ -6,10 +6,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.domain.user.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "requests")
@@ -34,9 +38,8 @@ public class Request {
     @Column(name = "responsible") //кто отвественный
     String responsible;
 
+    @OneToMany(mappedBy = "request", cascade = CascadeType.REFRESH)
     @JsonManagedReference
-    @OneToMany(mappedBy = "request", cascade = CascadeType.REMOVE)
-    private List<RequestProduct> requestProducts;
-
+    public List<RequestProduct> requestProducts = new ArrayList<>();
 
 }

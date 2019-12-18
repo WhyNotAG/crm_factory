@@ -3,22 +3,19 @@ package osfix.ag.crm.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Request;
-import osfix.ag.crm.domain.RequestProduct;
-import osfix.ag.crm.repo.ProductRepo;
+import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.repo.RequestRepo;
+import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.RequestService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
-    private ProductRepo productRepo;
 
     public RequestServiceImpl(RequestRepo requestRepo, ProductRepo productRepo) {
         this.requestRepo = requestRepo;
-        this.productRepo = productRepo;
     }
 
     @Override
@@ -61,31 +58,19 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request addProduct(Long id, List<Long> products_id, List<String> quantity, List<String> packaging) {
-        RequestProduct requestProduct = new RequestProduct();
+    public Request addProduct(Long id, List<String> prName, List<String> quantity, List<String> packaging) {
         Request request = requestRepo.findById(id).orElse(null);
-        List<RequestProduct> requestProducts = request.getRequestProducts();
-        request.getRequestProducts().remove(this);
-        for (RequestProduct requestProductT:requestProducts){
-            requestProductT.setProduct(null);
-            requestProductT.setRequest(null);
-        }
-        requestProducts = new ArrayList<>();
-        int length = 0;
-        for (Long pI : products_id) {
-            requestProduct.setProduct(productRepo.findById(pI).orElse(null));
-            requestProduct.setQuantity(quantity.get(length));
-            requestProduct.setPackaging(packaging.get(length));
-            requestProducts.add(requestProduct);
-            requestProduct.setRequest(request);
-            requestProduct = new RequestProduct();
-            length++;
+        request.setRequestProducts(null);
+        RequestProduct requestProduct = new RequestProduct();
+
+        for (int i = 0; i < prName.size(); i++) {
+            requestProduct.setPackaging(packaging.get(i));
+            requestProduct.setName(prName.get(i));
+            requestProduct.setQuantity(quantity.get(i));
+            request.getRequestProducts().add(requestProduct);
         }
 
-        requestProduct.setRequest(request);
-        request.setRequestProducts(requestProducts);
-        requestRepo.save(request);
-        return request;
+        return requestRepo.save(request);
     }
 
     public void deletePro(Long id) {

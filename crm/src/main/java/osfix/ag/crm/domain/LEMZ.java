@@ -14,7 +14,7 @@ public class LEMZ {
     Long id;
 
     @Column(name = "shipping_date")
-    Date shippingDate;
+    String shippingDate;
 
     @Column(name = "date")
     String date;
@@ -23,11 +23,11 @@ public class LEMZ {
     String quantity;
 
     @Column(name = "code_word") //кодовое слово
-            String codeWord;
+    String codeWord;
 
     @Column(name = "status")
     String status;
 
     @Column(name = "responsible") //кто отвественный
-            String responsible;
+    String responsible;
 }

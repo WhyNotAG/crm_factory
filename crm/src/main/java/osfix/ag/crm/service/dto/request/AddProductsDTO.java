@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class AddProductsDTO {
-    List<Long> productsId;
+    List<String> productsName;
     List<String> quantity;
     List<String> packaging;
 }
