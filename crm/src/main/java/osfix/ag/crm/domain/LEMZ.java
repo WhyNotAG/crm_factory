@@ -1,9 +1,14 @@
 package osfix.ag.crm.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import osfix.ag.crm.domain.product.LemzProduct;
+import osfix.ag.crm.domain.product.RequestProduct;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "lemz")
@@ -30,4 +35,8 @@ public class LEMZ {
 
     @Column(name = "responsible") //кто отвественный
     String responsible;
+
+    @OneToMany(mappedBy = "lemz", cascade = CascadeType.REFRESH)
+    @JsonManagedReference
+    public List<LemzProduct> lemzProducts = new ArrayList<>();
 }

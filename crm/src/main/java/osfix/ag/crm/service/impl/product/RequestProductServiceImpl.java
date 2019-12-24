@@ -1,4 +1,4 @@
-package osfix.ag.crm.service.impl;
+package osfix.ag.crm.service.impl.product;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

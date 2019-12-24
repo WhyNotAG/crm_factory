@@ -1,7 +1,6 @@
 package osfix.ag.crm.service.dto;
 
 import lombok.Data;
-import osfix.ag.crm.domain.Request;
 
 @Data
 public class RequestProductDTO {
