@@ -6,6 +6,8 @@ import osfix.ag.crm.domain.dispatcher.rigging.Bench;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.BenchPart;
 import osfix.ag.crm.service.BenchPartService;
 import osfix.ag.crm.service.BenchService;
+import osfix.ag.crm.service.dto.RiggingPartDTO;
+import osfix.ag.crm.service.mapper.rigging.BenchPartMapper;
 
 import java.util.List;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class BenchController {
     private BenchService benchService;
     private BenchPartService benchPartService;
+    private BenchPartMapper benchPartMapper;
 
-    public BenchController(BenchService benchService, BenchPartService benchPartService) {
+    public BenchController(BenchService benchService, BenchPartService benchPartService, BenchPartMapper benchPartMapper) {
         this.benchService = benchService;
         this.benchPartService = benchPartService;
+        this.benchPartMapper = benchPartMapper;
     }
 
     @GetMapping("/")
@@ -57,13 +61,13 @@ public class BenchController {
     }
 
     @PostMapping("/part/")
-    public ResponseEntity<BenchPart> addPart(@RequestBody BenchPart benchPart) {
-        return ResponseEntity.ok().body(benchPartService.save(benchPart));
+    public ResponseEntity<BenchPart> addPart(@RequestBody RiggingPartDTO benchPart) {
+        return ResponseEntity.ok().body(benchPartService.save(benchPartMapper.toEntity(benchPart)));
     }
 
     @PutMapping("/part/{id}")
-    public ResponseEntity<BenchPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody BenchPart benchPart) {
-        return ResponseEntity.ok().body(benchPartService.update(id, benchPart));
+    public ResponseEntity<BenchPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO benchPart) {
+        return ResponseEntity.ok().body(benchPartService.update(id, benchPartMapper.toEntity(benchPart)));
     }
 
     @DeleteMapping("/part/{id}")

@@ -6,6 +6,8 @@ import osfix.ag.crm.domain.dispatcher.rigging.Stamp;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.StampPart;
 import osfix.ag.crm.service.StampPartService;
 import osfix.ag.crm.service.StampService;
+import osfix.ag.crm.service.dto.RiggingPartDTO;
+import osfix.ag.crm.service.mapper.rigging.StampPartMapper;
 
 import java.util.List;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class StampController {
     private StampService stampService;
     private StampPartService stampPartService;
+    private StampPartMapper stampPartMapper;
 
-    public StampController(StampService stampService, StampPartService stampPartService) {
+    public StampController(StampService stampService, StampPartService stampPartService, StampPartMapper stampPartMapper) {
         this.stampService = stampService;
         this.stampPartService = stampPartService;
+        this.stampPartMapper = stampPartMapper;
     }
 
     @GetMapping("/")
@@ -57,13 +61,13 @@ public class StampController {
     }
 
     @PostMapping("/part/")
-    public ResponseEntity<StampPart> addPart(@RequestBody StampPart stampPart) {
-        return ResponseEntity.ok().body(stampPartService.save(stampPart));
+    public ResponseEntity<StampPart> addPart(@RequestBody RiggingPartDTO stampPart) {
+        return ResponseEntity.ok().body(stampPartService.save(stampPartMapper.toEntity(stampPart)));
     }
 
     @PutMapping("/part/{id}")
-    public ResponseEntity<StampPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody StampPart stampPart) {
-        return ResponseEntity.ok().body(stampPartService.update(id, stampPart));
+    public ResponseEntity<StampPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO stampPart) {
+        return ResponseEntity.ok().body(stampPartService.update(id, stampPartMapper.toEntity(stampPart)));
     }
 
     @DeleteMapping("/part/{id}")

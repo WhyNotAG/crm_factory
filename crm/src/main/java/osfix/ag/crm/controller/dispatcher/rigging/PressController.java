@@ -6,6 +6,8 @@ import osfix.ag.crm.domain.dispatcher.rigging.Press;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.PressPart;
 import osfix.ag.crm.service.PressPartService;
 import osfix.ag.crm.service.PressService;
+import osfix.ag.crm.service.dto.RiggingPartDTO;
+import osfix.ag.crm.service.mapper.rigging.PressPartMapper;
 
 import java.util.List;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class PressController {
     private PressService pressService;
     private PressPartService pressPartService;
+    private PressPartMapper pressPartMapper;
 
-    public PressController(PressService pressService, PressPartService pressPartService) {
+    public PressController(PressService pressService, PressPartService pressPartService, PressPartMapper pressPartMapper) {
         this.pressService = pressService;
         this.pressPartService = pressPartService;
+        this.pressPartMapper = pressPartMapper;
     }
 
     @GetMapping("/")
@@ -57,13 +61,13 @@ public class PressController {
     }
 
     @PostMapping("/part/")
-    public ResponseEntity<PressPart> addPart(@RequestBody PressPart pressPart) {
-        return ResponseEntity.ok().body(pressPartService.save(pressPart));
+    public ResponseEntity<PressPart> addPart(@RequestBody RiggingPartDTO pressPart) {
+        return ResponseEntity.ok().body(pressPartService.save(pressPartMapper.toEntity(pressPart)));
     }
 
     @PutMapping("/part/{id}")
-    public ResponseEntity<PressPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody PressPart pressPart) {
-        return ResponseEntity.ok().body(pressPartService.update(id, pressPart));
+    public ResponseEntity<PressPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO pressPart) {
+        return ResponseEntity.ok().body(pressPartService.update(id, pressPartMapper.toEntity(pressPart)));
     }
 
     @DeleteMapping("/part/{id}")
