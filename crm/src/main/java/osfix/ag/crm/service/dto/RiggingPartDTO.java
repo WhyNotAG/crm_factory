@@ -10,6 +10,7 @@ public class RiggingPartDTO {
     String name;
     String location;
     String comment;
+    String amount;
     String cuttingDimensions;
     String milling;
     String harding;

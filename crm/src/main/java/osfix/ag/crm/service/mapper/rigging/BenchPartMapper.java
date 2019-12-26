@@ -25,6 +25,7 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
         benchPart.setErosion(dto.getErosion());
         benchPart.setGrinding(dto.getGrinding());
         benchPart.setHarding(dto.getHarding());
+        benchPart.setAmount(dto.getAmount());
         benchPart.setId(dto.getId());
         benchPart.setLocation(dto.getLocation());
         benchPart.setMilling(dto.getMilling());
@@ -42,6 +43,7 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
         dto.setCuttingDimensions(entity.getCuttingDimensions());
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
+        dto.setAmount(entity.getAmount());
         dto.setHarding(entity.getHarding());
         dto.setId(entity.getId());
         dto.setLocation(entity.getLocation());

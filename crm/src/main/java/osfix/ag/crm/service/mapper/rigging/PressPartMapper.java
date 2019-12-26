@@ -27,6 +27,7 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
         pressPart.setId(dto.getId());
         pressPart.setLocation(dto.getLocation());
         pressPart.setMilling(dto.getMilling());
+        pressPart.setAmount(dto.getAmount());
         pressPart.setName(dto.getName());
         pressPart.setNumber(dto.getNumber());
         pressPart.setPress(pressService.findById(dto.getRiggingId()));
@@ -42,6 +43,7 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
         dto.setHarding(entity.getHarding());
+        dto.setAmount(entity.getAmount());
         dto.setId(entity.getId());
         dto.setLocation(entity.getLocation());
         dto.setMilling(entity.getMilling());
