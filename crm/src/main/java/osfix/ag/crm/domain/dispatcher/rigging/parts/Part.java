@@ -23,6 +23,9 @@ public abstract class Part {
     @Column(name = "comment")
     String comment;
 
+    @Column(name = "amount")
+    String amount;
+
     @Column(name = "cutting_dimensions")
     String cuttingDimensions;
 
