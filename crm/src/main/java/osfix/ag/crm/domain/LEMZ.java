@@ -33,6 +33,9 @@ public class LEMZ {
     @Column(name = "status")
     String status;
 
+    @Column(name = "comment")
+    String comment;
+
     @Column(name = "responsible") //кто отвественный
     String responsible;
 
