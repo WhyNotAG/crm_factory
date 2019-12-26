@@ -30,7 +30,7 @@ public class BenchPartServiceImpl implements BenchPartService {
     public BenchPart update(Long id, BenchPart benchPart) {
         BenchPart benchPartFromDb = benchPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(benchPart, benchPartFromDb, "id");
-        return benchPartFromDb;
+        return benchPartRepo.save(benchPartFromDb);
     }
 
     @Override

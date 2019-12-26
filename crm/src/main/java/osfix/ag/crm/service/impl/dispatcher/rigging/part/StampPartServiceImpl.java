@@ -31,7 +31,7 @@ public class StampPartServiceImpl implements StampPartService {
     public StampPart update(Long id, StampPart stampPart) {
         StampPart stampPartFromDb = stampPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(stampPart, stampPartFromDb, "id");
-        return stampPartFromDb;
+        return stampPartRepo.save(stampPartFromDb);
     }
 
     @Override

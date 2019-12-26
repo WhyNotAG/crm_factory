@@ -30,7 +30,7 @@ public class PressPartServiceImpl implements PressPartService {
     public PressPart update(Long id, PressPart pressPart) {
         PressPart pressPartFromDb = pressPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(pressPart, pressPartFromDb, "id");
-        return pressPartFromDb;
+        return pressPartRepo.save(pressPartFromDb);
     }
 
     @Override
