@@ -122,7 +122,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
 				<configuration>
-					<mainClass>osfix.ag.crm.CrmApplication</mainClass>
+					<mainClass>crm.osfix.ag.crm.CrmApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
