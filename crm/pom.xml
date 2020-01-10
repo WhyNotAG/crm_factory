@@ -121,17 +121,9 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<id>osfix</id>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>osfix.ag.crm.CrmApplication</mainClass>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<mainClass>osfix.ag.crm.CrmApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
