@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        if (user.getRoles().contains(roleRepo.findByName("ROLE_LEMZ")) ||
+                user.getRoles().contains(roleRepo.findByName("ROLE_LEPSARI")))
+            { user.getRoles().add(roleRepo.findByName("ROLE_WORKSHOP")); }
+
         userRepo.save(user);
         return user;
     }
