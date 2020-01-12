@@ -1,7 +1,10 @@
 package osfix.ag.crm.service.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.repo.product.ProductCategoryRepo;
+import osfix.ag.crm.service.ProductCategoryService;
 import osfix.ag.crm.service.dto.ProductsDTO;
 
 import java.util.List;
@@ -9,6 +12,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
+
+    @Autowired
+    ProductCategoryService productCategoryService;
+
     @Override
     public Product toEntity(ProductsDTO dto) {
         Product product = new Product();
@@ -21,6 +28,11 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         product.setTypeOfProduct(dto.getTypeOfProduct());
         product.setPhoto(dto.getPhoto());
         product.setVendor(dto.getVendor());
+
+        if (productCategoryService.findByCategory(dto.getCategory()) != null) {
+            product.setProductCategory(productCategoryService.findByCategory(dto.getCategory()));
+        } else {product.setProductCategory(null);}
+
         return product;
     }
 
@@ -36,7 +48,12 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         dto.setTypeOfProduct(entity.getTypeOfProduct());
         dto.setPhoto(entity.getPhoto());
         dto.setVendor(entity.getVendor());
-        return null;
+
+        if(entity.getProductCategory() != null) {
+            dto.setCategory(entity.getProductCategory().getCategory());
+        } else { dto.setCategory(null);}
+
+        return dto;
     }
 
     @Override

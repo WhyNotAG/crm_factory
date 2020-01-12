@@ -23,25 +23,25 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Product>> findAll(){
-        return ResponseEntity.ok().body(productService.findAll());
+    public ResponseEntity<List<ProductsDTO>> findAll(){
+        return ResponseEntity.ok().body(productMapper.toDtoList(productService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> findById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok().body(productService.findById(id));
+    public ResponseEntity<ProductsDTO> findById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(productMapper.fromEntity(productService.findById(id)));
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/")
-    public ResponseEntity<Product> add(@RequestBody ProductsDTO product) {
-        return ResponseEntity.ok().body(productService.save(productMapper.toEntity(product)));
+    public ResponseEntity<ProductsDTO> add(@RequestBody ProductsDTO product) {
+        return ResponseEntity.ok().body(productMapper.fromEntity(productService.save(productMapper.toEntity(product))));
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO product) {
-        return ResponseEntity.ok().body(productService.update(id,productMapper.toEntity(product)));
+    public ResponseEntity<ProductsDTO> update(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO product) {
+        return ResponseEntity.ok().body(productMapper.fromEntity(productService.update(id,productMapper.toEntity(product))));
     }
 
     @Secured("ROLE_ADMIN")

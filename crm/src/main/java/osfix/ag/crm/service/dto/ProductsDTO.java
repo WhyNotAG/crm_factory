@@ -13,4 +13,5 @@ public class ProductsDTO {
     private String packaging;
     private String comment;
     private String vendor;
+    private String category;
 }

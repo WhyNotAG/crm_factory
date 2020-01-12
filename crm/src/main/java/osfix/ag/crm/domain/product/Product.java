@@ -1,7 +1,9 @@
 package osfix.ag.crm.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import osfix.ag.crm.domain.Lepsari;
 
 import javax.persistence.*;
 import java.util.List;
@@ -39,4 +41,8 @@ public class Product {
     @Column(name = "vendor")
     private String vendor;
 
+    @ManyToOne
+    @JsonIgnoreProperties("products")
+    @JsonBackReference
+    private ProductCategory productCategory;
 }

@@ -25,7 +25,7 @@ public class LepsariProduct {
     private String quantity;
 
     @ManyToOne
-    @JsonIgnoreProperties("lemzProducts")
+    @JsonIgnoreProperties("lepsariProducts")
     @JsonBackReference
     private Lepsari lepsari;
 }

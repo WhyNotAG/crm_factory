@@ -3,6 +3,7 @@ package osfix.ag.crm.service.impl.product;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.repo.product.ProductCategoryRepo;
 import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.ProductService;
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
+    //private ProductCategoryRepo productCategoryRepo;
 
-    public ProductServiceImpl(ProductRepo productRepo) {
+    public ProductServiceImpl(ProductRepo productRepo, ProductCategoryRepo productCategoryRepo) {
         this.productRepo = productRepo;
+        //this.productCategoryRepo = productCategoryRepo;
     }
 
     @Override
@@ -42,4 +45,5 @@ public class ProductServiceImpl implements ProductService {
         Product result = productRepo.save(productFromDb);
         return result;
     }
+
 }
