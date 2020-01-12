@@ -10,4 +10,5 @@ public interface PressPartService {
     PressPart update(Long id, PressPart pressPart);
     PressPart save(PressPart pressPart);
     void delete(Long id);
+    PressPart changeColor(Long id, String color);
 }

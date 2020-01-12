@@ -42,4 +42,11 @@ public class PressPartServiceImpl implements PressPartService {
     public void delete(Long id) {
         pressPartRepo.deleteById(id);
     }
+
+    @Override
+    public PressPart changeColor(Long id, String color) {
+        PressPart pressPart = pressPartRepo.findById(id).orElse(null);
+        pressPart.setColor(color);
+        return pressPartRepo.save(pressPart);
+    }
 }

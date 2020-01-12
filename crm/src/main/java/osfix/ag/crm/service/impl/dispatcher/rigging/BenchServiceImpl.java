@@ -45,4 +45,11 @@ public class BenchServiceImpl implements BenchService {
     public Bench addParts(List<BenchPart> benchParts) {
         return null;
     }
+
+    @Override
+    public Bench changeColor(Long id, String color) {
+        Bench bench = benchRepo.findById(id).orElse(null);
+        bench.setColor(color);
+        return benchRepo.save(bench);
+    }
 }

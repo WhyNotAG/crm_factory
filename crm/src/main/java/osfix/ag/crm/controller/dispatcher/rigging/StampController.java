@@ -2,10 +2,13 @@ package osfix.ag.crm.controller.dispatcher.rigging;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import osfix.ag.crm.domain.dispatcher.rigging.Press;
 import osfix.ag.crm.domain.dispatcher.rigging.Stamp;
+import osfix.ag.crm.domain.dispatcher.rigging.parts.BenchPart;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.StampPart;
 import osfix.ag.crm.service.StampPartService;
 import osfix.ag.crm.service.StampService;
+import osfix.ag.crm.service.dto.RiggingDTO;
 import osfix.ag.crm.service.dto.RiggingPartDTO;
 import osfix.ag.crm.service.mapper.rigging.StampPartMapper;
 
@@ -44,6 +47,11 @@ public class StampController {
         return ResponseEntity.ok().body(stampService.update(id, stamp));
     }
 
+    @PutMapping("/color/{id}")
+    public ResponseEntity<Stamp> changeColor(@PathVariable(name = "id") Long id, @RequestBody RiggingDTO color) {
+        return ResponseEntity.ok().body(stampService.changeColor(id, color.getColor()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         stampService.delete(id);
@@ -68,6 +76,11 @@ public class StampController {
     @PutMapping("/part/{id}")
     public ResponseEntity<StampPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO stampPart) {
         return ResponseEntity.ok().body(stampPartService.update(id, stampPartMapper.toEntity(stampPart)));
+    }
+
+    @PutMapping("/part/color/{id}")
+    public ResponseEntity<StampPart> changeColorPart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO color) {
+        return ResponseEntity.ok().body(stampPartService.changeColor(id, color.getColor()));
     }
 
     @DeleteMapping("/part/{id}")

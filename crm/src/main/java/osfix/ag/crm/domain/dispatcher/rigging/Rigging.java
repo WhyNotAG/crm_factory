@@ -19,4 +19,7 @@ public abstract class Rigging {
 
     @Column(name = "comment")
     String comment;
+
+    @Column(name = "color")
+    String color;
 }

@@ -42,4 +42,11 @@ public class BenchPartServiceImpl implements BenchPartService {
     public void delete(Long id) {
         benchPartRepo.deleteById(id);
     }
+
+    @Override
+    public BenchPart changeColor(Long id, String color) {
+        BenchPart benchPart = benchPartRepo.findById(id).orElse(null);
+        benchPart.setColor(color);
+        return benchPartRepo.save(benchPart);
+    }
 }

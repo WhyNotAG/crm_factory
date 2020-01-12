@@ -12,4 +12,5 @@ public interface PressService {
     Press save(Press press);
     void delete(Long id);
     Press addParts(List<PressPart> pressParts);
+    Press changeColor(Long id, String color);
 }

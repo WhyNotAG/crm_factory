@@ -10,4 +10,5 @@ public interface BenchPartService {
     BenchPart update(Long id, BenchPart benchPart);
     BenchPart save(BenchPart benchPart);
     void delete(Long id);
+    BenchPart changeColor(Long id, String color);
 }

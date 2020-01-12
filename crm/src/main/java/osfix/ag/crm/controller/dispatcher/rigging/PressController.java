@@ -2,10 +2,13 @@ package osfix.ag.crm.controller.dispatcher.rigging;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import osfix.ag.crm.domain.dispatcher.rigging.Bench;
 import osfix.ag.crm.domain.dispatcher.rigging.Press;
+import osfix.ag.crm.domain.dispatcher.rigging.parts.BenchPart;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.PressPart;
 import osfix.ag.crm.service.PressPartService;
 import osfix.ag.crm.service.PressService;
+import osfix.ag.crm.service.dto.RiggingDTO;
 import osfix.ag.crm.service.dto.RiggingPartDTO;
 import osfix.ag.crm.service.mapper.rigging.PressPartMapper;
 
@@ -44,6 +47,11 @@ public class PressController {
         return ResponseEntity.ok().body(pressService.update(id, press));
     }
 
+    @PutMapping("/color/{id}")
+    public ResponseEntity<Press> changeColor(@PathVariable(name = "id") Long id, @RequestBody RiggingDTO color) {
+        return ResponseEntity.ok().body(pressService.changeColor(id, color.getColor()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         pressService.delete(id);
@@ -68,6 +76,11 @@ public class PressController {
     @PutMapping("/part/{id}")
     public ResponseEntity<PressPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO pressPart) {
         return ResponseEntity.ok().body(pressPartService.update(id, pressPartMapper.toEntity(pressPart)));
+    }
+
+    @PutMapping("/part/color/{id}")
+    public ResponseEntity<PressPart> changeColorPart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO color) {
+        return ResponseEntity.ok().body(pressPartService.changeColor(id, color.getColor()));
     }
 
     @DeleteMapping("/part/{id}")

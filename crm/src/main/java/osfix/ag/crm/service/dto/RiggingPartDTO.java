@@ -18,4 +18,5 @@ public class RiggingPartDTO {
     String erosion;
     String controll;
     Long riggingId;
+    String color;
 }

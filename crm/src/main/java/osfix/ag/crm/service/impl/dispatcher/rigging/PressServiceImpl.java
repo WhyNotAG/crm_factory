@@ -47,4 +47,11 @@ public class PressServiceImpl implements PressService {
     public Press addParts(List<PressPart> pressParts) {
         return null;
     }
+
+    @Override
+    public Press changeColor(Long id, String color) {
+        Press press = pressRepo.findById(id).orElse(null);
+        press.setColor(color);
+        return pressRepo.save(press);
+    }
 }

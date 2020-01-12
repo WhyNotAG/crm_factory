@@ -47,4 +47,11 @@ public class StampServiceImpl implements StampService {
     public Stamp addParts(List<StampPart> stampParts) {
         return null;
     }
+
+    @Override
+    public Stamp changeColor(Long id, String color) {
+        Stamp stamp = stampRepo.findById(id).orElse(null);
+        stamp.setColor(color);
+        return stampRepo.save(stamp);
+    }
 }

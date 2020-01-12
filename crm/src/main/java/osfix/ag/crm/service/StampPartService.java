@@ -10,4 +10,5 @@ public interface StampPartService {
     StampPart update(Long id, StampPart stampPart);
     StampPart save(StampPart stampPart);
     void delete(Long id);
+    StampPart changeColor(Long id, String color);
 }

@@ -30,6 +30,7 @@ public class StampPartMapper implements EntityMapper<StampPart, RiggingPartDTO> 
         stampPart.setMilling(dto.getMilling());
         stampPart.setName(dto.getName());
         stampPart.setNumber(dto.getNumber());
+        stampPart.setColor(dto.getColor());
         stampPart.setStamp(stampService.findById(dto.getRiggingId()));
         return stampPart;
     }
@@ -49,6 +50,7 @@ public class StampPartMapper implements EntityMapper<StampPart, RiggingPartDTO> 
         dto.setMilling(entity.getMilling());
         dto.setName(entity.getName());
         dto.setNumber(entity.getNumber());
+        dto.setColor(entity.getColor());
         dto.setRiggingId(entity.getStamp().getId());
         return dto;
     }

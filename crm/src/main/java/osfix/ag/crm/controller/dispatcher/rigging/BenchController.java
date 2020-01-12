@@ -6,6 +6,7 @@ import osfix.ag.crm.domain.dispatcher.rigging.Bench;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.BenchPart;
 import osfix.ag.crm.service.BenchPartService;
 import osfix.ag.crm.service.BenchService;
+import osfix.ag.crm.service.dto.RiggingDTO;
 import osfix.ag.crm.service.dto.RiggingPartDTO;
 import osfix.ag.crm.service.mapper.rigging.BenchPartMapper;
 
@@ -44,6 +45,11 @@ public class BenchController {
         return ResponseEntity.ok().body(benchService.update(id, bench));
     }
 
+    @PutMapping("/color/{id}")
+    public ResponseEntity<Bench> changeColor(@PathVariable(name = "id") Long id, @RequestBody RiggingDTO color) {
+        return ResponseEntity.ok().body(benchService.changeColor(id, color.getColor()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         benchService.delete(id);
@@ -68,6 +74,11 @@ public class BenchController {
     @PutMapping("/part/{id}")
     public ResponseEntity<BenchPart> updatePart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO benchPart) {
         return ResponseEntity.ok().body(benchPartService.update(id, benchPartMapper.toEntity(benchPart)));
+    }
+
+    @PutMapping("/part/color/{id}")
+    public ResponseEntity<BenchPart> changeColorPart(@PathVariable(name = "id") Long id, @RequestBody RiggingPartDTO color) {
+        return ResponseEntity.ok().body(benchPartService.changeColor(id, color.getColor()));
     }
 
     @DeleteMapping("/part/{id}")

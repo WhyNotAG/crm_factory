@@ -43,4 +43,11 @@ public class StampPartServiceImpl implements StampPartService {
     public void delete(Long id) {
         stampPartRepo.deleteById(id);
     }
+
+    @Override
+    public StampPart changeColor(Long id, String color) {
+        StampPart stampPart = stampPartRepo.findById(id).orElse(null);
+        stampPart.setColor(color);
+        return stampPartRepo.save(stampPart);
+    }
 }

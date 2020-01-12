@@ -31,6 +31,7 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
         benchPart.setMilling(dto.getMilling());
         benchPart.setName(dto.getName());
         benchPart.setNumber(dto.getNumber());
+        benchPart.setColor(dto.getColor());
         benchPart.setBench(benchService.findById(dto.getRiggingId()));
         return benchPart;
     }
@@ -51,6 +52,7 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
         dto.setName(entity.getName());
         dto.setNumber(entity.getNumber());
         dto.setRiggingId(entity.getBench().getId());
+        dto.setColor(entity.getColor());
         return dto;
     }
 
