@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.service.EmployeeService;
+import osfix.ag.crm.service.dto.EmployeeDTO;
+import osfix.ag.crm.service.mapper.EmployeeMapper;
 
 import java.util.List;
 
@@ -11,12 +13,16 @@ import java.util.List;
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
     private EmployeeService employeeService;
+    private EmployeeMapper employeeMapper;
 
-    public EmployeeController(EmployeeService employeeService) { this.employeeService = employeeService; }
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
+        this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
+    }
 
     @GetMapping("/")
-    public ResponseEntity<List<Employee>> findAll() {
-        return ResponseEntity.ok().body(employeeService.findAll());
+    public ResponseEntity<List<EmployeeDTO>> findAll() {
+        return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findAll()));
     }
 
     @GetMapping("/{id}")
