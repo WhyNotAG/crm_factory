@@ -25,9 +25,9 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findAll()));
     }
 
-    @GetMapping("/{workshop}")
-    public ResponseEntity<List<EmployeeDTO>> findByWorkshop(@PathVariable(name = "workshop") String workshop) {
-        return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findByWorkshop(workshop)));
+    @PostMapping("/workshop")
+    public ResponseEntity<List<EmployeeDTO>> findByWorkshop(@RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findByWorkshop(employeeDTO.getWorkshop())));
     }
 
     @GetMapping("/{id}")
