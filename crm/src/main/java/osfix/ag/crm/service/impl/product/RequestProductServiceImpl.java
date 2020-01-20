@@ -44,6 +44,13 @@ public class RequestProductServiceImpl implements RequestProductService {
     }
 
     @Override
+    public RequestProduct changeStatus(Long id, String status) {
+        RequestProduct requestProduct = requestProductRepo.findById(id).orElse(null);
+        requestProduct.setStatus(status);
+        return requestProductRepo.save(requestProduct);
+    }
+
+    @Override
     public void delete(Long id) {
         requestProductRepo.deleteById(id);
     }

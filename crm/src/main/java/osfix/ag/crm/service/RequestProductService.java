@@ -10,5 +10,6 @@ public interface RequestProductService {
     RequestProduct findById(Long id);
     RequestProduct update(Long id, RequestProductDTO requestProduct);
     RequestProduct save(RequestProductDTO requestProduct);
+    RequestProduct changeStatus(Long id, String status);
     void delete(Long id);
 }

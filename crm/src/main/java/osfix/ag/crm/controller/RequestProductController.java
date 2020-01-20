@@ -37,10 +37,13 @@ public class RequestProductController {
         return ResponseEntity.ok().body(requestProductService.update(id, requestProduct));
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable(name = "id") Long id) {
-        requestProductService.delete(id);
+    @PutMapping("/status/{id}")
+    public ResponseEntity<RequestProduct> changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestProductDTO requestProductDTO) {
+        return ResponseEntity.ok().body(requestProductService.changeStatus(id, requestProductDTO.getStatus()));
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable(name = "id") Long id) { requestProductService.delete(id); }
 
 
 }
