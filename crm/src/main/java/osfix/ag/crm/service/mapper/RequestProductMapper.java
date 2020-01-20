@@ -22,6 +22,7 @@ public class RequestProductMapper implements EntityMapper<RequestProduct, Reques
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
         requestProduct.setRequest(requestService.findById(dto.getRequestId()));
+        requestProduct.setStatus(dto.getStatus());
         return requestProduct;
     }
 
@@ -33,6 +34,7 @@ public class RequestProductMapper implements EntityMapper<RequestProduct, Reques
         dto.setName(entity.getName());
         dto.setPackaging(entity.getPackaging());
         dto.setRequestId(entity.getRequest().getId());
+        dto.setStatus(entity.getStatus());
         return dto;
     }
 

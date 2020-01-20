@@ -9,4 +9,5 @@ public class RequestProductDTO {
     private String packaging;
     private String quantity;
     private Long requestId;
+    private String status;
 }
