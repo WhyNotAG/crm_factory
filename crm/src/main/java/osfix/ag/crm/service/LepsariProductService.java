@@ -1,5 +1,6 @@
 package osfix.ag.crm.service;
 
+import osfix.ag.crm.domain.Lepsari;
 import osfix.ag.crm.domain.product.LepsariProduct;
 import osfix.ag.crm.service.dto.RequestProductDTO;
 
@@ -10,5 +11,6 @@ public interface LepsariProductService {
     LepsariProduct findById(Long id);
     LepsariProduct update(Long id, RequestProductDTO requestProduct);
     LepsariProduct save(RequestProductDTO requestProduct);
+    LepsariProduct changeStatus(Long id, String status);
     void delete(Long id);
 }

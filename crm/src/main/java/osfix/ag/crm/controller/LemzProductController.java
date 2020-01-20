@@ -37,6 +37,11 @@ public class LemzProductController {
         return ResponseEntity.ok().body(lemzProductService.update(id, requestProduct));
     }
 
+    @PutMapping("/status/{id}")
+    public ResponseEntity<LemzProduct> changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestProductDTO requestProductDTO) {
+        return ResponseEntity.ok().body(lemzProductService.changeStatus(id, requestProductDTO.getStatus()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         lemzProductService.delete(id);

@@ -44,6 +44,13 @@ public class LepsariProductServiceImpl implements LepsariProductService {
     }
 
     @Override
+    public LepsariProduct changeStatus(Long id, String status) {
+        LepsariProduct lepsariProduct = lepsariProductRepo.findById(id).orElse(null);
+        lepsariProduct.setStatus(status);
+        return lepsariProductRepo.save(lepsariProduct);
+    }
+
+    @Override
     public void delete(Long id) {
         lepsariProductRepo.deleteById(id);
     }

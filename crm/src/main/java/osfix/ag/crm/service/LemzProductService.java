@@ -10,5 +10,6 @@ public interface LemzProductService {
     LemzProduct findById(Long id);
     LemzProduct update(Long id, RequestProductDTO requestProduct);
     LemzProduct save(RequestProductDTO requestProduct);
+    LemzProduct changeStatus(Long id, String status);
     void delete(Long id);
 }

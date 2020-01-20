@@ -38,6 +38,11 @@ public class LepsariProductController {
         return ResponseEntity.ok().body(lepsariProductService.update(id, requestProduct));
     }
 
+    @PutMapping("/status/{id}")
+    public ResponseEntity<LepsariProduct> changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestProductDTO requestProductDTO) {
+        return ResponseEntity.ok().body(lepsariProductService.changeStatus(id, requestProductDTO.getStatus()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         lepsariProductService.delete(id);

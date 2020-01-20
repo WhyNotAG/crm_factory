@@ -44,6 +44,13 @@ public class LemzProductServiceImpl implements LemzProductService {
     }
 
     @Override
+    public LemzProduct changeStatus(Long id, String status) {
+        LemzProduct lemzProduct = lemzProductRepo.findById(id).orElse(null);
+        lemzProduct.setStatus(status);
+        return lemzProductRepo.save(lemzProduct);
+    }
+
+    @Override
     public void delete(Long id) {
         lemzProductRepo.deleteById(id);
     }
