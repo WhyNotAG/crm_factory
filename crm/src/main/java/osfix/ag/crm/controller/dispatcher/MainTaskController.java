@@ -34,6 +34,11 @@ public class MainTaskController {
         return ResponseEntity.ok().body(mainTaskService.update(id, mainTask));
     }
 
+    @PutMapping("/condition/{id}")
+    public ResponseEntity<MainTask> changeCondition(@PathVariable(name = "id") Long id, @RequestBody MainTask mainTask) {
+        return ResponseEntity.ok().body(mainTaskService.changeCondition(id, mainTask.getCondition()));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) { mainTaskService.delete(id); }
 }

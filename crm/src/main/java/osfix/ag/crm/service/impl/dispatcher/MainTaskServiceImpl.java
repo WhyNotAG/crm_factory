@@ -37,6 +37,13 @@ public class MainTaskServiceImpl implements MainTaskService {
     }
 
     @Override
+    public MainTask changeCondition(Long id, String condition) {
+        MainTask mainTask = mainTaskRepo.findById(id).orElse(null);
+        mainTask.setCondition(condition);
+        return mainTaskRepo.save(mainTask);
+    }
+
+    @Override
     public void delete(Long id) {
         mainTaskRepo.deleteById(id);
     }

@@ -9,5 +9,6 @@ public interface MainTaskService {
     MainTask findById(Long id);
     MainTask update(Long id, MainTask mainTask);
     MainTask save(MainTask mainTask);
+    MainTask changeCondition(Long id, String condition);
     void delete(Long id);
 }
