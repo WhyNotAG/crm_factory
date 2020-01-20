@@ -28,6 +28,7 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         product.setTypeOfProduct(dto.getTypeOfProduct());
         product.setPhoto(dto.getPhoto());
         product.setVendor(dto.getVendor());
+        product.setProductionLocation(dto.getProductionLocation());
 
         if (productCategoryService.findByCategory(dto.getCategory()) != null) {
             product.setProductCategory(productCategoryService.findByCategory(dto.getCategory()));
@@ -48,6 +49,7 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         dto.setTypeOfProduct(entity.getTypeOfProduct());
         dto.setPhoto(entity.getPhoto());
         dto.setVendor(entity.getVendor());
+        dto.setProductionLocation(entity.getProductionLocation());
 
         if(entity.getProductCategory() != null) {
             dto.setCategory(entity.getProductCategory().getCategory());

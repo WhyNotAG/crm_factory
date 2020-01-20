@@ -41,6 +41,9 @@ public class Product {
     @Column(name = "vendor")
     private String vendor;
 
+    @Column(name = "production_location")
+    private String productionLocation;
+
     @ManyToOne
     @JsonIgnoreProperties("products")
     @JsonBackReference
