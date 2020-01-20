@@ -1,13 +1,11 @@
 package osfix.ag.crm.domain;
-
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "storage")
+@Table(name = "storage_lepsari")
 @Data
-public class Storage {
+public class StorageLepsari {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
