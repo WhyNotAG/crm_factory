@@ -29,4 +29,6 @@ public class MainTask {
     @Column(name = "status")
     String status;
 
+    @Column(name = "condition")
+    String condition;
 }
