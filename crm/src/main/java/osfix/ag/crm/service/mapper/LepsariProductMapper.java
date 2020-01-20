@@ -23,6 +23,7 @@ public class LepsariProductMapper implements EntityMapper<LepsariProduct, Reques
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
         requestProduct.setLepsari(lepsariService.findById(dto.getRequestId()));
+        requestProduct.setStatus(dto.getStatus());
         return requestProduct;
     }
 
@@ -34,6 +35,7 @@ public class LepsariProductMapper implements EntityMapper<LepsariProduct, Reques
         dto.setName(entity.getName());
         dto.setPackaging(entity.getPackaging());
         dto.setRequestId(entity.getLepsari().getId());
+        dto.setStatus(entity.getStatus());
         return dto;
     }
 

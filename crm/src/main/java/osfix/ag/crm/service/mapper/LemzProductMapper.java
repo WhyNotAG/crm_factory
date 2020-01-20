@@ -22,6 +22,7 @@ public class LemzProductMapper implements EntityMapper<LemzProduct, RequestProdu
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
         requestProduct.setLemz(lemzService.findById(dto.getRequestId()));
+        requestProduct.setStatus(dto.getStatus());
         return requestProduct;
     }
 
@@ -33,6 +34,7 @@ public class LemzProductMapper implements EntityMapper<LemzProduct, RequestProdu
         dto.setName(entity.getName());
         dto.setPackaging(entity.getPackaging());
         dto.setRequestId(entity.getLemz().getId());
+        dto.setStatus(entity.getStatus());
         return dto;
     }
 

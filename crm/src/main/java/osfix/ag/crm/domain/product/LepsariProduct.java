@@ -24,6 +24,9 @@ public class LepsariProduct {
     @Column(name = "quantity")
     private String quantity;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne
     @JsonIgnoreProperties("lepsariProducts")
     @JsonBackReference
