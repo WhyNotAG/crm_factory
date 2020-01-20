@@ -32,5 +32,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee save(Employee employee) { return employeeRepo.save(employee); }
 
     @Override
+    public List<Employee> findByWorkshop(String workshop) {
+        List<Employee> employees = employeeRepo.findAllByWorkshop(workshop);
+        return employees;
+    }
+
+    @Override
     public void delete(Long id) { employeeRepo.deleteById(id); }
 }

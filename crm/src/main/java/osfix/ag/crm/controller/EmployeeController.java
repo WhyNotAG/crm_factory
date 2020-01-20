@@ -25,6 +25,11 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findAll()));
     }
 
+    @GetMapping("/{workshop}")
+    public ResponseEntity<List<EmployeeDTO>> findByWorkshop(@PathVariable(name = "workshop") String workshop) {
+        return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findByWorkshop(workshop)));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok().body(employeeService.findById(id));
