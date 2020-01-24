@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.ProductCategory;
 import osfix.ag.crm.service.ProductCategoryService;
+import osfix.ag.crm.service.dto.ProductsCategoryDTO;
+import osfix.ag.crm.service.mapper.ProductsCategoryMapper;
 
 import java.util.List;
 
@@ -11,9 +13,11 @@ import java.util.List;
 @RequestMapping("api/v1/product_category")
 public class ProductCategoryController {
     private ProductCategoryService productCategoryService;
+    private ProductsCategoryMapper productsCategoryMapper;
 
-    public ProductCategoryController(ProductCategoryService productCategoryService) {
+    public ProductCategoryController(ProductCategoryService productCategoryService, ProductsCategoryMapper productsCategoryMapper) {
         this.productCategoryService = productCategoryService;
+        this.productsCategoryMapper = productsCategoryMapper;
     }
 
     @GetMapping("/")
@@ -35,6 +39,12 @@ public class ProductCategoryController {
     public ResponseEntity<ProductCategory> update(@PathVariable(name = "id") Long id, @RequestBody ProductCategory productCategory) {
         return ResponseEntity.ok().body(productCategoryService.update(id, productCategory));
     }
+
+    @GetMapping("/name/")
+    public ResponseEntity<List<ProductsCategoryDTO>> findAllName() {
+        return ResponseEntity.ok().body(productsCategoryMapper.toDtoList(productCategoryService.findAllName()));
+    }
+
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {

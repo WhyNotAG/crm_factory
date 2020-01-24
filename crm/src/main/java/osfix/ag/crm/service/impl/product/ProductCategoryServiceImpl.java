@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.product.ProductCategory;
 import osfix.ag.crm.repo.product.ProductCategoryRepo;
 import osfix.ag.crm.service.ProductCategoryService;
+import osfix.ag.crm.service.dto.ProductsCategoryDTO;
 
 import java.util.List;
 
@@ -41,6 +42,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void delete(Long id) {
          productCategoryRepo.deleteById(id);
+    }
+
+    @Override
+    public List<ProductsCategoryDTO> findAllName() {
+        return null;
     }
 
     @Override
