@@ -45,8 +45,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public List<ProductsCategoryDTO> findAllName() {
-        return null;
+    public List<ProductCategory> findAllName() {
+        return productCategoryRepo.findAll();
     }
 
     @Override
