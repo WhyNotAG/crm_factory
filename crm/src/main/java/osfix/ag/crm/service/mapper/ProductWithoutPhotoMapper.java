@@ -7,6 +7,7 @@ import osfix.ag.crm.service.ProductCategoryService;
 import osfix.ag.crm.service.dto.ProductsWithoutPhotoDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductWithoutPhotoMapper implements EntityMapper<Product, ProductsWithoutPhotoDTO> {
@@ -56,11 +57,15 @@ public class ProductWithoutPhotoMapper implements EntityMapper<Product, Products
 
     @Override
     public List<Product> fromDtoList(List<ProductsWithoutPhotoDTO> list) {
-        return null;
+        return list.stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<ProductsWithoutPhotoDTO> toDtoList(List<Product> list) {
-        return null;
+        return list.stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
     }
 }

@@ -9,6 +9,7 @@ import osfix.ag.crm.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -51,10 +52,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findByCategory(String category) {
         List<Product> products = new ArrayList<>();
-
         for(Product product : productRepo.findAll()) {
-            if (product.getProductCategory().getCategory() == category) {
-                products.add(product);
+            if(product.getProductCategory() != null) {
+                if (product.getProductCategory().getCategory().equals(category)) {
+                    products.add(product);
+                }
             }
         }
         return products;
