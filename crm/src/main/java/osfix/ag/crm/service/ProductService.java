@@ -10,4 +10,5 @@ public interface ProductService {
     void delete(Long id);
     Product update(Long id, Product product);
     List<Product> findAll();
+    List<Product> findByCategory(String category);
 }

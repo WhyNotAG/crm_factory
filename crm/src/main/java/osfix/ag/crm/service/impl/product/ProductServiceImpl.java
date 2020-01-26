@@ -6,6 +6,8 @@ import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.repo.product.ProductCategoryRepo;
 import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.ProductService;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,4 +48,15 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public List<Product> findByCategory(String category) {
+        List<Product> products = new ArrayList<>();
+
+        for(Product product : productRepo.findAll()) {
+            if (product.getProductCategory().getCategory() == category) {
+                products.add(product);
+            }
+        }
+        return products;
+    }
 }

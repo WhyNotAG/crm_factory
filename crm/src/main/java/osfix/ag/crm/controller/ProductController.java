@@ -44,6 +44,11 @@ public class ProductController {
         return ResponseEntity.ok().body(productMapper.fromEntity(productService.update(id,productMapper.toEntity(product))));
     }
 
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<ProductsDTO>> findByCategory(@PathVariable(name = "category") String category) {
+        return ResponseEntity.ok().body(productMapper.toDtoList(productService.findByCategory(category)));
+    }
+
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
