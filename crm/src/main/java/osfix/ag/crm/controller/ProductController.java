@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.service.ProductService;
 import osfix.ag.crm.service.dto.ProductsDTO;
+import osfix.ag.crm.service.dto.ProductsWithoutPhotoDTO;
 import osfix.ag.crm.service.mapper.ProductMapper;
+import osfix.ag.crm.service.mapper.ProductWithoutPhotoMapper;
 
 import java.util.List;
 
@@ -16,10 +18,13 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
     private ProductMapper productMapper;
+    private ProductWithoutPhotoMapper productWithoutPhotoMapper;
 
-    public ProductController(ProductService productService, ProductMapper productMapper) {
+    public ProductController(ProductService productService, ProductMapper productMapper,
+                             ProductWithoutPhotoMapper productWithoutPhotoMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
+        this.productWithoutPhotoMapper = productWithoutPhotoMapper;
     }
 
     @GetMapping("/")
@@ -44,9 +49,9 @@ public class ProductController {
         return ResponseEntity.ok().body(productMapper.fromEntity(productService.update(id,productMapper.toEntity(product))));
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<ProductsDTO>> findByCategory(@PathVariable(name = "category") String category) {
-        return ResponseEntity.ok().body(productMapper.toDtoList(productService.findByCategory(category)));
+    @PostMapping("/category/")
+    public ResponseEntity<List<ProductsWithoutPhotoDTO>> findByCategory(@RequestBody ProductsDTO products) {
+        return ResponseEntity.ok().body(productWithoutPhotoMapper.toDtoList(productService.findByCategory(products.getCategory())));
     }
 
     @Secured("ROLE_ADMIN")
