@@ -3,8 +3,10 @@ package osfix.ag.crm.service.impl;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.repo.EmployeeRepo;
 import osfix.ag.crm.repo.WorkControlRepo;
+import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.WorkControlService;
 import osfix.ag.crm.service.dto.DayDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
@@ -15,10 +17,12 @@ import java.util.List;
 public class WorkControlServiceImpl implements WorkControlService {
     private WorkControlRepo workControlRepo;
     private EmployeeRepo employeeRepo;
+    private ProductRepo productRepo;
 
-    public WorkControlServiceImpl(WorkControlRepo workControlRepo, EmployeeRepo employeeRepo) {
+    public WorkControlServiceImpl(WorkControlRepo workControlRepo, EmployeeRepo employeeRepo, ProductRepo productRepo) {
         this.workControlRepo = workControlRepo;
         this.employeeRepo = employeeRepo;
+        this.productRepo = productRepo;
     }
 
     @Override
@@ -89,6 +93,24 @@ public class WorkControlServiceImpl implements WorkControlService {
         days.add(day);
         workReportDTO.setDays(days);
         return workReportDTO;
+    }
+
+    @Override
+    public WorkControl addProduct(Long id, Long product_id) {
+        WorkControl workControl = workControlRepo.findById(id).orElse(null);
+        List<Product> products = workControl.getProducts();
+        products.add(productRepo.findById(product_id).orElse(null));
+        workControl.setProducts(products);
+        return workControlRepo.save(workControl);
+    }
+
+    @Override
+    public WorkControl deleteProduct(Long id, Long product_id) {
+        WorkControl workControl = workControlRepo.findById(id).orElse(null);
+        List<Product> products = workControl.getProducts();
+        products.remove(productRepo.findById(product_id).orElse(null));
+        workControl.setProducts(products);
+        return workControlRepo.save(workControl);
     }
 
     @Override
