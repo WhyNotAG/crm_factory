@@ -1,8 +1,13 @@
 package osfix.ag.crm.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import osfix.ag.crm.domain.product.RequestProduct;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -48,5 +53,9 @@ public class Employee {
 
     @Column(name = "relevance")
     String relevance;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REFRESH)
+    @JsonBackReference
+    public List<WorkControl> workControls = new ArrayList<>();
 
 }

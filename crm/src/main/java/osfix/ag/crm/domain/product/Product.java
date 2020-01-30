@@ -1,9 +1,12 @@
 package osfix.ag.crm.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.Lepsari;
+import osfix.ag.crm.domain.WorkControl;
 
 import javax.persistence.*;
 import java.util.List;
@@ -48,4 +51,8 @@ public class Product {
     @JsonIgnoreProperties("products")
     @JsonBackReference
     private ProductCategory productCategory;
+
+    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<WorkControl> workControls;
 }
