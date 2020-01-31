@@ -4,7 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.service.WorkControlService;
+import osfix.ag.crm.service.dto.WorkControlDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
+import osfix.ag.crm.service.mapper.WorkControlMapper;
 
 import java.util.List;
 
@@ -12,9 +14,11 @@ import java.util.List;
 @RequestMapping("/api/v1/work_control")
 public class WorkControlController {
     private WorkControlService workControlService;
+    private WorkControlMapper workControlMapper;
 
-    public WorkControlController(WorkControlService workControlService) {
+    public WorkControlController(WorkControlService workControlService, WorkControlMapper workControlMapper) {
         this.workControlService = workControlService;
+        this.workControlMapper = workControlMapper;
     }
 
     @GetMapping("/")
@@ -43,8 +47,8 @@ public class WorkControlController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<WorkControl> add(@RequestBody WorkControl workControl) {
-        return ResponseEntity.ok().body(workControlService.save(workControl));
+    public ResponseEntity<WorkControl> add(@RequestBody WorkControlDTO workControl) {
+        return ResponseEntity.ok().body(workControlService.save(workControlMapper.toEntity(workControl)));
     }
 
     @PutMapping("/{id}")
