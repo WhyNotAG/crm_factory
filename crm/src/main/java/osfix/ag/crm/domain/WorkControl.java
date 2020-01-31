@@ -2,8 +2,10 @@ package osfix.ag.crm.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.domain.product.WorkControlProduct;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,5 +45,9 @@ public class WorkControl {
     @JoinTable(name = "control_product", joinColumns = {@JoinColumn(name = "control_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private List<Product> products;
+
+    @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
+    @JsonManagedReference
+    List<WorkControlProduct> workControlProduct;
 
 }

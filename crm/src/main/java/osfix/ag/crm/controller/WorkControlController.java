@@ -56,10 +56,11 @@ public class WorkControlController {
         return ResponseEntity.ok().body(workControlService.update(id,workControl));
     }
 
-    @GetMapping("/product/{id}&{pr_id}")
+    @GetMapping("/product/{id}&{pr_id}&{quantity}")
     public ResponseEntity<WorkControl> addProduct(@PathVariable(name = "id") Long id,
-                                                  @PathVariable(name = "pr_id") Long pr_id) {
-        return ResponseEntity.ok().body(workControlService.addProduct(id,pr_id));
+                                                  @PathVariable(name = "pr_id") Long pr_id,
+                                                  @PathVariable(name = "quantity") Long quantity) {
+        return ResponseEntity.ok().body(workControlService.addProduct(id,pr_id,quantity));
     }
 
     @DeleteMapping("/product/{id}&{pr_id}")

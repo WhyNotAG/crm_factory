@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.domain.product.WorkControlProduct;
 import osfix.ag.crm.repo.EmployeeRepo;
 import osfix.ag.crm.repo.WorkControlRepo;
 import osfix.ag.crm.repo.product.ProductRepo;
+import osfix.ag.crm.service.WorkControlProductService;
 import osfix.ag.crm.service.WorkControlService;
 import osfix.ag.crm.service.dto.DayDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
@@ -18,11 +20,14 @@ public class WorkControlServiceImpl implements WorkControlService {
     private WorkControlRepo workControlRepo;
     private EmployeeRepo employeeRepo;
     private ProductRepo productRepo;
+    private WorkControlProductService workControlProductRepo;
 
-    public WorkControlServiceImpl(WorkControlRepo workControlRepo, EmployeeRepo employeeRepo, ProductRepo productRepo) {
+    public WorkControlServiceImpl(WorkControlRepo workControlRepo, EmployeeRepo employeeRepo,
+                                  ProductRepo productRepo, WorkControlProductService workControlProductRepo) {
         this.workControlRepo = workControlRepo;
         this.employeeRepo = employeeRepo;
         this.productRepo = productRepo;
+        this.workControlProductRepo = workControlProductRepo;
     }
 
     @Override
@@ -96,11 +101,20 @@ public class WorkControlServiceImpl implements WorkControlService {
     }
 
     @Override
-    public WorkControl addProduct(Long id, Long product_id) {
+    public WorkControl addProduct(Long id, Long product_id, Long quantity) {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
         List<Product> products = workControl.getProducts();
+
+        List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
+        WorkControlProduct workControlProduct = new WorkControlProduct();
+        workControlProduct.setQuantity(quantity);
+        workControlProduct.setWorkControl(workControl);
+        workControlProduct.setProductId(product_id);
+        workControlProducts.add(workControlProductRepo.save(workControlProduct));
+
         products.add(productRepo.findById(product_id).orElse(null));
         workControl.setProducts(products);
+        workControl.setWorkControlProduct(workControlProducts);
         return workControlRepo.save(workControl);
     }
 
@@ -110,6 +124,11 @@ public class WorkControlServiceImpl implements WorkControlService {
         List<Product> products = workControl.getProducts();
         products.remove(productRepo.findById(product_id).orElse(null));
         workControl.setProducts(products);
+
+        List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
+        workControlProducts.remove(workControlProductRepo.findByWorkAndProduct(workControl,product_id));
+        workControl.setWorkControlProduct(workControlProducts);
+
         return workControlRepo.save(workControl);
     }
 

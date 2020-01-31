@@ -12,7 +12,7 @@ public interface WorkControlService {
     WorkControl update(Long id, WorkControl workControl);
     void delete(Long id);
     WorkControl findById(Long id);
-    WorkControl addProduct(Long id, Long product_id);
+    WorkControl addProduct(Long id, Long product_id, Long quantity);
     WorkControl deleteProduct(Long id, Long product_id);
     List<WorkControl> findAllByMonth(Integer month);
     WorkReportDTO reportByEmployeeId(Long id, Integer month);
