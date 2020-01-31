@@ -110,11 +110,12 @@ public class WorkControlServiceImpl implements WorkControlService {
         workControlProduct.setQuantity(quantity);
         workControlProduct.setWorkControl(workControl);
         workControlProduct.setProductId(product_id);
-        workControlProducts.add(workControlProductRepo.save(workControlProduct));
+        workControlProductRepo.save(workControlProduct);
+        //workControlProducts.add(workControlProductRepo.save(workControlProduct));
 
         products.add(productRepo.findById(product_id).orElse(null));
         workControl.setProducts(products);
-        workControl.setWorkControlProduct(workControlProducts);
+        //workControl.setWorkControlProduct(workControlProducts);
         return workControlRepo.save(workControl);
     }
 
