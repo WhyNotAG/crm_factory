@@ -103,33 +103,27 @@ public class WorkControlServiceImpl implements WorkControlService {
     @Override
     public WorkControl addProduct(Long id, Long product_id, Long quantity) {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
-        List<Product> products = workControl.getProducts();
+        Product product = productRepo.findById(product_id).orElse(null);
 
         List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
         WorkControlProduct workControlProduct = new WorkControlProduct();
         workControlProduct.setQuantity(quantity);
         workControlProduct.setWorkControl(workControl);
-        workControlProduct.setProductId(product_id);
+        workControlProduct.setProduct(product);
         workControlProductRepo.save(workControlProduct);
-        //workControlProducts.add(workControlProductRepo.save(workControlProduct));
+        workControlProducts.add(workControlProductRepo.save(workControlProduct));
 
-        products.add(productRepo.findById(product_id).orElse(null));
-        workControl.setProducts(products);
-        //workControl.setWorkControlProduct(workControlProducts);
         return workControlRepo.save(workControl);
     }
 
     @Override
     public WorkControl deleteProduct(Long id, Long product_id) {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
-        List<Product> products = workControl.getProducts();
-        products.remove(productRepo.findById(product_id).orElse(null));
-        workControl.setProducts(products);
-
-        List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
-        workControlProducts.remove(workControlProductRepo.findByWorkAndProduct(workControl,product_id));
-        workControl.setWorkControlProduct(workControlProducts);
-
+        //List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
+        WorkControlProduct workControlProduct = workControlProductRepo.findByWorkAndProduct(workControl, product_id);
+        workControlProductRepo.delete(workControlProduct.getId());
+        //workControlProducts.remove(workControlProductRepo.findByWorkAndProduct(workControl,product_id));
+        //workControl.setWorkControlProduct(workControlProducts);
         return workControlRepo.save(workControl);
     }
 

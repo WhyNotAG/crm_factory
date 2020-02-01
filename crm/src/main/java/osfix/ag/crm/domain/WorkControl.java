@@ -40,12 +40,6 @@ public class WorkControl {
     @JsonIdentityReference
     private Employee employee;
 
-    @JsonIdentityReference
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "control_product", joinColumns = {@JoinColumn(name = "control_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
-    private List<Product> products;
-
     @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     List<WorkControlProduct> workControlProduct;

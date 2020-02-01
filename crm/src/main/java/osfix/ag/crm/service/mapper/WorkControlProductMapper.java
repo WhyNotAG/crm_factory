@@ -18,7 +18,7 @@ public class WorkControlProductMapper implements EntityMapper<WorkControlProduct
     public WorkControlProduct toEntity(WorkControlProductDTO dto) {
         WorkControlProduct workControlProduct = new WorkControlProduct();
         workControlProduct.setId(dto.getId());
-        workControlProduct.setProductId(dto.getProductId());
+        //workControlProduct.setProductId(dto.getProductId());
         workControlProduct.setWorkControl(workControlService.findById(dto.getWorkControlId()));
         workControlProduct.setQuantity(dto.getQuantity());
         return workControlProduct;

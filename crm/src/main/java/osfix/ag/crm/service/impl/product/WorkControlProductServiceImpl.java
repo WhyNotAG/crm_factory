@@ -3,7 +3,9 @@ package osfix.ag.crm.service.impl.product;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.product.WorkControlProduct;
+import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.repo.product.WorkControlProductRepo;
 import osfix.ag.crm.service.WorkControlProductService;
 
@@ -12,9 +14,11 @@ import java.util.List;
 @Service
 public class WorkControlProductServiceImpl implements WorkControlProductService {
     private WorkControlProductRepo workControlProductRepo;
+    private ProductRepo productRepo;
 
-    public WorkControlProductServiceImpl(WorkControlProductRepo workControlProductRepo) {
+    public WorkControlProductServiceImpl(WorkControlProductRepo workControlProductRepo, ProductRepo productRepo) {
         this.workControlProductRepo = workControlProductRepo;
+        this.productRepo = productRepo;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class WorkControlProductServiceImpl implements WorkControlProductService 
 
     @Override
     public WorkControlProduct findByWorkAndProduct(WorkControl workControl, Long productId) {
-        return workControlProductRepo.findByWorkControlAndProductId(workControl, productId);
+        return workControlProductRepo.findByWorkControlAndProduct(workControl, productRepo.findById(productId).orElse(null));
     }
 
     @Override

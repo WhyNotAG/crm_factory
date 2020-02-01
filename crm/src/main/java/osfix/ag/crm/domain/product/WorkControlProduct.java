@@ -1,11 +1,13 @@
 package osfix.ag.crm.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import osfix.ag.crm.domain.WorkControl;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "work_control_product")
@@ -15,8 +17,9 @@ public class WorkControlProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "product_id")
-    Long productId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIdentityReference
+    private Product product;
 
     @Column(name = "quantity")
     Long quantity;

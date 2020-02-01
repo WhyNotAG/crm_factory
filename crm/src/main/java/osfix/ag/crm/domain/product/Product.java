@@ -52,7 +52,7 @@ public class Product {
     @JsonBackReference
     private ProductCategory productCategory;
 
-    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<WorkControl> workControls;
+    private List<WorkControlProduct> workControlProducts;
 }
