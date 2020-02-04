@@ -28,4 +28,7 @@ public class ShippingRegistry {
 
     @Column(name = "driver")
     String driver;
+
+    @Column(name = "quantity")
+    String quantity;
 }
