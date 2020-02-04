@@ -11,4 +11,5 @@ public interface ProductService {
     Product update(Long id, Product product);
     List<Product> findAll();
     List<Product> findByCategory(String category);
+    List<Product> findByProductLocation(String location);
 }

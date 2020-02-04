@@ -61,4 +61,9 @@ public class ProductServiceImpl implements ProductService {
         }
         return products;
     }
+
+    @Override
+    public List<Product> findByProductLocation(String location) {
+        return productRepo.findAllByProductionLocation(location);
+    }
 }

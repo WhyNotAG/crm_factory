@@ -37,6 +37,11 @@ public class ProductController {
         return ResponseEntity.ok().body(productMapper.fromEntity(productService.findById(id)));
     }
 
+    @PostMapping("/location/")
+    public ResponseEntity<List<ProductsDTO>> findByLocation(@RequestBody ProductsDTO product) {
+        return ResponseEntity.ok().body(productMapper.toDtoList(productService.findByProductLocation(product.getProductionLocation())));
+    }
+
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/")
     public ResponseEntity<ProductsDTO> add(@RequestBody ProductsDTO product) {
