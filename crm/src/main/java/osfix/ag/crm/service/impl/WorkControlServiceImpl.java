@@ -119,16 +119,13 @@ public class WorkControlServiceImpl implements WorkControlService {
     @Override
     public WorkControl deleteProduct(Long id, Long product_id) {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
-        //List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
         WorkControlProduct workControlProduct = workControlProductRepo.findByWorkAndProduct(workControl, product_id);
         workControlProductRepo.delete(workControlProduct.getId());
-        //workControlProducts.remove(workControlProductRepo.findByWorkAndProduct(workControl,product_id));
-        //workControl.setWorkControlProduct(workControlProducts);
         return workControlRepo.save(workControl);
     }
 
     @Override
-    public List<WorkControl> reportByMonth(String month) {
-        return null;
+    public List<WorkControl> findByDayAndMonth(Integer day, Integer month) {
+        return workControlRepo.findAllByDayAndMonth(day, month);
     }
 }

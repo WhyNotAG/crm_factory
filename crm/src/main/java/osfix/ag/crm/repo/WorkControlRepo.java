@@ -11,7 +11,7 @@ import java.util.List;
 public interface WorkControlRepo extends JpaRepository<WorkControl, Long> {
     List<WorkControl> findAllByMonth(Integer month);
     List<WorkControl> findAllByEmployee(Employee employee);
-    List<WorkControl> findAllByDay(Integer day);
+    List<WorkControl> findAllByDayAndMonth(Integer day, Integer month);
     List<WorkControl> findAllByEmployeeAndMonth(Employee employee, Integer month);
 
 }

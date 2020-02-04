@@ -16,6 +16,6 @@ public interface WorkControlService {
     WorkControl deleteProduct(Long id, Long product_id);
     List<WorkControl> findAllByMonth(Integer month);
     WorkReportDTO reportByEmployeeId(Long id, Integer month);
-    List<WorkControl> reportByMonth(String month);
+    List<WorkControl> findByDayAndMonth(Integer day, Integer month);
 
 }

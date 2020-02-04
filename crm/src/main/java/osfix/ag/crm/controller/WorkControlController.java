@@ -41,6 +41,12 @@ public class WorkControlController {
         return ResponseEntity.ok().body(workControlService.findAllByMonth(month));
     }
 
+    @GetMapping("/day/{day}&{month}")
+    public ResponseEntity<List<WorkControl>> findByDayAndMonth(@PathVariable(name = "day") Integer day,
+                                                               @PathVariable(name = "month") Integer month) {
+        return ResponseEntity.ok().body(workControlService.findByDayAndMonth(day,month));
+    }
+
     @GetMapping("/report/{id}&{month}")
     public ResponseEntity<WorkReportDTO> reportByMonth(@PathVariable(name = "id") Long id, @PathVariable(name = "month") Integer month) {
         return ResponseEntity.ok().body(workControlService.reportByEmployeeId(id,month));
