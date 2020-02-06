@@ -85,5 +85,13 @@ public class WorkControlController {
     public void delete(@PathVariable(name = "id") Long id) {
         workControlService.delete(id);
     }
+
+    @GetMapping("/range/{dF}&{mF}&{dL}&{mL}")
+    public ResponseEntity<List<ReWorkControlDTO>> findByRange(@PathVariable(name = "dF") Integer dF,
+                                                              @PathVariable(name = "mF") Integer mF,
+                                                              @PathVariable(name = "dL") Integer dL,
+                                                              @PathVariable(name = "mL") Integer mL) {
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(mF,dF,dL,mL)));
+    }
 }
 

@@ -17,5 +17,6 @@ public interface WorkControlService {
     List<WorkControl> findAllByMonth(Integer month);
     WorkReportDTO reportByEmployeeId(Long id, Integer month);
     List<WorkControl> findByDayAndMonth(Integer day, Integer month);
+    List<WorkControl> findByRange(Integer dayFirst,  Integer monthFirst, Integer dayLast, Integer monthLast);
 
 }
