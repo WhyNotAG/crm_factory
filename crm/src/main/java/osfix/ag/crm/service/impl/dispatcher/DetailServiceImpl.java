@@ -32,4 +32,11 @@ public class DetailServiceImpl implements DetailService {
 
     @Override
     public void delete(Long id) { detailRepo.deleteById(id); }
+
+    @Override
+    public Detail changeColor(Long id, String color) {
+        Detail detail = detailRepo.findById(id).orElse(null);
+        detail.setColor(color);
+        return detailRepo.save(detail);
+    }
 }

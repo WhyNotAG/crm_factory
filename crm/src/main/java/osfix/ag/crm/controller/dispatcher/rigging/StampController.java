@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/stamp")
 public class StampController {
+
     private StampService stampService;
     private StampPartService stampPartService;
     private StampPartMapper stampPartMapper;
