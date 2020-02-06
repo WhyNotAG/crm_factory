@@ -131,7 +131,7 @@ public class WorkControlServiceImpl implements WorkControlService {
 
     @Override
     public List<WorkControl> findByRange(Integer dayFirst, Integer monthFirst, Integer dayLast, Integer monthLast) {
-        List<List<WorkControl>> workControls = new ArrayList<>(monthLast - monthFirst);
+        List<List<WorkControl>> workControls = new ArrayList<>(Math.abs(monthLast - monthFirst));
 
         for (int i = monthFirst + 1; i < monthLast; i++) {
             workControls.add(workControlRepo.findAllByMonth(i));
@@ -141,19 +141,21 @@ public class WorkControlServiceImpl implements WorkControlService {
         List<WorkControl> workControlsLast = workControlRepo.findAllByMonth(monthLast);
         List<WorkControl> result = new ArrayList<>();
 
-        for(WorkControl workControl : workControlsFirst) {
-            if(workControl.getDay() >= dayFirst) { result.add(workControl); }
-        }
-
-        for(List<WorkControl> workControls1 : workControls) {
-            for(WorkControl workControl : workControls1) {
-                result.add(workControl);
-            }
-        }
-
         if (monthFirst != monthLast) {
+            for(WorkControl workControl : workControlsFirst) {
+                if(workControl.getDay() >= dayFirst) { result.add(workControl); }
+            }
+
+            for(List<WorkControl> workControls1 : workControls) {
+                for(WorkControl workControl : workControls1) { result.add(workControl); }
+        }
+
             for (WorkControl workControl : workControlsLast) {
                 if (workControl.getDay() <= dayLast) { result.add(workControl); }
+            }
+        } else {
+            for (WorkControl workControl : workControlsFirst) {
+                if (workControl.getDay() <= dayLast && workControl.getDay() >= dayFirst) { result.add(workControl); }
             }
         }
 

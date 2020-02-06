@@ -91,7 +91,7 @@ public class WorkControlController {
                                                               @PathVariable(name = "mF") Integer mF,
                                                               @PathVariable(name = "dL") Integer dL,
                                                               @PathVariable(name = "mL") Integer mL) {
-        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(mF,dF,dL,mL)));
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL)));
     }
 }
 
