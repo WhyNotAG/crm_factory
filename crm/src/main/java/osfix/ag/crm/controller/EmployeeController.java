@@ -31,18 +31,18 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> findById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok().body(employeeService.findById(id));
+    public ResponseEntity<EmployeeDTO> findById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(id)));
     }
 
     @PostMapping("/")
-    public ResponseEntity<Employee> add(@RequestBody Employee employee) {
-        return ResponseEntity.ok().body(employeeService.save(employee));
+    public ResponseEntity<EmployeeDTO> add(@RequestBody Employee employee) {
+        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.save(employee)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> update(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
-        return ResponseEntity.ok().body(employeeService.update(id, employee));
+    public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
+        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.update(id, employee)));
     }
 
     @DeleteMapping("/{id}")
