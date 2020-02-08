@@ -3,10 +3,12 @@ package osfix.ag.crm.controller.dispatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.dispatcher.Detail;
+import osfix.ag.crm.domain.dispatcher.rigging.Bench;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.DetailPart;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.StampPart;
 import osfix.ag.crm.service.DetailPartService;
 import osfix.ag.crm.service.DetailService;
+import osfix.ag.crm.service.dto.RiggingDTO;
 import osfix.ag.crm.service.dto.RiggingPartDTO;
 import osfix.ag.crm.service.mapper.rigging.DetailPartMapper;
 
@@ -44,6 +46,11 @@ public class DetailController {
     @PutMapping("/{id}")
     public ResponseEntity<Detail> update(@PathVariable(name = "id") Long id, @RequestBody Detail detail) {
         return ResponseEntity.ok().body(detailService.update(id, detail));
+    }
+
+    @PutMapping("/color/{id}")
+    public ResponseEntity<Detail> changeColor(@PathVariable(name = "id") Long id, @RequestBody RiggingDTO color) {
+        return ResponseEntity.ok().body(detailService.changeColor(id, color.getColor()));
     }
 
     @DeleteMapping("/{id}")
