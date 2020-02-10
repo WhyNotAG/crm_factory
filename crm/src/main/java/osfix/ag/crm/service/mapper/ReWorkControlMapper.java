@@ -30,7 +30,7 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
     @Override
     public ReWorkControlDTO fromEntity(WorkControl entity) {
         ReWorkControlDTO dto = new ReWorkControlDTO();
-        dto.setWorkControlProduct(entity.getWorkControlProduct());
+        if (entity.getWorkControlProduct() != null) { dto.setWorkControlProduct(entity.getWorkControlProduct()); }
         dto.setYear(entity.getYear());
         dto.setWorkList(entity.getWorkList());
         dto.setMonth(entity.getMonth());
