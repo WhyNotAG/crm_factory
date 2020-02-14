@@ -22,6 +22,8 @@ public class PriceProductServiceImpl implements PriceProductService {
     private double retailPrice;
     private double lessThan1500Price;
     private double lessThan5000Price;
+    private double stopPrice;
+    private double stopPriceAll;
 
     public PriceProductServiceImpl(PriceProductRepo priceProductRepo) {
         this.priceProductRepo = priceProductRepo;
@@ -64,6 +66,8 @@ public class PriceProductServiceImpl implements PriceProductService {
         partnerPrice = price.getPartnerPrice();
         cost = price.getCost();
         units = price.getUnits();
+        stopPriceAll = price.getStopPriceAll();
+        stopPrice = price.getStopPrice();
     }
 
     public PriceDTO getPrice() {
@@ -77,6 +81,8 @@ public class PriceProductServiceImpl implements PriceProductService {
         priceDTO.setRetailMarketPrice(retailMarketPrice);
         priceDTO.setRetailPrice(retailPrice);
         priceDTO.setUnits(units);
+        priceDTO.setStopPriceAll(stopPriceAll);
+        priceDTO.setStopPrice(stopPrice);
         return priceDTO;
     }
 }

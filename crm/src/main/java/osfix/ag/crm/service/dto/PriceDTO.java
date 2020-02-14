@@ -13,4 +13,6 @@ public class PriceDTO {
     private double units;
     private double cost;
     private double retailMarketPrice;
+    private double stopPrice;
+    private double stopPriceAll;
 }
