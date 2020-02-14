@@ -51,6 +51,15 @@ public class PriceGroupProduct {
     @Column(name = "distributor_price")
     String distributorPrice;
 
+    @Column(name = "less_than_1500_price")
+    String lessThan1500Price;
+
+    @Column(name = "less_than_5000_price")
+    String lessThan5000Price;
+
+    @Column(name = "retail_price")
+    String retailPrice;
+
     @OneToMany(mappedBy = "priceGroupProduct", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     public List<PriceProduct> products = new ArrayList<>();

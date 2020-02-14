@@ -16,8 +16,9 @@ public class PriceProductController {
     PriceProductService priceProductService;
     PriceProductMapper priceProductMapper;
 
-    public PriceProductController(PriceProductService priceProductService) {
+    public PriceProductController(PriceProductService priceProductService, PriceProductMapper priceProductMapper) {
         this.priceProductService = priceProductService;
+        this.priceProductMapper = priceProductMapper;
     }
 
     @GetMapping("/")
