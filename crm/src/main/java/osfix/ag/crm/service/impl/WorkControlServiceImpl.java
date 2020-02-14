@@ -14,6 +14,7 @@ import osfix.ag.crm.service.WorkControlService;
 import osfix.ag.crm.service.dto.DayDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -54,8 +55,11 @@ public class WorkControlServiceImpl implements WorkControlService {
         return workControlRepo.save(workControlFromDb);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
+        WorkControl workControl = workControlRepo.findById(id).orElse(null);
+        workControlProductRepo.deleteAllByWorkControl(workControl);
         workControlRepo.deleteById(id);
     }
 
