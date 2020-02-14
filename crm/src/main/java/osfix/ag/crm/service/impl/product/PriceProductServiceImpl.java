@@ -13,15 +13,15 @@ import java.util.List;
 public class PriceProductServiceImpl implements PriceProductService {
     PriceProductRepo priceProductRepo;
 
-    private double retail;
-    private double less1500;
-    private double less5000;
-    private double partner;
-    private double dialler;
-    private double distributor;
-    private double stopPrice;
-    private double stopPriceAll;
-    private double oldPrice;
+    private double retailMarketPrice;
+    private double units;
+    private double cost;
+    private double partnerPrice;
+    private double dealerPrice;
+    private double distributorPrice;
+    private double retailPrice;
+    private double lessThan1500Price;
+    private double lessThan5000Price;
 
     public PriceProductServiceImpl(PriceProductRepo priceProductRepo) {
         this.priceProductRepo = priceProductRepo;
@@ -55,28 +55,28 @@ public class PriceProductServiceImpl implements PriceProductService {
     }
 
     public void setPrice(PriceDTO price) {
-        dialler = price.getDialler();
-        distributor = price.getDistributor();
-        retail = price.getRetail();
-        less1500 = price.getLess1500();
-        less5000 = price.getLess5000();
-        oldPrice = price.getOldPrice();
-        partner = price.getPartner();
-        stopPrice = price.getStopPrice();
-        stopPriceAll = price.getStopPriceAll();
+        dealerPrice = price.getDealerPrice();
+        distributorPrice = price.getDistributorPrice();
+        retailMarketPrice = price.getRetailMarketPrice();
+        lessThan1500Price = price.getLessThan1500Price();
+        lessThan5000Price = price.getLessThan5000Price();
+        retailPrice = price.getRetailPrice();
+        partnerPrice = price.getPartnerPrice();
+        cost = price.getCost();
+        units = price.getUnits();
     }
 
     public PriceDTO getPrice() {
         PriceDTO priceDTO = new PriceDTO();
-        priceDTO.setLess1500(less1500);
-        priceDTO.setDistributor(distributor);
-        priceDTO.setDialler(dialler);
-        priceDTO.setLess5000(less5000);
-        priceDTO.setOldPrice(oldPrice);
-        priceDTO.setPartner(partner);
-        priceDTO.setRetail(retail);
-        priceDTO.setStopPrice(stopPrice);
-        priceDTO.setStopPriceAll(stopPriceAll);
+        priceDTO.setLessThan1500Price(lessThan1500Price);
+        priceDTO.setDistributorPrice(distributorPrice);
+        priceDTO.setDealerPrice(dealerPrice);
+        priceDTO.setLessThan5000Price(lessThan5000Price);
+        priceDTO.setCost(cost);
+        priceDTO.setPartnerPrice(partnerPrice);
+        priceDTO.setRetailMarketPrice(retailMarketPrice);
+        priceDTO.setRetailPrice(retailPrice);
+        priceDTO.setUnits(units);
         return priceDTO;
     }
 }

@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class PriceDTO {
-    private double retail;
-    private double less1500;
-    private double less5000;
-    private double partner;
-    private double dialler;
-    private double distributor;
-    private double stopPrice;
-    private double stopPriceAll;
-    private double oldPrice;
+    private double retailPrice;
+    private double lessThan1500Price;
+    private double lessThan5000Price;
+    private double partnerPrice;
+    private double dealerPrice;
+    private double distributorPrice;
+    private double units;
+    private double cost;
+    private double retailMarketPrice;
 }
