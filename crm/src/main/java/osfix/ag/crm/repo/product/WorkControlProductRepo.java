@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface WorkControlProductRepo extends JpaRepository<WorkControlProduct, Long> {
     WorkControlProduct findByWorkControlAndProduct(WorkControl workControl, Product product);
+    List<WorkControlProduct> findAllByWorkControl(WorkControl workControl);
+    void deleteAllByWorkControl(WorkControl workControl);
 }

@@ -12,5 +12,5 @@ public interface WorkControlProductService {
     WorkControlProduct save(WorkControlProduct workControlProduct);
     void delete(Long id);
     WorkControlProduct update(Long id, WorkControlProduct workControlProduct);
-
+    void deleteAllByWorkControl(WorkControl workControl);
 }

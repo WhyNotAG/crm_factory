@@ -52,4 +52,9 @@ public class WorkControlProductServiceImpl implements WorkControlProductService 
         BeanUtils.copyProperties(workControlProduct, workControlProductFromDB, "id");
         return workControlProductRepo.save(workControlProductFromDB);
     }
+
+    @Override
+    public void deleteAllByWorkControl(WorkControl workControl) {
+        workControlProductRepo.deleteAllByWorkControl(workControl);
+    }
 }

@@ -1,5 +1,6 @@
 package osfix.ag.crm.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.WorkControl;
@@ -48,7 +49,9 @@ public class WorkControlServiceImpl implements WorkControlService {
 
     @Override
     public WorkControl update(Long id, WorkControl workControl) {
-        return null;
+        WorkControl workControlFromDb = workControlRepo.findById(id).orElse(null);
+        BeanUtils.copyProperties(workControl, workControlFromDb, "id");
+        return workControlRepo.save(workControlFromDb);
     }
 
     @Override

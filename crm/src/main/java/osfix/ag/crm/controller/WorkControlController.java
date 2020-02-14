@@ -64,8 +64,9 @@ public class WorkControlController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ReWorkControlDTO> update(@PathVariable(name = "id") Long id, @RequestBody WorkControlDTO workControl) {
-        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.update(id,
-                workControlMapper.toEntity(workControl))));
+        WorkControl workControl1 = workControlMapper.toEntity(workControl);
+        System.out.println(workControl1.getWorkControlProduct());
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.update(id, workControl1)));
     }
 
     @GetMapping("/product/{id}&{pr_id}&{quantity}")

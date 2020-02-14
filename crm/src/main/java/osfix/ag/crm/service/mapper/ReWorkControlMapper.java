@@ -3,6 +3,9 @@ package osfix.ag.crm.service.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.product.WorkControlProduct;
+import osfix.ag.crm.repo.WorkControlRepo;
+import osfix.ag.crm.repo.product.WorkControlProductRepo;
 import osfix.ag.crm.service.dto.ReWorkControlDTO;
 
 import java.util.List;
@@ -12,6 +15,9 @@ import java.util.stream.Collectors;
 public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkControlDTO> {
     @Autowired
     EmployeeMapper employeeMapper;
+
+    @Autowired
+    WorkControlProductRepo workControlProductRepo;
 
     @Override
     public WorkControl toEntity(ReWorkControlDTO dto) {
@@ -31,6 +37,10 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
     public ReWorkControlDTO fromEntity(WorkControl entity) {
         ReWorkControlDTO dto = new ReWorkControlDTO();
         if (entity.getWorkControlProduct() != null) { dto.setWorkControlProduct(entity.getWorkControlProduct()); }
+            else {
+                List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
+                dto.setWorkControlProduct(products);
+        }
         dto.setYear(entity.getYear());
         dto.setWorkList(entity.getWorkList());
         dto.setMonth(entity.getMonth());

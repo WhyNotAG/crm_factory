@@ -37,7 +37,7 @@ public class WorkControlMapper implements EntityMapper<WorkControl, WorkControlD
         dto.setHours(entity.getHours());
         dto.setId(entity.getId());
         dto.setMonth(entity.getMonth());
-        dto.setWorkListId(entity.getEmployee().getId());
+        dto.setWorkListId(entity.getWorkList().getId());
         dto.setYear(entity.getYear());
         return dto;
     }
