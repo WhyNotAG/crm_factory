@@ -36,7 +36,7 @@ public class PriceProduct {
     String retailPrice;
 
     @Column(name = "partner_price")
-    String partnerP;
+    String partnerPrice;
 
     @Column(name = "dealer_price")
     String dealerPrice;
