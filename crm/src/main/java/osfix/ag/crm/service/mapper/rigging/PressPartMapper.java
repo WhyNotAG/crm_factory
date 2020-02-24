@@ -32,6 +32,7 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
         pressPart.setNumber(dto.getNumber());
         pressPart.setColor(dto.getColor());
         pressPart.setPress(pressService.findById(dto.getRiggingId()));
+        pressPart.setDrawing(dto.getDrawing());
         return pressPart;
     }
 
@@ -52,6 +53,7 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
         dto.setNumber(entity.getNumber());
         dto.setColor(entity.getColor());
         dto.setRiggingId(entity.getPress().getId());
+        dto.setDrawing(entity.getDrawing());
         return dto;
     }
 

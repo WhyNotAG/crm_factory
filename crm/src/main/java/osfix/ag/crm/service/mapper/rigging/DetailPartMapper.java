@@ -33,6 +33,7 @@ public class DetailPartMapper implements EntityMapper<DetailPart, RiggingPartDTO
         detailPart.setNumber(dto.getNumber());
         detailPart.setColor(dto.getColor());
         detailPart.setDetail(detailService.findById(dto.getRiggingId()));
+        detailPart.setDrawing(dto.getDrawing());
         return detailPart;
     }
 
@@ -53,6 +54,7 @@ public class DetailPartMapper implements EntityMapper<DetailPart, RiggingPartDTO
         dto.setNumber(entity.getNumber());
         dto.setRiggingId(entity.getDetail().getId());
         dto.setColor(entity.getColor());
+        dto.setDrawing(entity.getDrawing());
         return dto;
     }
 
