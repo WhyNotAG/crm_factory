@@ -35,9 +35,6 @@ public class WorkControl {
     @Column(name = "hours")
     Long hours;
 
-    @Column(name = "type_of_work")
-    String typeOfWork;
-
     @ManyToOne
     @JsonIgnoreProperties("workControls")
     @JsonIdentityReference

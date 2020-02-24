@@ -14,6 +14,7 @@ public class WorkListMapper implements EntityMapper<WorkList, WorkListDTO> {
         WorkList workList = new WorkList();
         workList.setId(dto.getId());
         workList.setWork(dto.getWork());
+        workList.setTypeOfWork(dto.getTypeOfWork());
         return workList;
     }
 
@@ -22,6 +23,7 @@ public class WorkListMapper implements EntityMapper<WorkList, WorkListDTO> {
         WorkListDTO dto = new WorkListDTO();
         dto.setId(entity.getId());
         dto.setWork(dto.getWork());
+        dto.setTypeOfWork(dto.getTypeOfWork());
         return dto;
     }
 

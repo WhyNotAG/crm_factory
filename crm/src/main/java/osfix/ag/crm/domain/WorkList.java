@@ -19,6 +19,9 @@ public class WorkList {
     @Column(name = "work")
     String work;
 
+    @Column(name = "type_of_work")
+    String typeOfWork;
+
     @OneToMany(mappedBy = "workList", cascade = CascadeType.REFRESH)
     @JsonBackReference
     public List<WorkControl> workControls = new ArrayList<>();

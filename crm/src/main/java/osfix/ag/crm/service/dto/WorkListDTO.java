@@ -6,4 +6,5 @@ import lombok.Data;
 public class WorkListDTO {
     Long id;
     String work;
+    String typeOfWork;
 }

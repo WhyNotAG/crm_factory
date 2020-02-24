@@ -26,7 +26,6 @@ public class WorkControlMapper implements EntityMapper<WorkControl, WorkControlD
         workControl.setMonth(dto.getMonth());
         workControl.setWorkList(workListService.findById(dto.getWorkListId()));
         workControl.setYear(dto.getYear());
-        workControl.setTypeOfWork(dto.getTypeOfWork());
         return workControl;
     }
 
@@ -40,7 +39,6 @@ public class WorkControlMapper implements EntityMapper<WorkControl, WorkControlD
         dto.setMonth(entity.getMonth());
         dto.setWorkListId(entity.getWorkList().getId());
         dto.setYear(entity.getYear());
-        dto.setTypeOfWork(entity.getTypeOfWork());
         return dto;
     }
 
