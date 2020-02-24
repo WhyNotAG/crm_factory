@@ -46,4 +46,7 @@ public abstract class Part {
 
     @Column(name = "color")
     String color;
+
+    @Column(name = "drawing")
+    String drawing;
 }
