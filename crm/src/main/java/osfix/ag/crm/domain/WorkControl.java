@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 
 import javax.persistence.*;
@@ -43,5 +42,9 @@ public class WorkControl {
     @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     List<WorkControlProduct> workControlProduct;
+
+    @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
+    @JsonManagedReference
+    List<WorkControlProduct> workControlTrashBase;
 
 }

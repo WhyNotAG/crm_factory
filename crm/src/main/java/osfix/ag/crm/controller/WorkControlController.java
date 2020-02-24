@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.service.WorkControlService;
+import osfix.ag.crm.service.dto.ProductsDTO;
 import osfix.ag.crm.service.dto.ReWorkControlDTO;
 import osfix.ag.crm.service.dto.WorkControlDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
@@ -69,11 +70,12 @@ public class WorkControlController {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.update(id, workControl1)));
     }
 
-    @GetMapping("/product/{id}&{pr_id}&{quantity}")
+    @PostMapping("/product/{id}&{pr_id}&{quantity}")
     public ResponseEntity<ReWorkControlDTO> addProduct(@PathVariable(name = "id") Long id,
-                                                  @PathVariable(name = "pr_id") Long pr_id,
-                                                  @PathVariable(name = "quantity") Long quantity) {
-        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id,pr_id,quantity)));
+                                                       @PathVariable(name = "pr_id") Long pr_id,
+                                                       @PathVariable(name = "quantity") Long quantity,
+                                                       @RequestBody ProductsDTO productsDTO) {
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id,pr_id,quantity, productsDTO.getName())));
     }
 
     @DeleteMapping("/product/{id}&{pr_id}")

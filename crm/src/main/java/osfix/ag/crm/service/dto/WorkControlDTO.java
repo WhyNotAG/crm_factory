@@ -11,7 +11,4 @@ public class WorkControlDTO {
     Integer day;
     Long hours;
     Long employeeId;
-
-    public static class ReWorkControlDTO {
-    }
 }

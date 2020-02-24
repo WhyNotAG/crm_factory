@@ -3,10 +3,12 @@ package osfix.ag.crm.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Employee;
+import osfix.ag.crm.domain.TrashBase;
 import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 import osfix.ag.crm.repo.EmployeeRepo;
+import osfix.ag.crm.repo.TrashBaseRepo;
 import osfix.ag.crm.repo.WorkControlRepo;
 import osfix.ag.crm.repo.product.ProductRepo;
 import osfix.ag.crm.service.WorkControlProductService;
@@ -24,13 +26,16 @@ public class WorkControlServiceImpl implements WorkControlService {
     private EmployeeRepo employeeRepo;
     private ProductRepo productRepo;
     private WorkControlProductService workControlProductRepo;
+    private TrashBaseRepo trashBaseRepo;
 
     public WorkControlServiceImpl(WorkControlRepo workControlRepo, EmployeeRepo employeeRepo,
-                                  ProductRepo productRepo, WorkControlProductService workControlProductRepo) {
+                                  ProductRepo productRepo, WorkControlProductService workControlProductRepo,
+                                  TrashBaseRepo trashBaseRepo) {
         this.workControlRepo = workControlRepo;
         this.employeeRepo = employeeRepo;
         this.productRepo = productRepo;
         this.workControlProductRepo = workControlProductRepo;
+        this.trashBaseRepo = trashBaseRepo;
     }
 
     @Override
@@ -109,9 +114,18 @@ public class WorkControlServiceImpl implements WorkControlService {
     }
 
     @Override
-    public WorkControl addProduct(Long id, Long product_id, Long quantity) {
+    public WorkControl addProduct(Long id, Long product_id, Long quantity, String name) {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
         Product product = productRepo.findById(product_id).orElse(null);
+
+        if (product == null) {
+            TrashBase trashBase = new TrashBase();
+            trashBase.setName(name);
+            trashBase.setQuantity(quantity);
+            trashBase.setWorkControl(workControl);
+            trashBaseRepo.save(trashBase);
+            return null;
+        }
 
         List<WorkControlProduct> workControlProducts = workControl.getWorkControlProduct();
         WorkControlProduct workControlProduct = new WorkControlProduct();
