@@ -19,4 +19,5 @@ public class RiggingPartDTO {
     String controll;
     Long riggingId;
     String color;
+    String drawing;
 }

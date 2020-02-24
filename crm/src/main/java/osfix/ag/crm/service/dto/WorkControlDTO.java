@@ -10,6 +10,7 @@ public class WorkControlDTO {
     Integer month;
     Integer day;
     Long hours;
+    String typeOfWork;
     Long employeeId;
 
     public static class ReWorkControlDTO {
