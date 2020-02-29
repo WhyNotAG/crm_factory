@@ -18,49 +18,21 @@ public class PriceGroupProduct {
     @Column(name = "name")
     String name;
 
-    @Column(name = "img")
-    String img;
+    @Column(name = "img_one")
+    String imgOne;
 
-    @Column(name = "description")
-    String description;
+    @Column(name = "img_two")
+    String imgTwo;
 
-    @Column(name = "location_type")
-    String locationType;
+    @Column(name = "img_three")
+    String imgThree;
 
-    @Column(name = "link_address")
-    String linkAddress;
+    @Column(name = "img_four")
+    String imgFour;
 
-    @Column(name = "info_text")
-    String infoText;
+    @Column(name = "img_five")
+    String imgFive;
 
-    @Column(name = "category")
-    String category;
-
-    @Column(name = "cost")
-    String cost;
-
-    @Column(name = "retail_market_price")
-    String retailMarketPrice;
-
-    @Column(name = "partner_price")
-    String partnerPrice;
-
-    @Column(name = "dealer_price")
-    String dealerPrice;
-
-    @Column(name = "distributor_price")
-    String distributorPrice;
-
-    @Column(name = "less_than_1500_price")
-    String lessThan1500Price;
-
-    @Column(name = "less_than_5000_price")
-    String lessThan5000Price;
-
-    @Column(name = "retail_price")
-    String retailPrice;
-
-    @OneToMany(mappedBy = "priceGroupProduct", cascade = CascadeType.REFRESH)
-    @JsonManagedReference
-    public List<PriceProduct> products = new ArrayList<>();
+    @Column(name = "img_six")
+    String imgSix;
 }

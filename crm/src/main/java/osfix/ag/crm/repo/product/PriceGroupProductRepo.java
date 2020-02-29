@@ -6,4 +6,5 @@ import osfix.ag.crm.domain.product.PriceGroupProduct;
 
 @Repository
 public interface PriceGroupProductRepo extends JpaRepository<PriceGroupProduct, Long> {
+    PriceGroupProduct findByName(String name);
 }

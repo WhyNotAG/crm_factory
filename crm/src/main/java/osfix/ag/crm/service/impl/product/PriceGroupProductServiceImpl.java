@@ -42,4 +42,9 @@ public class PriceGroupProductServiceImpl implements PriceGroupProductService {
     public void delete(Long id) {
         priceGroupProductRepo.deleteById(id);
     }
+
+    @Override
+    public PriceGroupProduct findByName(String name) {
+        return priceGroupProductRepo.findByName(name);
+    }
 }
