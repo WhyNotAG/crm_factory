@@ -21,6 +21,11 @@ public class PriceGroupProductController {
         return ResponseEntity.ok().body(priceGroupProductService.findAll());
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<PriceGroupProduct> findByName(@PathVariable(name = "name") String name) {
+        return ResponseEntity.ok().body(priceGroupProductService.findByName(name));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PriceGroupProduct> findById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok().body(priceGroupProductService.findById(id));
