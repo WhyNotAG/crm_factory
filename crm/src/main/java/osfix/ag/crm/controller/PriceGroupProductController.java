@@ -42,6 +42,12 @@ public class PriceGroupProductController {
         return ResponseEntity.ok().body(priceGroupProductService.update(id, priceGroupProduct));
     }
 
+    @PutMapping("/name/{name}")
+    public ResponseEntity<PriceGroupProduct> updateByName(@PathVariable(name = "name") String  name,
+                                                    @RequestBody PriceGroupProduct priceGroupProduct) {
+        return ResponseEntity.ok().body(priceGroupProductService.update(name, priceGroupProduct));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         priceGroupProductService.delete(id);

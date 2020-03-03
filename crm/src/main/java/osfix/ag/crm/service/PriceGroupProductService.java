@@ -10,5 +10,6 @@ public interface PriceGroupProductService {
     PriceGroupProduct findById(Long id);
     PriceGroupProduct save(PriceGroupProduct priceGroupProduct);
     PriceGroupProduct update(Long id, PriceGroupProduct priceGroupProduct);
+    PriceGroupProduct update(String name, PriceGroupProduct priceGroupProduct);
     void delete(Long id);
 }

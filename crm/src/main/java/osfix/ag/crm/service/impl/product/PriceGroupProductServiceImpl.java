@@ -40,6 +40,14 @@ public class PriceGroupProductServiceImpl implements PriceGroupProductService {
     }
 
     @Override
+    public PriceGroupProduct update(String name, PriceGroupProduct priceGroupProduct) {
+        PriceGroupProduct priceGroupProductFromDb = priceGroupProductRepo.findByName(name);
+        if(priceGroupProductFromDb == null) { return priceGroupProductRepo.save(priceGroupProduct);}
+        BeanUtils.copyProperties(priceGroupProduct, priceGroupProductFromDb, "id");
+        return priceGroupProductRepo.save(priceGroupProductFromDb);
+    }
+
+    @Override
     public void delete(Long id) {
         priceGroupProductRepo.deleteById(id);
     }
