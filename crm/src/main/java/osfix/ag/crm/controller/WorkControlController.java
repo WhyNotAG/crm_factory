@@ -70,7 +70,7 @@ public class WorkControlController {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.update(id, workControl1)));
     }
 
-    @PostMapping("/product/{id}&{pr_id}&{quantity}&{name}")
+    @PostMapping("/product/{id}&{pr_id}&{quantity}")
     public ResponseEntity<ReWorkControlDTO> addProduct(@PathVariable(name = "id") Long id,
                                                        @PathVariable(name = "pr_id") Long pr_id,
                                                        @PathVariable(name = "quantity") Long quantity,
