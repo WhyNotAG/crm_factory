@@ -74,7 +74,6 @@ public class WorkControlController {
     public ResponseEntity<ReWorkControlDTO> addProduct(@PathVariable(name = "id") Long id,
                                                        @PathVariable(name = "pr_id") Long pr_id,
                                                        @PathVariable(name = "quantity") Long quantity,
-                                                       @PathVariable(name = "name") String name,
                                                        @RequestBody ProductsDTO productsDTO) {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id, pr_id, quantity, productsDTO.getName())));
     }
