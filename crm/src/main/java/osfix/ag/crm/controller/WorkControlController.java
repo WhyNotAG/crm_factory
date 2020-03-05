@@ -70,12 +70,13 @@ public class WorkControlController {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.update(id, workControl1)));
     }
 
-    @PostMapping("/product/{id}&{pr_id}&{quantity}")
+    @PostMapping("/product/{id}&{pr_id}&{quantity}&{name}")
     public ResponseEntity<ReWorkControlDTO> addProduct(@PathVariable(name = "id") Long id,
                                                        @PathVariable(name = "pr_id") Long pr_id,
                                                        @PathVariable(name = "quantity") Long quantity,
+                                                       @PathVariable(name = "name") String name,
                                                        @RequestBody ProductsDTO productsDTO) {
-        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id,pr_id,quantity, productsDTO.getName())));
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id, pr_id, quantity, productsDTO.getName())));
     }
 
     @DeleteMapping("/product/{id}&{pr_id}")
