@@ -9,10 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.JwtRefreshToken;
 import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.security.jwt.AccessToken;
@@ -47,6 +44,11 @@ public class AuthenticationController {
         this.userMapper = userMapper;
     }
 
+
+    @GetMapping("")
+    public String getInfo() {
+        return "Добро пожаловать";
+    }
 
     @PostMapping("login")
     public ResponseEntity<SignInResponseDTO> login(@RequestBody AuthenticationRequestDTO requestDto) {

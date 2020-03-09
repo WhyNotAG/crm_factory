@@ -1,5 +1,6 @@
 package osfix.ag.crm.service;
-import osfix.ag.crm.domain.Client;
+import osfix.ag.crm.domain.manager.Client;
+
 import java.util.List;
 
 public interface ClientService {

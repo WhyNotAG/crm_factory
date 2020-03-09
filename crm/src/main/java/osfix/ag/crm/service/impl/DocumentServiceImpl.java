@@ -2,7 +2,6 @@ package osfix.ag.crm.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import osfix.ag.crm.domain.Client;
 import osfix.ag.crm.domain.Document;
 import osfix.ag.crm.repo.DocumentRepo;
 import osfix.ag.crm.service.DocumentService;

@@ -1,9 +1,11 @@
-package osfix.ag.crm.controller;
+package osfix.ag.crm.controller.manager;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import osfix.ag.crm.domain.Client;
+import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.service.ClientService;
+import osfix.ag.crm.service.dto.manager.ClientDTO;
+import osfix.ag.crm.service.mapper.manager.ClientMapper;
 
 import java.util.List;
 
@@ -12,10 +14,11 @@ import java.util.List;
 public class ClientController {
 
     public ClientService clientService;
+    private ClientMapper clientMapper;
 
-
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, ClientMapper clientMapper) {
         this.clientService = clientService;
+        this.clientMapper = clientMapper;
     }
 
     @GetMapping("/")
@@ -26,8 +29,8 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public Client create(@RequestBody Client client) { //создание нового сообщения
-        return clientService.save(client);
+    public Client create(@RequestBody ClientDTO client) {
+        return clientService.save(clientMapper.toEntity(client));
     }
 
     @Secured("ROLE_ADMIN")
@@ -36,8 +39,8 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Client update(@PathVariable(name="id") Long id, @RequestBody Client client) {
-        return clientService.update(id, client);
+    public Client update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
+        return clientService.update(id, clientMapper.toEntity(client));
     }
 
 }
