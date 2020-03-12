@@ -11,6 +11,11 @@ import java.util.List;
 @Service
 public class HistoryServiceImpl implements HistoryService {
     private HistoryRepo historyRepo;
+
+    public HistoryServiceImpl(HistoryRepo historyRepo) {
+        this.historyRepo = historyRepo;
+    }
+
     @Override
     public List<History> findAll() {
         return historyRepo.findAll();
