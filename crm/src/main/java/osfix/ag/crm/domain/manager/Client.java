@@ -58,6 +58,10 @@ public class Client {
     @JsonIdentityReference
     public List<Contact> contacts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
+    @JsonIdentityReference
+    public List<History> histories = new ArrayList<>();
+
     @ManyToOne
     @JsonBackReference
     private Category category;
