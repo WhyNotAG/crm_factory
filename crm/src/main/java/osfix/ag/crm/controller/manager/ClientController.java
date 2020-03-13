@@ -43,4 +43,15 @@ public class ClientController {
         return clientService.update(id, clientMapper.toEntity(client));
     }
 
+    @PostMapping("/category/{name}")
+    public List<Client> findAllByCategoryName(@PathVariable(name = "name") String name) {
+        return clientService.findAllByCategory_Name(name);
+    }
+
+    @PostMapping("/category/{name}&{type}")
+    public List<Client> findAllByCategoryName(@PathVariable(name = "name") String name,
+                                              @PathVariable(name = "type") String type) {
+        return clientService.findAllByCategory_NameAndClientType(name, type);
+    }
+
 }

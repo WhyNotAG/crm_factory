@@ -42,4 +42,14 @@ public class ClientServiceImpl implements ClientService {
     public void delete(Long id) {
         clientRepo.deleteById(id);
     }
+
+    @Override
+    public List<Client> findAllByCategory_Name(String name) {
+        return clientRepo.findAllByCategory_Name(name);
+    }
+
+    @Override
+    public List<Client> findAllByCategory_NameAndClientType(String name, String clientType) {
+        return clientRepo.findAllByCategory_NameAndClientType(name, clientType);
+    }
 }

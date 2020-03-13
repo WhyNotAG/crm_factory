@@ -15,5 +15,6 @@ public class ClientDTO {
     String clientType;
     String manager;
     Long nextDateContact;
+    String categoryName;
     Long categoryId;
 }
