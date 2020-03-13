@@ -47,6 +47,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         dto.setId(entity.getId());
         dto.setManager(entity.getManager());
         dto.setName(entity.getName());
+        dto.setCategoryName(entity.getCategory().getName());
         dto.setNextDateContact(entity.getNextDateContact().getTime());
         dto.setPrice(entity.getPrice());
         dto.setSite(entity.getSite());

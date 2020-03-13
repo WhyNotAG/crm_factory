@@ -22,15 +22,15 @@ public class ClientController {
     }
 
     @GetMapping("/")
-    public List<Client> getAllClients() { return clientService.findAll();}
+    public List<ClientDTO> getAllClients() { return clientMapper.toDtoList(clientService.findAll());}
 
     @GetMapping("/{id}")
-    public Client getClient(@PathVariable(name="id") long id) {return clientService.findById(id);}
+    public ClientDTO getClient(@PathVariable(name="id") long id) {return clientMapper.fromEntity(clientService.findById(id));}
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public Client create(@RequestBody ClientDTO client) {
-        return clientService.save(clientMapper.toEntity(client));
+    public ClientDTO create(@RequestBody ClientDTO client) {
+        return clientMapper.fromEntity(clientService.save(clientMapper.toEntity(client)));
     }
 
     @Secured("ROLE_ADMIN")
@@ -39,19 +39,19 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Client update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
-        return clientService.update(id, clientMapper.toEntity(client));
+    public ClientDTO update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
+        return clientMapper.fromEntity(clientService.update(id, clientMapper.toEntity(client)));
     }
 
     @PostMapping("/category/{name}")
-    public List<Client> findAllByCategoryName(@PathVariable(name = "name") String name) {
-        return clientService.findAllByCategory_Name(name);
+    public List<ClientDTO> findAllByCategoryName(@PathVariable(name = "name") String name) {
+        return clientMapper.toDtoList(clientService.findAllByCategory_Name(name));
     }
 
     @PostMapping("/category/{name}&{type}")
-    public List<Client> findAllByCategoryName(@PathVariable(name = "name") String name,
+    public List<ClientDTO> findAllByCategoryName(@PathVariable(name = "name") String name,
                                               @PathVariable(name = "type") String type) {
-        return clientService.findAllByCategory_NameAndClientType(name, type);
+        return clientMapper.toDtoList(clientService.findAllByCategory_NameAndClientType(name, type));
     }
 
 }
