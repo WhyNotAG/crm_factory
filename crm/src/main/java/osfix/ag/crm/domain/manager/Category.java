@@ -1,5 +1,7 @@
 package osfix.ag.crm.domain.manager;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
@@ -22,6 +24,6 @@ public class Category {
     String visibility;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH)
-    @JsonManagedReference
+    @JsonBackReference
     public List<Client> clients = new ArrayList<>();
 }

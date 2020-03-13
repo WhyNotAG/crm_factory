@@ -63,7 +63,7 @@ public class Client {
     public List<History> histories = new ArrayList<>();
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIdentityReference
     private Category category;
 
 }
