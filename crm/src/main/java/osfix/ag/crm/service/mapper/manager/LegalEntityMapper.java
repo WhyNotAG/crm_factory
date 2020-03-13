@@ -19,6 +19,7 @@ public class LegalEntityMapper implements EntityMapper<LegalEntity, LegalEntityD
     public LegalEntity toEntity(LegalEntityDTO dto) {
         LegalEntity legalEntity = new LegalEntity();
         legalEntity.setBik(dto.getBik());
+        legalEntity.setName(dto.getName());
         legalEntity.setCheckingAccount(dto.getCheckingAccount());
         legalEntity.setClient(clientRepo.findById(dto.getClientId()).orElse(null));
         legalEntity.setFactualAddress(dto.getFactualAddress());
@@ -34,6 +35,7 @@ public class LegalEntityMapper implements EntityMapper<LegalEntity, LegalEntityD
     public LegalEntityDTO fromEntity(LegalEntity entity) {
         LegalEntityDTO dto = new LegalEntityDTO();
         dto.setBik(entity.getBik());
+        dto.setName(entity.getName());
         dto.setCheckingAccount(entity.getCheckingAccount());
         dto.setClientId(entity.getClient().getId());
         dto.setFactualAddress(entity.getFactualAddress());

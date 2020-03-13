@@ -53,4 +53,11 @@ public class ClientController {
         return clientService.findAllByCategory_NameAndClientType(client.getCategoryName(), client.getClientType());
     }
 
+    @PostMapping("/date/")
+    public Client changeDate(@RequestBody ClientDTO client) {
+        Client client1 = clientMapper.toEntity(client);
+        return clientService.updateDate(client1.getId(), client1.getNextDateContact());
+    }
+
+
 }

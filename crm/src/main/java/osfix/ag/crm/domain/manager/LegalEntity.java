@@ -1,7 +1,6 @@
 package osfix.ag.crm.domain.manager;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,6 +12,9 @@ public class LegalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(name = "name")
+    String name;
 
     @Column(name = "inn")
     String inn;

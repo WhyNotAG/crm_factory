@@ -4,6 +4,7 @@ import lombok.Data;
 @Data
 public class LegalEntityDTO {
     Long id;
+    String name;
     String inn;
     String kpp;
     String ogrn;

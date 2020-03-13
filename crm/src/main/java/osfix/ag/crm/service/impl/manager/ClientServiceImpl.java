@@ -6,6 +6,7 @@ import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.service.ClientService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,5 +52,12 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> findAllByCategory_NameAndClientType(String name, String clientType) {
         return clientRepo.findAllByCategory_NameAndClientType(name, clientType);
+    }
+
+    @Override
+    public Client updateDate(Long id, Date date) {
+        Client client = clientRepo.findById(id).orElse(null);
+        client.setNextDateContact(date);
+        return clientRepo.save(client);
     }
 }
