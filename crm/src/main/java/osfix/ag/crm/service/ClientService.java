@@ -11,6 +11,6 @@ public interface ClientService {
     Client findById(Long id);
     Client update(Long id, Client client);
     Client save(Client client);
-    Client updateDate(Long id, Date date);
+    Client updateDate(Long id, Long date);
     void delete(Long id);
 }

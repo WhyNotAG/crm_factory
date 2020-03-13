@@ -55,8 +55,7 @@ public class ClientController {
 
     @PostMapping("/date/")
     public Client changeDate(@RequestBody ClientDTO client) {
-        Client client1 = clientMapper.toEntity(client);
-        return clientService.updateDate(client.getId(), client1.getNextDateContact());
+        return clientService.updateDate(client.getId(), client.getNextDateContact());
     }
 
 
