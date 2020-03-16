@@ -54,6 +54,7 @@ public class PriceGroupProductServiceImpl implements PriceGroupProductService {
 
     @Override
     public PriceGroupProduct findByName(String name) {
-        return priceGroupProductRepo.findByName(name);
+        if(priceGroupProductRepo.findByName(name) != null) { return priceGroupProductRepo.findByName(name); }
+        else { return new PriceGroupProduct(); }
     }
 }
