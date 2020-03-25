@@ -42,4 +42,9 @@ public class MessageServiceImpl implements MessageService {
     public void delete(Long id) {
         messageRepo.deleteById(id);
     }
+
+    @Override
+    public List<Message> findAllByDiscussion(Long id) {
+        return messageRepo.findAllByDiscussion_Id(id);
+    }
 }

@@ -1,6 +1,7 @@
 package osfix.ag.crm.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.feedback.Discussion;
 import osfix.ag.crm.domain.feedback.Message;
@@ -75,5 +76,10 @@ public class FeedbackController {
     @DeleteMapping("/message/{id}")
     public void messageDelete(@PathVariable(name = "id") Long id) {
         messageService.delete(id);
+    }
+
+    @GetMapping("/discussion/{id}")
+    public ResponseEntity<List<Message>> findAllByDiscussion(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(messageService.findAllByDiscussion(id));
     }
 }

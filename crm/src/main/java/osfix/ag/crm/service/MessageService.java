@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface MessageService {
     List<Message> findAll();
+    List<Message> findAllByDiscussion(Long id);
     Message findById(Long id);
     Message update(Long id, Message message);
     Message save(Message message);
