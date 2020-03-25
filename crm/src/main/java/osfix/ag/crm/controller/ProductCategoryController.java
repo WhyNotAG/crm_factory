@@ -36,8 +36,8 @@ public class ProductCategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductCategory> update(@PathVariable(name = "id") Long id, @RequestBody ProductCategory productCategory) {
-        return ResponseEntity.ok().body(productCategoryService.update(id, productCategory));
+    public ResponseEntity<ProductCategory> update(@PathVariable(name = "id") Long id, @RequestBody ProductsCategoryDTO productCategory) {
+        return ResponseEntity.ok().body(productCategoryService.update(id, productsCategoryMapper.toEntity(productCategory)));
     }
 
     @GetMapping("/name/")

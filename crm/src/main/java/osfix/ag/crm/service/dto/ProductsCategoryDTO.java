@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ProductsCategoryDTO {
     Long id;
-    String name;
+    String category;
 }

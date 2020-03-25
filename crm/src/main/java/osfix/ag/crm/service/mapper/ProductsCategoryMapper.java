@@ -12,7 +12,7 @@ public class ProductsCategoryMapper implements EntityMapper<ProductCategory, Pro
     @Override
     public ProductCategory toEntity(ProductsCategoryDTO dto) {
         ProductCategory productCategory = new ProductCategory();
-        productCategory.setCategory(dto.getName());
+        productCategory.setCategory(dto.getCategory());
         productCategory.setId(dto.getId());
         return productCategory;
     }
@@ -21,7 +21,7 @@ public class ProductsCategoryMapper implements EntityMapper<ProductCategory, Pro
     public ProductsCategoryDTO fromEntity(ProductCategory entity) {
         ProductsCategoryDTO productsCategoryDTO = new ProductsCategoryDTO();
         productsCategoryDTO.setId(entity.getId());
-        productsCategoryDTO.setName(entity.getCategory());
+        productsCategoryDTO.setCategory(entity.getCategory());
         return productsCategoryDTO;
     }
 
