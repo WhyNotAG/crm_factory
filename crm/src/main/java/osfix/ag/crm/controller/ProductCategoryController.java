@@ -31,8 +31,8 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ProductCategory> add(@RequestBody ProductCategory productCategory) {
-        return ResponseEntity.ok().body(productCategoryService.save(productCategory));
+    public ResponseEntity<ProductCategory> add(@RequestBody ProductsCategoryDTO productCategory) {
+        return ResponseEntity.ok().body(productCategoryService.save(productsCategoryMapper.toEntity(productCategory)));
     }
 
     @PutMapping("/{id}")
