@@ -1,5 +1,9 @@
 package osfix.ag.crm.controller.manager;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.manager.Client;
@@ -22,7 +26,11 @@ public class ClientController {
     }
 
     @GetMapping("/")
-    public List<Client> getAllClients() { return clientService.findAll();}
+    public Page<Client> getAllClients(@PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+        Page<Client> clients = clientService.findAll(pageable);
+        System.out.println(clients.getTotalPages());
+        return clients;
+    }
 
     @GetMapping("/{id}")
     public Client getClient(@PathVariable(name="id") long id) {return clientService.findById(id);}
@@ -44,13 +52,13 @@ public class ClientController {
     }
 
     @PostMapping("/category/")
-    public List<Client> findAllByCategoryName(@RequestBody ClientDTO client) {
-        return clientService.findAllByCategory_Name(client.getCategoryName());
+    public Page<Client> findAllByCategoryName(@RequestBody ClientDTO client, @PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+        return clientService.findAllByCategory_Name(client.getCategoryName(), pageable);
     }
 
     @PostMapping("/category_type/")
-    public List<Client> findAllByCategoryNameAndType(@RequestBody ClientDTO client) {
-        return clientService.findAllByCategory_NameAndClientType(client.getCategoryName(), client.getClientType());
+    public Page<Client> findAllByCategoryNameAndType(@RequestBody ClientDTO client, @PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+        return clientService.findAllByCategory_NameAndClientType(client.getCategoryName(), client.getClientType(), pageable);
     }
 
     @PostMapping("/date/")

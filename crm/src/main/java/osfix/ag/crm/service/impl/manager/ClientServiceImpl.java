@@ -1,13 +1,15 @@
 package osfix.ag.crm.service.impl.manager;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.repo.manager.ClientRepo;
+import org.springframework.data.domain.Page;
 import osfix.ag.crm.service.ClientService;
 
+
 import java.sql.Date;
-import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -18,8 +20,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAll() {
-        return clientRepo.findAll();
+    public Page<Client> findAll(Pageable pageable) {
+        return clientRepo.findAll(pageable);
     }
 
     @Override
@@ -45,13 +47,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAllByCategory_Name(String name) {
-        return clientRepo.findAllByCategory_Name(name);
+    public Page<Client> findAllByCategory_Name(String name, Pageable pageable) {
+        return clientRepo.findAllByCategory_Name(name, pageable);
     }
 
     @Override
-    public List<Client> findAllByCategory_NameAndClientType(String name, String clientType) {
-        return clientRepo.findAllByCategory_NameAndClientType(name, clientType);
+    public Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable) {
+        return clientRepo.findAllByCategory_NameAndClientType(name, clientType, pageable);
     }
 
     @Override
