@@ -26,7 +26,7 @@ public class ClientController {
     }
 
     @GetMapping("/")
-    public Page<Client> getAllClients(@PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+    public Page<Client> getAllClients(@PageableDefault(sort = {"name"}, direction = Sort.Direction.DESC, size = 20) Pageable pageable) {
         Page<Client> clients = clientService.findAll(pageable);
         System.out.println(clients.getTotalPages());
         return clients;
