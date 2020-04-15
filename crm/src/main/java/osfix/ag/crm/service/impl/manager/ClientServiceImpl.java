@@ -10,6 +10,7 @@ import osfix.ag.crm.service.ClientService;
 
 
 import java.sql.Date;
+import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -22,6 +23,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findAll(Pageable pageable) {
         return clientRepo.findAll(pageable);
+    }
+
+    @Override
+    public Set<Client> search(String substring) {
+        return clientRepo.findAllByNameContainsOrCommentContainsOrSiteContains(substring, substring, substring);
     }
 
     @Override

@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class DayDTO {
     Integer Day;
-    Long hours;
+    Double hours;
 }

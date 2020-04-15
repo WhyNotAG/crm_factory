@@ -9,6 +9,6 @@ public class WorkControlDTO {
     Integer year;
     Integer month;
     Integer day;
-    Long hours;
+    Double hours;
     Long employeeId;
 }

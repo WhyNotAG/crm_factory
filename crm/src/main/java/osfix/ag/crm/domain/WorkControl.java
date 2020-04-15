@@ -32,7 +32,7 @@ public class WorkControl {
     Integer day;
 
     @Column(name = "hours")
-    Long hours;
+    Double hours;
 
     @ManyToOne
     @JsonIgnoreProperties("workControls")

@@ -13,7 +13,7 @@ public class ReWorkControlDTO {
     Integer year;
     Integer month;
     Integer day;
-    Long hours;
+    Double hours;
     private EmployeeDTO employee;
     List<WorkControlProduct> workControlProduct;
 }

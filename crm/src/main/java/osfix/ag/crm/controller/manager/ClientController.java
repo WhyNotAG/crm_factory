@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.manager.Client;
@@ -12,6 +13,7 @@ import osfix.ag.crm.service.dto.manager.ClientDTO;
 import osfix.ag.crm.service.mapper.manager.ClientMapper;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -39,6 +41,12 @@ public class ClientController {
     @PostMapping()
     public Client create(@RequestBody ClientDTO client) {
         return clientService.save(clientMapper.toEntity(client));
+    }
+
+
+    @PostMapping("/search/")
+    public ResponseEntity<Set<Client>> search(@RequestBody ClientDTO client) {
+        return ResponseEntity.ok().body(clientService.search(client.getName()));
     }
 
     @Secured("ROLE_ADMIN")
