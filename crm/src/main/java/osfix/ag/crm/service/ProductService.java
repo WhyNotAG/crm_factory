@@ -2,6 +2,7 @@ package osfix.ag.crm.service;
 
 import java.util.List;
 import osfix.ag.crm.domain.Document;
+import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.Product;
 
 public interface ProductService {
@@ -12,4 +13,5 @@ public interface ProductService {
     List<Product> findAll();
     List<Product> findByCategory(String category);
     List<Product> findByProductLocation(String location);
+    Product addPacking(Long productId, List<Long> packingId);
 }

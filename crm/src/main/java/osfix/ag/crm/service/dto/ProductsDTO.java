@@ -1,7 +1,11 @@
 package osfix.ag.crm.service.dto;
 
 import lombok.Data;
+import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.TypeOfProduct;
+
+import java.util.List;
+
 @Data
 public class ProductsDTO {
     private long id;
@@ -15,4 +19,5 @@ public class ProductsDTO {
     private String vendor;
     private String category;
     private String productionLocation;
+    private List<Long> packings;
 }

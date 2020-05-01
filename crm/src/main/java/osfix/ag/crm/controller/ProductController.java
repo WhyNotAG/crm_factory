@@ -64,4 +64,9 @@ public class ProductController {
     public void delete(@PathVariable(name = "id") Long id) {
         productService.delete(id);
     }
+
+    @PostMapping("/add/{id}")
+    public ResponseEntity<ProductsDTO> addPackings(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO productsDTO) {
+        return ResponseEntity.ok().body(productMapper.fromEntity(productService.addPacking(id, productsDTO.getPackings())));
+    }
 }

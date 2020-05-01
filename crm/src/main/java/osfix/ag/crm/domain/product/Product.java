@@ -7,8 +7,12 @@ import lombok.Data;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.Lepsari;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.factory.Packing;
+import osfix.ag.crm.domain.manager.History;
+import osfix.ag.crm.domain.user.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -55,4 +59,10 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<WorkControlProduct> workControlProducts;
+
+    @JsonIgnoreProperties("users")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "product_packing", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "packing_id", referencedColumnName = "id")})
+    private List<Packing> packings;
 }

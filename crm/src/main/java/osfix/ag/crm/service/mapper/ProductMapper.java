@@ -2,11 +2,14 @@ package osfix.ag.crm.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.repo.factory.PackingRepo;
 import osfix.ag.crm.repo.product.ProductCategoryRepo;
 import osfix.ag.crm.service.ProductCategoryService;
 import osfix.ag.crm.service.dto.ProductsDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +18,8 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
 
     @Autowired
     ProductCategoryService productCategoryService;
+    @Autowired
+    PackingRepo packingRepo;
 
     @Override
     public Product toEntity(ProductsDTO dto) {
@@ -33,6 +38,11 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         if (productCategoryService.findByCategory(dto.getCategory()) != null) {
             product.setProductCategory(productCategoryService.findByCategory(dto.getCategory()));
         } else {product.setProductCategory(null);}
+
+
+        for (Long packing : dto.getPackings()) {
+            product.getPackings().add(packingRepo.findById(packing).orElse(null));
+        }
 
         return product;
     }
@@ -55,6 +65,11 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
             dto.setCategory(entity.getProductCategory().getCategory());
         } else { dto.setCategory(null);}
 
+        List<Long> packings = new ArrayList<>();
+        for(Packing packing : entity.getPackings()) {
+            packings.add(packing.getId());
+        }
+        dto.setPackings(packings);
         return dto;
     }
 

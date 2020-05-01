@@ -50,6 +50,9 @@ public class Client {
     @Column(name = "next_date_contact")
     Date nextDateContact;
 
+    @Column(name = "favorite")
+    Boolean favorite;
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
     @JsonIdentityReference
     public List<LegalEntity> legalEntities = new ArrayList<>();

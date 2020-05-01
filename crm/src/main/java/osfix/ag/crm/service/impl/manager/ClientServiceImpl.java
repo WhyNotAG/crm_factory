@@ -27,7 +27,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> search(String substring) {
-        return clientRepo.findAllByNameContainsOrCommentContainsOrSiteContains(substring, substring, substring);
+        return clientRepo.findAllByNameIgnoreCaseContainsOrCommentIgnoreCaseContainsOrSiteIgnoreCaseContains(substring, substring, substring);
     }
 
     @Override

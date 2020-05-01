@@ -33,6 +33,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setSite(dto.getSite());
         client.setStorageAddress(dto.getStorageAddress());
         client.setWorkCondition(dto.getWorkCondition());
+        client.setFavorite(dto.getFavorite() ? dto.getFavorite() : false);
         return client;
     }
 
@@ -53,6 +54,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         dto.setSite(entity.getSite());
         dto.setStorageAddress(entity.getStorageAddress());
         dto.setWorkCondition(entity.getWorkCondition());
+        dto.setFavorite(entity.getFavorite() ? entity.getFavorite() : false);
         return dto;
     }
 

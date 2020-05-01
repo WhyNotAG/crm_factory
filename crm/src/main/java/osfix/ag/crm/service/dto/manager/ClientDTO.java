@@ -17,4 +17,5 @@ public class ClientDTO {
     Long nextDateContact;
     String categoryName;
     Long categoryId;
+    Boolean favorite;
 }
