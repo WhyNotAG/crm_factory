@@ -20,7 +20,9 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
     @Override
     public Client toEntity(ClientDTO dto) {
         Client client = new Client();
-        client.setCategory(categoryRepo.findById(dto.getCategoryId()).orElse(null));
+        if(dto.getCategoryId() != null){
+            client.setCategory(categoryRepo.findById(dto.getCategoryId()).orElse(null));
+        }
         client.setCheck(dto.getCheck());
         client.setClientType(dto.getClientType());
         client.setComment(dto.getComment());
@@ -28,12 +30,14 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setId(dto.getId());
         client.setManager(dto.getManager());
         client.setName(dto.getName());
-        client.setNextDateContact(new Date(dto.getNextDateContact()*1000));
+        if(dto.getNextDateContact() != null){
+            client.setNextDateContact(new Date(dto.getNextDateContact()*1000));
+        }
         client.setPrice(dto.getPrice());
         client.setSite(dto.getSite());
         client.setStorageAddress(dto.getStorageAddress());
         client.setWorkCondition(dto.getWorkCondition());
-        client.setFavorite(dto.getFavorite() ? dto.getFavorite() : false);
+        client.setFavorite(dto.getFavorite() != null ? dto.getFavorite() : false);
         return client;
     }
 
