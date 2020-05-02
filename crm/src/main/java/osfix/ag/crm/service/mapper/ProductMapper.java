@@ -40,8 +40,10 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         } else {product.setProductCategory(null);}
 
 
-        for (Long packing : dto.getPackings()) {
-            product.getPackings().add(packingRepo.findById(packing).orElse(null));
+        if(dto.getPackings() != null) {
+            for (Long packing : dto.getPackings()) {
+                product.getPackings().add(packingRepo.findById(packing).orElse(null));
+            }
         }
 
         return product;
@@ -65,11 +67,13 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
             dto.setCategory(entity.getProductCategory().getCategory());
         } else { dto.setCategory(null);}
 
-        List<Long> packings = new ArrayList<>();
-        for(Packing packing : entity.getPackings()) {
-            packings.add(packing.getId());
+        if(entity.getPackings() != null) {
+            List<Long> packings = new ArrayList<>();
+            for(Packing packing : entity.getPackings()) {
+                packings.add(packing.getId());
+            }
+            dto.setPackings(packings);
         }
-        dto.setPackings(packings);
         return dto;
     }
 

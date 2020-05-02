@@ -29,7 +29,7 @@ public class PackingServiceImpl implements PackingService {
     @Override
     public Packing update(Long id, Packing packing) {
         Packing packingFromDB = packingRepo.findById(id).orElse(null);
-        BeanUtils.copyProperties(packing, packingFromDB);
+        BeanUtils.copyProperties(packing, packingFromDB, "id");
         return packingRepo.save(packingFromDB);
     }
 
