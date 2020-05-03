@@ -3,6 +3,7 @@ package osfix.ag.crm.domain.product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.Lepsari;
@@ -60,7 +61,8 @@ public class Product {
     @JsonBackReference
     private List<WorkControlProduct> workControlProducts;
 
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties("products")
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_packing", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "packing_id", referencedColumnName = "id")})

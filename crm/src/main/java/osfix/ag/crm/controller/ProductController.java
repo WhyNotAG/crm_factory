@@ -32,8 +32,8 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ProductsDTO>> findAll(){
-        return ResponseEntity.ok().body(productMapper.toDtoList(productService.findAll()));
+    public ResponseEntity<List<ProductsWithPackingsDTO>> findAll(){
+        return ResponseEntity.ok().body(productWithPackingsMapper.toDtoList(productService.findAll()));
     }
 
     @GetMapping("/{id}")

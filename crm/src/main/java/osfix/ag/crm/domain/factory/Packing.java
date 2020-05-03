@@ -1,5 +1,6 @@
 package osfix.ag.crm.domain.factory;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
@@ -29,6 +30,7 @@ public class Packing {
     String size;
 
     @JsonIgnoreProperties("packings")
+    @JsonBackReference
     @ManyToMany(mappedBy = "packings", fetch = FetchType.LAZY)
     private List<Product> products;
 
