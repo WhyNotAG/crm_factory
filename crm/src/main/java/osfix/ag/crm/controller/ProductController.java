@@ -33,8 +33,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductsDTO> findById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok().body(productMapper.fromEntity(productService.findById(id)));
+    public ResponseEntity<Product> findById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(productService.findById(id));
     }
 
     @PostMapping("/location/")
