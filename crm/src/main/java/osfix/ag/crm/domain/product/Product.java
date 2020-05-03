@@ -63,7 +63,7 @@ public class Product {
 
     @JsonIgnoreProperties("products")
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_packing", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "packing_id", referencedColumnName = "id")})
     private List<Packing> packings;
