@@ -8,9 +8,11 @@ import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.service.ProductService;
 import osfix.ag.crm.service.dto.ProductsDTO;
 import osfix.ag.crm.service.dto.ProductsWithPackingsDTO;
+import osfix.ag.crm.service.dto.ProductsWithoutPackingDTO;
 import osfix.ag.crm.service.dto.ProductsWithoutPhotoDTO;
 import osfix.ag.crm.service.mapper.ProductMapper;
 import osfix.ag.crm.service.mapper.ProductWithPackingsMapper;
+import osfix.ag.crm.service.mapper.ProductWithoutPackingsMapper;
 import osfix.ag.crm.service.mapper.ProductWithoutPhotoMapper;
 
 import java.util.List;
@@ -22,18 +24,22 @@ public class ProductController {
     private ProductMapper productMapper;
     private ProductWithoutPhotoMapper productWithoutPhotoMapper;
     private ProductWithPackingsMapper productWithPackingsMapper;
+    private ProductWithoutPackingsMapper productWithoutPackingsMapper;
 
     public ProductController(ProductService productService, ProductMapper productMapper,
-                             ProductWithoutPhotoMapper productWithoutPhotoMapper, ProductWithPackingsMapper productWithPackingsMapper) {
+                             ProductWithoutPhotoMapper productWithoutPhotoMapper,
+                             ProductWithPackingsMapper productWithPackingsMapper,
+                             ProductWithoutPackingsMapper productWithoutPackingsMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
         this.productWithoutPhotoMapper = productWithoutPhotoMapper;
         this.productWithPackingsMapper = productWithPackingsMapper;
+        this.productWithoutPackingsMapper = productWithoutPackingsMapper;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ProductsWithPackingsDTO>> findAll(){
-        return ResponseEntity.ok().body(productWithPackingsMapper.toDtoList(productService.findAll()));
+    public ResponseEntity<List<ProductsWithoutPackingDTO>> findAll(){
+        return ResponseEntity.ok().body(productWithoutPackingsMapper.toDtoList(productService.findAll()));
     }
 
     @GetMapping("/{id}")
