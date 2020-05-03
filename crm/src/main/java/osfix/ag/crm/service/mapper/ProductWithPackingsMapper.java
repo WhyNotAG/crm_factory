@@ -5,24 +5,22 @@ import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.repo.factory.PackingRepo;
-import osfix.ag.crm.repo.product.ProductCategoryRepo;
 import osfix.ag.crm.service.ProductCategoryService;
 import osfix.ag.crm.service.dto.ProductsDTO;
+import osfix.ag.crm.service.dto.ProductsWithPackingsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Component
-public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
-
+public class ProductWithPackingsMapper implements EntityMapper<Product, ProductsWithPackingsDTO> {
     @Autowired
     ProductCategoryService productCategoryService;
     @Autowired
     PackingRepo packingRepo;
 
     @Override
-    public Product toEntity(ProductsDTO dto) {
+    public Product toEntity(ProductsWithPackingsDTO dto) {
         Product product = new Product();
         product.setId(dto.getId());
         product.setWeight(dto.getWeight());
@@ -41,8 +39,8 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
 
 
         if(dto.getPackings() != null) {
-            for (Long packing : dto.getPackings()) {
-                product.getPackings().add(packingRepo.findById(packing).orElse(null));
+            for (Packing packing : dto.getPackings()) {
+                product.getPackings().add(packingRepo.findById(packing.getId()).orElse(null));
             }
         }
 
@@ -50,8 +48,8 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
     }
 
     @Override
-    public ProductsDTO fromEntity(Product entity) {
-        ProductsDTO dto = new ProductsDTO();
+    public ProductsWithPackingsDTO fromEntity(Product entity) {
+        ProductsWithPackingsDTO dto = new ProductsWithPackingsDTO();
         dto.setId(entity.getId());
         dto.setWeight(entity.getWeight());
         dto.setUnit(entity.getUnit());
@@ -68,9 +66,9 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         } else { dto.setCategory(null);}
 
         if(entity.getPackings() != null) {
-            List<Long> packings = new ArrayList<>();
+            List<Packing> packings = new ArrayList<>();
             for(Packing packing : entity.getPackings()) {
-                packings.add(packing.getId());
+                packings.add(packing);
             }
             dto.setPackings(packings);
         }
@@ -78,14 +76,14 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
     }
 
     @Override
-    public List<Product> fromDtoList(List<ProductsDTO> list) {
+    public List<Product> fromDtoList(List<ProductsWithPackingsDTO> list) {
         return list.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductsDTO> toDtoList(List<Product> list) {
+    public List<ProductsWithPackingsDTO> toDtoList(List<Product> list) {
         return list.stream()
                 .map(this::fromEntity)
                 .collect(Collectors.toList());

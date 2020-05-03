@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.service.ProductService;
 import osfix.ag.crm.service.dto.ProductsDTO;
+import osfix.ag.crm.service.dto.ProductsWithPackingsDTO;
 import osfix.ag.crm.service.dto.ProductsWithoutPhotoDTO;
 import osfix.ag.crm.service.mapper.ProductMapper;
+import osfix.ag.crm.service.mapper.ProductWithPackingsMapper;
 import osfix.ag.crm.service.mapper.ProductWithoutPhotoMapper;
 
 import java.util.List;
@@ -19,12 +21,14 @@ public class ProductController {
     private ProductService productService;
     private ProductMapper productMapper;
     private ProductWithoutPhotoMapper productWithoutPhotoMapper;
+    private ProductWithPackingsMapper productWithPackingsMapper;
 
     public ProductController(ProductService productService, ProductMapper productMapper,
-                             ProductWithoutPhotoMapper productWithoutPhotoMapper) {
+                             ProductWithoutPhotoMapper productWithoutPhotoMapper, ProductWithPackingsMapper productWithPackingsMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
         this.productWithoutPhotoMapper = productWithoutPhotoMapper;
+        this.productWithPackingsMapper = productWithPackingsMapper;
     }
 
     @GetMapping("/")
@@ -66,7 +70,7 @@ public class ProductController {
     }
 
     @PostMapping("/add/{id}")
-    public ResponseEntity<ProductsDTO> addPackings(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO productsDTO) {
-        return ResponseEntity.ok().body(productMapper.fromEntity(productService.addPacking(id, productsDTO.getPackings())));
+    public ResponseEntity<ProductsWithPackingsDTO> addPackings(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO productsDTO) {
+        return ResponseEntity.ok().body(productWithPackingsMapper.fromEntity(productService.addPacking(id, productsDTO.getPackings())));
     }
 }

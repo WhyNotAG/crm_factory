@@ -5,9 +5,8 @@ import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.TypeOfProduct;
 
 import java.util.List;
-
 @Data
-public class ProductsDTO {
+public class ProductsWithPackingsDTO {
     private long id;
     private String name;
     private TypeOfProduct typeOfProduct;
@@ -19,5 +18,5 @@ public class ProductsDTO {
     private String vendor;
     private String category;
     private String productionLocation;
-    private List<Long> packings;
+    private List<Packing> packings;
 }
