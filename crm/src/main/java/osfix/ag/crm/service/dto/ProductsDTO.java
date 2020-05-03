@@ -20,4 +20,5 @@ public class ProductsDTO {
     private String category;
     private String productionLocation;
     private List<Long> packings;
+    private List<Packing> packingsOutput;
 }

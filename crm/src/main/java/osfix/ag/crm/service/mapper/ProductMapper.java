@@ -68,11 +68,11 @@ public class ProductMapper implements EntityMapper<Product, ProductsDTO> {
         } else { dto.setCategory(null);}
 
         if(entity.getPackings() != null) {
-            List<Long> packings = new ArrayList<>();
+            List<Packing> packings = new ArrayList<>();
             for(Packing packing : entity.getPackings()) {
-                packings.add(packing.getId());
+                packings.add(packing);
             }
-            dto.setPackings(packings);
+            dto.setPackingsOutput(packings);
         }
         return dto;
     }
