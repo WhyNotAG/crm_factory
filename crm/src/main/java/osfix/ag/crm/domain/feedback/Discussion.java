@@ -1,7 +1,6 @@
 package osfix.ag.crm.domain.feedback;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import javax.persistence.*;
