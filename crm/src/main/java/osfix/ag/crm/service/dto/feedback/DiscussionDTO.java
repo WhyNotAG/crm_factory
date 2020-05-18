@@ -10,4 +10,5 @@ public class DiscussionDTO {
     String status;
     String subject;
     String text;
+    Boolean isRead;
 }

@@ -21,6 +21,7 @@ public class DiscussionMapper implements EntityMapper<Discussion, DiscussionDTO>
         discussion.setStatus(dto.getStatus());
         discussion.setSubject(dto.getSubject());
         discussion.setText(dto.getText());
+        discussion.setIsRead(dto.getIsRead());
         return discussion;
     }
 
@@ -34,6 +35,7 @@ public class DiscussionMapper implements EntityMapper<Discussion, DiscussionDTO>
         dto.setStatus(entity.getStatus());
         dto.setSubject(entity.getSubject());
         dto.setText(entity.getText());
+        dto.setIsRead(entity.getIsRead());
         return dto;
     }
 
