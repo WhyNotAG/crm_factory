@@ -31,8 +31,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> findById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(id)));
+    public ResponseEntity<Employee> findById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(employeeService.findById(id));
     }
 
     @PostMapping("/")

@@ -54,7 +54,7 @@ public class Employee {
     @Column(name = "relevance")
     String relevance;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     @JsonBackReference
     public List<WorkControl> workControls = new ArrayList<>();
 

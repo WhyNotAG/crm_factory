@@ -39,11 +39,11 @@ public class WorkControl {
     @JsonIdentityReference
     private Employee employee;
 
-    @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "workControl", fetch = FetchType.LAZY)
     @JsonManagedReference
     List<WorkControlProduct> workControlProduct;
 
-    @OneToMany(mappedBy = "workControl", cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "workControl", fetch = FetchType.LAZY)
     @JsonManagedReference
     List<WorkControlProduct> workControlTrashBase;
 
