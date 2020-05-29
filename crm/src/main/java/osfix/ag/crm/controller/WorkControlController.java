@@ -3,13 +3,18 @@ package osfix.ag.crm.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.dispatcher.rigging.parts.Part;
+import osfix.ag.crm.service.PartsWorkService;
 import osfix.ag.crm.service.WorkControlService;
 import osfix.ag.crm.service.dto.ProductsDTO;
 import osfix.ag.crm.service.dto.ReWorkControlDTO;
 import osfix.ag.crm.service.dto.WorkControlDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
+import osfix.ag.crm.service.dto.factory.PartsDTO;
+import osfix.ag.crm.service.dto.factory.PartsWorkDTO;
 import osfix.ag.crm.service.mapper.ReWorkControlMapper;
 import osfix.ag.crm.service.mapper.WorkControlMapper;
+import osfix.ag.crm.service.mapper.factory.PartsWorkMapper;
 
 import java.util.List;
 
@@ -19,12 +24,17 @@ public class WorkControlController {
     private WorkControlService workControlService;
     private WorkControlMapper workControlMapper;
     private ReWorkControlMapper reWorkControlMapper;
+    private PartsWorkService partsWorkService;
+    private PartsWorkMapper partsWorkMapper;
 
     public WorkControlController(WorkControlService workControlService, WorkControlMapper workControlMapper,
-                                 ReWorkControlMapper reWorkControlMapper) {
+                                 ReWorkControlMapper reWorkControlMapper, PartsWorkService partsWorkService,
+                                 PartsWorkMapper partsWorkMapper) {
         this.workControlService = workControlService;
         this.workControlMapper = workControlMapper;
         this.reWorkControlMapper = reWorkControlMapper;
+        this.partsWorkService = partsWorkService;
+        this.partsWorkMapper = partsWorkMapper;
     }
 
     @GetMapping("/")
@@ -76,6 +86,27 @@ public class WorkControlController {
                                                        @PathVariable(name = "quantity") Long quantity,
                                                        @RequestBody ProductsDTO productsDTO) {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.addProduct(id, pr_id, quantity, productsDTO.getName())));
+    }
+
+
+    @GetMapping("/part/{id}")
+    public ResponseEntity<PartsDTO> getPart(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok().body(partsWorkService.getPart(id));
+    }
+
+    @PostMapping("/part/")
+    public ResponseEntity<ReWorkControlDTO> addPart( @RequestBody PartsWorkDTO partsWorkDTO) {
+        partsWorkService.save(partsWorkMapper.toEntity(partsWorkDTO));
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.findById(partsWorkDTO.getWorkControl())));
+    }
+
+    @DeleteMapping("/part/{id}&{part_id}&{part_type}")
+    public ResponseEntity<ReWorkControlDTO> deletePart(@PathVariable(name = "id") Long id,
+                                                          @PathVariable(name = "part_id") Long part_id,
+                                                       @PathVariable(name = "part_type") String part_type) {
+        WorkControl workControl = workControlService.findById(id);
+        partsWorkService.deletePart(workControl, part_id, part_type);
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.findById(id)));
     }
 
     @DeleteMapping("/product/{id}&{pr_id}")

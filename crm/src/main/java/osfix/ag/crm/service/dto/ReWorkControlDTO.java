@@ -2,6 +2,7 @@ package osfix.ag.crm.service.dto;
 
 import lombok.Data;
 import osfix.ag.crm.domain.WorkList;
+import osfix.ag.crm.domain.dispatcher.rigging.parts.PartsWork;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public class ReWorkControlDTO {
     Double hours;
     private EmployeeDTO employee;
     List<WorkControlProduct> workControlProduct;
+    List<PartsWork> partsWorks;
 }

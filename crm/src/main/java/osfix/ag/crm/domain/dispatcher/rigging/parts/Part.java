@@ -1,8 +1,11 @@
 package osfix.ag.crm.domain.dispatcher.rigging.parts;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import osfix.ag.crm.domain.product.WorkControlProduct;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @MappedSuperclass
@@ -49,4 +52,5 @@ public abstract class Part {
 
     @Column(name = "drawing")
     String drawing;
+
 }

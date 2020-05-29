@@ -17,7 +17,7 @@ public class WorkControlProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIdentityReference
     private Product product;
 

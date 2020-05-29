@@ -6,6 +6,7 @@ import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 import osfix.ag.crm.repo.WorkControlRepo;
 import osfix.ag.crm.repo.product.WorkControlProductRepo;
+import osfix.ag.crm.repo.rigging.part.PartsWorkRepo;
 import osfix.ag.crm.service.dto.ReWorkControlDTO;
 
 import java.util.List;
@@ -19,10 +20,14 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
     @Autowired
     WorkControlProductRepo workControlProductRepo;
 
+    @Autowired
+    PartsWorkRepo partsWorkRepo;
+
     @Override
     public WorkControl toEntity(ReWorkControlDTO dto) {
         WorkControl workControl = new WorkControl();
         workControl.setWorkControlProduct(dto.getWorkControlProduct());
+        workControl.setPartsWork(dto.getPartsWorks());
         workControl.setYear(dto.getYear());
         workControl.setWorkList(dto.getWorkList());
         workControl.setMonth(dto.getMonth());
@@ -40,6 +45,12 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
             else {
                 List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
                 dto.setWorkControlProduct(products);
+        }
+
+        if (entity.getPartsWork() != null) { dto.setPartsWorks(entity.getPartsWork()); }
+        else {
+            List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
+            dto.setWorkControlProduct(products);
         }
         dto.setYear(entity.getYear());
         dto.setWorkList(entity.getWorkList());

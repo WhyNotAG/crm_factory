@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import osfix.ag.crm.domain.dispatcher.rigging.parts.PartsWork;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 
 import javax.persistence.*;
@@ -34,6 +35,9 @@ public class WorkControl {
     @Column(name = "hours")
     Double hours;
 
+    @Column(name = "comments")
+    Double comments;
+
     @ManyToOne
     @JsonIgnoreProperties("workControls")
     @JsonIdentityReference
@@ -45,6 +49,6 @@ public class WorkControl {
 
     @OneToMany(mappedBy = "workControl", fetch = FetchType.LAZY)
     @JsonManagedReference
-    List<WorkControlProduct> workControlTrashBase;
+    List<PartsWork> PartsWork;
 
 }
