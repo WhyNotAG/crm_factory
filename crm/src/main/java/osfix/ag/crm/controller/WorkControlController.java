@@ -104,7 +104,7 @@ public class WorkControlController {
     public ResponseEntity<ReWorkControlDTO> deletePart(@PathVariable(name = "id") Long id,
                                                           @PathVariable(name = "part_id") Long part_id,
                                                        @PathVariable(name = "part_type") String part_type) {
-        partsWorkService.deletePart(part_id, id, part_type);
+        partsWorkService.deletePart(id, part_id, part_type);
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.findById(id)));
     }
 

@@ -80,7 +80,6 @@ public class PartsWorkServiceImpl implements PartsWorkService {
     @Override
     public void deletePart(Long id, Long part_id, String type) {
         PartsWork partsWork = partsWorkRepo.findByPartIdAndWorkControlIdAndPartType(part_id, id, type);
-        System.out.println(partsWork.getPartType());
         partsWorkRepo.delete(partsWork);
     }
 
