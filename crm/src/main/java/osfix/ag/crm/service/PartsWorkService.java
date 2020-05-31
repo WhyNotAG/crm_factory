@@ -14,6 +14,6 @@ public interface PartsWorkService {
     PartsWork update(Long id,  PartsWork partsWork);
     PartsWork save( PartsWork partsWork);
     PartsDTO getPart(Long id);
-    void deletePart(WorkControl workControl, Long part_id, String type);
+    void deletePart(Long id, Long part_id, String type);
     void delete(Long id);
 }

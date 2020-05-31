@@ -8,5 +8,5 @@ import osfix.ag.crm.domain.dispatcher.rigging.parts.PartsWork;
 
 @Repository
 public interface PartsWorkRepo extends JpaRepository<PartsWork, Long> {
-    PartsWork findByPartIdAndAndWorkControlAndPartType(Long part_id, WorkControl workControl, String type);
+    PartsWork findByPartIdAndWorkControlIdAndPartType(Long part_id, Long id, String type);
 }

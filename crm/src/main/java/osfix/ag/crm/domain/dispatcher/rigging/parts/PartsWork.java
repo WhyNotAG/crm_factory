@@ -19,6 +19,9 @@ public class PartsWork {
     @Column(name = "part_type")
     String partType;
 
+    @Column(name = "name")
+    String name;
+
     @Column(name = "quantity")
     Long quantity;
 

@@ -9,4 +9,5 @@ public class PartsWorkDTO {
     String partType;
     Long quantity;
     Long workControl;
+    String name;
 }
