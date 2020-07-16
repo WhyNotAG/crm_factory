@@ -2,6 +2,7 @@ package osfix.ag.crm.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.LepsariProduct;
@@ -44,6 +45,7 @@ public class Lepsari {
     public List<LepsariProduct> lepsariProducts = new ArrayList<>();
 
     @OneToOne
+    @JsonIgnore
     @JsonBackReference
     Request request;
 }

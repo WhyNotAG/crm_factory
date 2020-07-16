@@ -1,8 +1,6 @@
 package osfix.ag.crm.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import osfix.ag.crm.domain.product.LemzProduct;
 import osfix.ag.crm.domain.product.RequestProduct;
@@ -46,6 +44,7 @@ public class LEMZ {
     public List<LemzProduct> lemzProducts = new ArrayList<>();
 
     @OneToOne
+    @JsonIgnore
     @JsonBackReference
     Request request;
 }
