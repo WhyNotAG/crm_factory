@@ -1,5 +1,7 @@
 package osfix.ag.crm.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.LemzProduct;
@@ -42,4 +44,9 @@ public class LEMZ {
     @OneToMany(mappedBy = "lemz", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     public List<LemzProduct> lemzProducts = new ArrayList<>();
+
+    @OneToOne
+    @JsonIgnore
+    @JsonBackReference
+    Request request;
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Lepsari;
 import osfix.ag.crm.repo.LepsariRepo;
+import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.service.LepsariService;
 
 import java.util.List;
@@ -11,8 +12,12 @@ import java.util.List;
 @Service
 public class LepsariServiceImpl implements LepsariService {
     private LepsariRepo lepsariRepo;
+    private RequestRepo requestRepo;
 
-    public LepsariServiceImpl(LepsariRepo lepsariRepo) { this.lepsariRepo = lepsariRepo; }
+    public LepsariServiceImpl(LepsariRepo lepsariRepo, RequestRepo requestRepo) {
+        this.lepsariRepo = lepsariRepo;
+        this.requestRepo = requestRepo;
+    }
 
     @Override
     public Lepsari findById(Long id) { return lepsariRepo.findById(id).orElse(null); }
@@ -37,6 +42,8 @@ public class LepsariServiceImpl implements LepsariService {
     public void changeStatus(Long id, String status) {
         Lepsari lepsari = lepsariRepo.findById(id).orElse(null);
         lepsari.setStatus(status);
+        lepsari.getRequest().setStatus(status);
+        requestRepo.save(lepsari.getRequest());
         lepsariRepo.save(lepsari);
     }
 }

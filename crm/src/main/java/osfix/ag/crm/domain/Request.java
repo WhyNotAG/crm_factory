@@ -1,9 +1,6 @@
 package osfix.ag.crm.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.product.RequestProduct;
@@ -42,4 +39,13 @@ public class Request {
     @JsonManagedReference
     public List<RequestProduct> requestProducts = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
+    @JsonManagedReference
+    @JsonIgnore
+    public LEMZ lemz;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
+    @JsonManagedReference
+    @JsonIgnore
+    public Lepsari lepsari;
 }
