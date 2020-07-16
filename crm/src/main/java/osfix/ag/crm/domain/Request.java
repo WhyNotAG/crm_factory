@@ -40,12 +40,10 @@ public class Request {
     public List<RequestProduct> requestProducts = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonBackReference
     public LEMZ lemz;
 
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonBackReference
     public Lepsari lepsari;
 }

@@ -62,8 +62,8 @@ public class RequestController {
     }
 
     @GetMapping("/copy/{id}/{factory}")
-    public void copy(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
-        requestService.copy(id,factory);
+    public ResponseEntity<Long> copy(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
+        return ResponseEntity.ok().body(requestService.copy(id,factory));
     }
 
     @DeleteMapping("/pro/{id}")

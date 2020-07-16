@@ -104,10 +104,10 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void copy(Long id, String factory) {
+    public Long copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
 
-        if(factory.equals("Lemz")){
+        if(factory.equals("lemz")){
             List<LemzProduct> lemzProducts = new ArrayList<>();
             LEMZ lemz = new LEMZ();
             lemz.setStatus(request.getStatus());
@@ -133,9 +133,10 @@ public class RequestServiceImpl implements RequestService {
                 lemzProductService.save(requestProductDTO);
             }
             request.setLemz(lemz);
+            return  lemz.getId();
         }
 
-        if(factory.equals("Lepsari")){
+        if(factory.equals("lepsari")){
             List<LepsariProduct> lepsariProducts = new ArrayList<>();
             Lepsari lepsari = new Lepsari();
             lepsari.setStatus(request.getStatus());
@@ -160,9 +161,10 @@ public class RequestServiceImpl implements RequestService {
                 requestProductDTO.setStatus(product.getStatus());
                 lepsariProductService.save(requestProductDTO);
             }
-
             request.setLepsari(lepsari);
+            return lepsari.getId();
         }
+        return null;
     }
 
     public void deletePro(Long id) {

@@ -45,6 +45,5 @@ public class Lepsari {
 
     @OneToOne
     @JsonBackReference
-    @JsonIgnore
     Request request;
 }

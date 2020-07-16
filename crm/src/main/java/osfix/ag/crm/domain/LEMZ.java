@@ -46,7 +46,6 @@ public class LEMZ {
     public List<LemzProduct> lemzProducts = new ArrayList<>();
 
     @OneToOne
-    @JsonIgnore
     @JsonBackReference
     Request request;
 }
