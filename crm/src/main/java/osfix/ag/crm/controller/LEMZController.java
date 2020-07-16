@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.LEMZ;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.service.LEMZService;
+import osfix.ag.crm.service.dto.RequestProductDTO;
 
 import javax.persistence.Column;
 import java.util.List;
@@ -43,7 +44,7 @@ public class LEMZController {
     }
 
     @PutMapping("/status/{id}")
-    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody LEMZ lemz) {
+    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestProductDTO lemz) {
         lemzService.changeStatus(id, lemz.getStatus());
     }
 }

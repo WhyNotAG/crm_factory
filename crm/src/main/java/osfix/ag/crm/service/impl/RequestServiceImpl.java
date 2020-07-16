@@ -107,6 +107,10 @@ public class RequestServiceImpl implements RequestService {
     public Long copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
 
+        if(request.getLepsari() != null || request.getLemz() != null) {
+            return null;
+        }
+
         if(factory.equals("lemz")){
             List<LemzProduct> lemzProducts = new ArrayList<>();
             LEMZ lemz = new LEMZ();

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.Lepsari;
 import osfix.ag.crm.service.LepsariService;
+import osfix.ag.crm.service.dto.RequestProductDTO;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class LepsariController {
     }
 
     @PutMapping("/status/{id}")
-    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody Lepsari lepsari) {
+    public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestProductDTO lepsari) {
         lepsariService.changeStatus(id, lepsari.getStatus());
     }
 }
