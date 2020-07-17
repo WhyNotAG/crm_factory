@@ -45,7 +45,6 @@ public class Lepsari {
     public List<LepsariProduct> lepsariProducts = new ArrayList<>();
 
     @OneToOne
-    @JsonIgnore
     @JsonBackReference
     Request request;
 }

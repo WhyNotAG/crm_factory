@@ -46,66 +46,57 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public Request update(Long id, Request request) {
         Request requestFromDb = findId(id);
-        BeanUtils.copyProperties(request,requestFromDb, "id");
-        Request result = requestRepo.save(requestFromDb);
+        BeanUtils.copyProperties(request,requestFromDb, "id", "lepsari", "lemz");
+        if(requestFromDb.getLemz() != null) {
 
-        if(request.getLemz() != null) {
-            List<LemzProduct> lemzProducts = new ArrayList<>();
-            LEMZ lemz = new LEMZ();
-            lemz.setStatus(request.getStatus());
-            lemz.setCodeWord(request.getCodeWord());
-            lemz.setComment("");
-            lemz.setDate(request.getDate());
-            lemz.setQuantity(request.getQuantity());
-            lemz.setResponsible(request.getResponsible());
+            requestFromDb.getLemz().setStatus(requestFromDb.getStatus());
+            requestFromDb.getLemz().setCodeWord(requestFromDb.getCodeWord());
+            requestFromDb.getLemz().setComment("");
+            requestFromDb.getLemz().setDate(requestFromDb.getDate());
+            requestFromDb.getLemz().setQuantity(requestFromDb.getQuantity());
+            requestFromDb.getLemz().setResponsible(requestFromDb.getResponsible());
 
 
-            lemz.setShippingDate(request.getDate());
-            lemz.setLemzProducts(lemzProducts);
-            lemz.setRequest(request);
-            lemz  = lemzRepo.save(lemz);
+            requestFromDb.getLemz().setShippingDate(requestFromDb.getDate());
+            requestFromDb.getLemz().setRequest(requestFromDb);
 
-            for(RequestProduct product : request.getRequestProducts()) {
+            for(RequestProduct product : requestFromDb.getRequestProducts()) {
                 RequestProductDTO requestProductDTO = new RequestProductDTO();
                 requestProductDTO.setName(product.getName());
                 requestProductDTO.setPackaging(product.getPackaging());
                 requestProductDTO.setQuantity(product.getQuantity());
-                requestProductDTO.setRequestId(lemz.getId());
+                requestProductDTO.setRequestId(requestFromDb.getLemz().getId());
                 requestProductDTO.setStatus(product.getStatus());
                 lemzProductService.save(requestProductDTO);
             }
-            request.setLemz(lemz);
+            lemzRepo.save(requestFromDb.getLemz());
         }
 
 
-        if(request.getLepsari() != null) {
-            List<LepsariProduct> lepsariProducts = new ArrayList<>();
-            Lepsari lepsari = new Lepsari();
-            lepsari.setStatus(request.getStatus());
-            lepsari.setCodeWord(request.getCodeWord());
-            lepsari.setComment("");
-            lepsari.setDate(request.getDate());
-            lepsari.setQuantity(request.getQuantity());
-            lepsari.setResponsible(request.getResponsible());
+        if(requestFromDb.getLepsari() != null) {
+            requestFromDb.getLepsari().setStatus(requestFromDb.getStatus());
+            requestFromDb.getLepsari().setCodeWord(requestFromDb.getCodeWord());
+            requestFromDb.getLepsari().setComment("");
+            requestFromDb.getLepsari().setDate(requestFromDb.getDate());
+            requestFromDb.getLepsari().setQuantity(requestFromDb.getQuantity());
+            requestFromDb.getLepsari().setResponsible(requestFromDb.getResponsible());
 
 
-            lepsari.setShippingDate(request.getDate());
-            lepsari.setLepsariProducts(lepsariProducts);
-            lepsari.setRequest(request);
-            lepsari = lepsariRepo.save(lepsari);
+            requestFromDb.getLepsari().setShippingDate(requestFromDb.getDate());
+            requestFromDb.getLepsari().setRequest(requestFromDb);
 
-            for(RequestProduct product : request.getRequestProducts()) {
+            for(RequestProduct product : requestFromDb.getRequestProducts()) {
                 RequestProductDTO requestProductDTO = new RequestProductDTO();
                 requestProductDTO.setName(product.getName());
                 requestProductDTO.setPackaging(product.getPackaging());
                 requestProductDTO.setQuantity(product.getQuantity());
-                requestProductDTO.setRequestId(lepsari.getId());
+                requestProductDTO.setRequestId(requestFromDb.getLepsari().getId());
                 requestProductDTO.setStatus(product.getStatus());
                 lepsariProductService.save(requestProductDTO);
             }
-            request.setLepsari(lepsari);
+            lepsariRepo.save(requestFromDb.getLepsari());
         }
-        return result;
+        return requestRepo.save(requestFromDb);
     }
 
     @Override
