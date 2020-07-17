@@ -34,6 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> findAllByTypeOrType(String type, String type2) {
+        return categoryRepo.findAllByTypeOrType(type, type2);
+    }
+
+    @Override
     public Category save(Category category) {
         return categoryRepo.save(category);
     }

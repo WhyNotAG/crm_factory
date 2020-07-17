@@ -63,6 +63,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Page<Client> findAllByCategory_NameAndClientTypeAndTypeOrType(String name, String clientType, String type, String type2, Pageable pageable) {
+        return clientRepo.findAllByCategory_NameAndClientTypeAndTypeOrType(name, clientType, type, type2, pageable);
+    }
+
+    @Override
     public Client updateDate(Long id, Long date) {
         Client client = clientRepo.findById(id).orElse(null);
         client.setNextDateContact(new Date(date*1000));

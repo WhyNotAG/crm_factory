@@ -53,6 +53,9 @@ public class Client {
     @Column(name = "favorite")
     Boolean favorite;
 
+    @Column(name = "type")
+    String type;
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
     @JsonIdentityReference
     public List<LegalEntity> legalEntities = new ArrayList<>();

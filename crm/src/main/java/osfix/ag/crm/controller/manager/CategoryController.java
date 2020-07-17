@@ -32,6 +32,16 @@ public class CategoryController {
         return categoryService.save(categoryMapper.toEntity(category));
     }
 
+    @GetMapping("/client/")
+    public List<Category> getClientCategories(){
+        return categoryService.findAllByTypeOrType("client", null);
+    }
+
+    @GetMapping("/supplier/")
+    public List<Category> getSupplierCategories(){
+        return categoryService.findAllByTypeOrType("supplier", "supplier");
+    }
+
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name="id") long id) { categoryService.delete(id);}

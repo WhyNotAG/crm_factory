@@ -69,6 +69,16 @@ public class ClientController {
         return clientService.findAllByCategory_NameAndClientType(client.getCategoryName(), client.getClientType(), pageable);
     }
 
+    @PostMapping("/category_type/client/")
+    public Page<Client> findAllClientByCategoryNameAndType(@RequestBody ClientDTO client, @PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+        return clientService.findAllByCategory_NameAndClientTypeAndTypeOrType(client.getCategoryName(), client.getClientType(), "client", null, pageable);
+    }
+
+    @PostMapping("/category_type/supplier/")
+    public Page<Client> findAllSupplierByCategoryNameAndType(@RequestBody ClientDTO client, @PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
+        return clientService.findAllByCategory_NameAndClientTypeAndTypeOrType(client.getCategoryName(), client.getClientType(), "supplier", "supplier", pageable);
+    }
+
     @PostMapping("/date/")
     public Client changeDate(@RequestBody ClientDTO client) {
         return clientService.updateDate(client.getId(), client.getNextDateContact());

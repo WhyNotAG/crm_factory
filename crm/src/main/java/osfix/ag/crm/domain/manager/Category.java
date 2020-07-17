@@ -23,6 +23,9 @@ public class Category {
     @Column(name = "visibility")
     String visibility;
 
+    @Column(name = "type")
+    String type;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH)
     @JsonBackReference
     public List<Client> clients = new ArrayList<>();
