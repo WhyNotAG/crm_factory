@@ -34,7 +34,7 @@ public class CategoryController {
 
     @GetMapping("/client/")
     public List<Category> getClientCategories(){
-        return categoryService.findAllByTypeOrType("client", null);
+        return categoryService.findAllByTypeOrType(null, null);
     }
 
     @GetMapping("/supplier/")
