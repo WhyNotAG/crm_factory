@@ -2,6 +2,8 @@ package osfix.ag.crm.service.impl.product;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import osfix.ag.crm.domain.Lepsari;
+import osfix.ag.crm.domain.product.LemzProduct;
 import osfix.ag.crm.domain.product.LepsariProduct;
 import osfix.ag.crm.repo.product.LepsariProductRepo;
 import osfix.ag.crm.service.LepsariProductService;
@@ -13,11 +15,9 @@ import java.util.List;
 @Service
 public class LepsariProductServiceImpl implements LepsariProductService {
     private LepsariProductRepo lepsariProductRepo;
-    private LepsariProductMapper lepsariProductMapper;
 
-    public LepsariProductServiceImpl(LepsariProductRepo lepsariProductRepo, LepsariProductMapper lepsariProductMapper) {
+    public LepsariProductServiceImpl(LepsariProductRepo lepsariProductRepo) {
         this.lepsariProductRepo = lepsariProductRepo;
-        this.lepsariProductMapper = lepsariProductMapper;
     }
 
     @Override
@@ -38,8 +38,8 @@ public class LepsariProductServiceImpl implements LepsariProductService {
     }
 
     @Override
-    public LepsariProduct save(RequestProductDTO requestProduct) {
-        LepsariProduct lemzProduct = lepsariProductMapper.toEntity(requestProduct);
+    public LepsariProduct save(LepsariProduct requestProduct) {
+        LepsariProduct lemzProduct = requestProduct;
         return lepsariProductRepo.save(lemzProduct);
     }
 

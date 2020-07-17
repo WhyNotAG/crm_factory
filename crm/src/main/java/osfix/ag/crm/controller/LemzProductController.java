@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.LemzProduct;
 import osfix.ag.crm.service.LemzProductService;
 import osfix.ag.crm.service.dto.RequestProductDTO;
+import osfix.ag.crm.service.mapper.LemzProductMapper;
 
 import java.util.List;
 
@@ -12,9 +13,11 @@ import java.util.List;
 @RequestMapping("/api/v1/lemz_product")
 public class LemzProductController {
     private LemzProductService lemzProductService;
+    private LemzProductMapper lemzProductMapper;
 
-    public LemzProductController(LemzProductService lemzProductService) {
+    public LemzProductController(LemzProductService lemzProductService, LemzProductMapper lemzProductMapper) {
         this.lemzProductService = lemzProductService;
+        this.lemzProductMapper = lemzProductMapper;
     }
 
     @GetMapping("/")
@@ -29,7 +32,7 @@ public class LemzProductController {
 
     @PostMapping("/")
     public ResponseEntity<LemzProduct> add(@RequestBody RequestProductDTO requestProduct) {
-        return ResponseEntity.ok().body(lemzProductService.save(requestProduct));
+        return ResponseEntity.ok().body(lemzProductService.save(lemzProductMapper.toEntity(requestProduct)));
     }
 
     @PutMapping("/{id}")

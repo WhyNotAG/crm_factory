@@ -9,7 +9,7 @@ public interface LemzProductService {
     List<LemzProduct> findAll();
     LemzProduct findById(Long id);
     LemzProduct update(Long id, RequestProductDTO requestProduct);
-    LemzProduct save(RequestProductDTO requestProduct);
+    LemzProduct save(LemzProduct requestProduct);
     LemzProduct changeStatus(Long id, String status);
     void delete(Long id);
 }

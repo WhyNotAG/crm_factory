@@ -16,6 +16,8 @@ import osfix.ag.crm.service.LemzProductService;
 import osfix.ag.crm.service.LepsariProductService;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.RequestProductDTO;
+import osfix.ag.crm.service.mapper.LemzProductMapper;
+import osfix.ag.crm.service.mapper.LepsariProductMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +29,19 @@ public class RequestServiceImpl implements RequestService {
     private LEMZRepo lemzRepo;
     private LemzProductService lemzProductService;
     private LepsariProductService lepsariProductService;
+    private LemzProductMapper lemzProductMapper;
+    private LepsariProductMapper lepsariProductMapper;
 
     public RequestServiceImpl(RequestRepo requestRepo, LEMZRepo lemzRepo, LepsariRepo lepsariRepo,
-                              LemzProductService lemzProductService, LepsariProductService lepsariProductService) {
+                              LemzProductService lemzProductService, LepsariProductService lepsariProductService,
+                              LemzProductMapper lemzProductMapper, LepsariProductMapper lepsariProductMapper) {
         this.requestRepo = requestRepo;
         this.lemzRepo = lemzRepo;
         this.lepsariRepo = lepsariRepo;
         this.lemzProductService = lemzProductService;
         this.lepsariProductService = lepsariProductService;
+        this.lemzProductMapper = lemzProductMapper;
+        this.lepsariProductMapper = lepsariProductMapper;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class RequestServiceImpl implements RequestService {
                 requestProductDTO.setQuantity(product.getQuantity());
                 requestProductDTO.setRequestId(requestFromDb.getLemz().getId());
                 requestProductDTO.setStatus(product.getStatus());
-                lemzProductService.save(requestProductDTO);
+                lemzProductService.save(lemzProductMapper.toEntity(requestProductDTO));
             }
             lemzRepo.save(requestFromDb.getLemz());
         }
@@ -92,7 +99,7 @@ public class RequestServiceImpl implements RequestService {
                 requestProductDTO.setQuantity(product.getQuantity());
                 requestProductDTO.setRequestId(requestFromDb.getLepsari().getId());
                 requestProductDTO.setStatus(product.getStatus());
-                lepsariProductService.save(requestProductDTO);
+                lepsariProductService.save(lepsariProductMapper.toEntity(requestProductDTO));
             }
             lepsariRepo.save(requestFromDb.getLepsari());
         }
@@ -182,7 +189,7 @@ public class RequestServiceImpl implements RequestService {
                 requestProductDTO.setQuantity(product.getQuantity());
                 requestProductDTO.setRequestId(lemz.getId());
                 requestProductDTO.setStatus(product.getStatus());
-                lemzProductService.save(requestProductDTO);
+                lemzProductService.save(lemzProductMapper.toEntity(requestProductDTO));
             }
             request.setLemz(lemz);
             return  lemz.getId();
@@ -211,7 +218,7 @@ public class RequestServiceImpl implements RequestService {
                 requestProductDTO.setQuantity(product.getQuantity());
                 requestProductDTO.setRequestId(lepsari.getId());
                 requestProductDTO.setStatus(product.getStatus());
-                lepsariProductService.save(requestProductDTO);
+                lepsariProductService.save(lepsariProductMapper.toEntity(requestProductDTO));
             }
             request.setLepsari(lepsari);
             return lepsari.getId();

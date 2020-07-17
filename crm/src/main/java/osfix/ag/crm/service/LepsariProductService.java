@@ -10,7 +10,7 @@ public interface LepsariProductService {
     List<LepsariProduct> findAll();
     LepsariProduct findById(Long id);
     LepsariProduct update(Long id, RequestProductDTO requestProduct);
-    LepsariProduct save(RequestProductDTO requestProduct);
+    LepsariProduct save(LepsariProduct requestProduct);
     LepsariProduct changeStatus(Long id, String status);
     void delete(Long id);
 }

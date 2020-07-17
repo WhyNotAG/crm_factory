@@ -3,6 +3,7 @@ package osfix.ag.crm.service.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.product.LepsariProduct;
+import osfix.ag.crm.repo.LepsariRepo;
 import osfix.ag.crm.service.LepsariService;
 import osfix.ag.crm.service.dto.RequestProductDTO;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 public class LepsariProductMapper implements EntityMapper<LepsariProduct, RequestProductDTO>{
 
     @Autowired
-    private LepsariService lepsariService;
+    private LepsariRepo lepsariRepo;
 
     @Override
     public LepsariProduct toEntity(RequestProductDTO dto) {
@@ -22,7 +23,7 @@ public class LepsariProductMapper implements EntityMapper<LepsariProduct, Reques
         requestProduct.setQuantity(dto.getQuantity());
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
-        requestProduct.setLepsari(lepsariService.findById(dto.getRequestId()));
+        requestProduct.setLepsari(lepsariRepo.findById(dto.getRequestId()).orElse(null));
         requestProduct.setStatus(dto.getStatus());
         return requestProduct;
     }

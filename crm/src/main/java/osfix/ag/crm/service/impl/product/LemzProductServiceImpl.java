@@ -13,11 +13,9 @@ import java.util.List;
 @Service
 public class LemzProductServiceImpl implements LemzProductService {
     private LemzProductRepo lemzProductRepo;
-    private LemzProductMapper lemzProductMapper;
 
-    public LemzProductServiceImpl(LemzProductRepo lemzProductRepo, LemzProductMapper lemzProductMapper) {
+    public LemzProductServiceImpl(LemzProductRepo lemzProductRepo) {
         this.lemzProductRepo = lemzProductRepo;
-        this.lemzProductMapper = lemzProductMapper;
     }
 
     @Override
@@ -38,8 +36,8 @@ public class LemzProductServiceImpl implements LemzProductService {
     }
 
     @Override
-    public LemzProduct save(RequestProductDTO requestProduct) {
-        LemzProduct lemzProduct = lemzProductMapper.toEntity(requestProduct);
+    public LemzProduct save(LemzProduct requestProduct) {
+        LemzProduct lemzProduct =requestProduct;
         return lemzProductRepo.save(lemzProduct);
     }
 

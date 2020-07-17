@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.product.LepsariProduct;
 import osfix.ag.crm.service.LepsariProductService;
 import osfix.ag.crm.service.dto.RequestProductDTO;
+import osfix.ag.crm.service.mapper.LepsariProductMapper;
 
 import java.util.List;
 
@@ -13,9 +14,12 @@ import java.util.List;
 @RequestMapping("/api/v1/lepsari_product")
 public class LepsariProductController {
     private LepsariProductService lepsariProductService;
+    private LepsariProductMapper lepsariProductMapper;
 
-    public LepsariProductController(LepsariProductService lepsariProductService) {
+    public LepsariProductController(LepsariProductService lepsariProductService,
+                                    LepsariProductMapper lepsariProductMapper) {
         this.lepsariProductService = lepsariProductService;
+        this.lepsariProductMapper = lepsariProductMapper;
     }
 
     @GetMapping("/")
@@ -30,7 +34,7 @@ public class LepsariProductController {
 
     @PostMapping("/")
     public ResponseEntity<LepsariProduct> add(@RequestBody RequestProductDTO requestProduct) {
-        return ResponseEntity.ok().body(lepsariProductService.save(requestProduct));
+        return ResponseEntity.ok().body(lepsariProductService.save(lepsariProductMapper.toEntity(requestProduct)));
     }
 
     @PutMapping("/{id}")
