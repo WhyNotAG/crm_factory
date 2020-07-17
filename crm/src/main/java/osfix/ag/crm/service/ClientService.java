@@ -12,7 +12,7 @@ public interface ClientService {
     Page<Client> findAllByCategory_Name(String name, Pageable pageable);
     Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable);
     Page<Client> findAllByCategory_NameAndClientTypeAndTypeOrType(String name, String clientType, String type, String type2, Pageable pageable);
-    Set<Client> search(String substring);
+    Set<Client> search(String substring, String type);
     Client findById(Long id);
     Client update(Long id, Client client);
     Client save(Client client);

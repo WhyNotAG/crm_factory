@@ -46,7 +46,7 @@ public class ClientController {
 
     @PostMapping("/search/")
     public ResponseEntity<Set<Client>> search(@RequestBody ClientDTO client) {
-        return ResponseEntity.ok().body(clientService.search(client.getName()));
+        return ResponseEntity.ok().body(clientService.search(client.getName(), client.getType()));
     }
 
     @Secured("ROLE_ADMIN")
@@ -71,7 +71,7 @@ public class ClientController {
 
     @PostMapping("/category_type/client/")
     public Page<Client> findAllClientByCategoryNameAndType(@RequestBody ClientDTO client, @PageableDefault(sort = {"name"}, direction = Sort.Direction.ASC, size = 20) Pageable pageable) {
-        return clientService.findAllByCategory_NameAndClientTypeAndTypeOrType(client.getCategoryName(), client.getClientType(), "client", null, pageable);
+        return clientService.findAllByCategory_NameAndClientTypeAndTypeOrType(client.getCategoryName(), client.getClientType(), null, null, pageable);
     }
 
     @PostMapping("/category_type/supplier/")

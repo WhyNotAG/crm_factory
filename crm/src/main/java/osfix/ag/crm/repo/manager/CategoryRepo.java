@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepo extends JpaRepository<Category, Long> {
-    List<Category> findAllByTypeOrType(String Type, String type2);
+    List<Category> findAllByType(String Type);
 }

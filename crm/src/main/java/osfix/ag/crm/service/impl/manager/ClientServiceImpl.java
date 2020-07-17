@@ -26,8 +26,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Set<Client> search(String substring) {
-        return clientRepo.findAllByNameIgnoreCaseContainsOrCommentIgnoreCaseContainsOrSiteIgnoreCaseContains(substring, substring, substring);
+    public Set<Client> search(String substring, String type) {
+        return clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndType(substring, type, substring, type, substring, type);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Page<Client> findAllByCategory_NameAndClientTypeAndTypeOrType(String name, String clientType, String type, String type2, Pageable pageable) {
-        return clientRepo.findAllByCategory_NameAndClientTypeAndTypeOrType(name, clientType, type, type2, pageable);
+        return clientRepo.findAllByCategory_NameAndClientTypeAndType(name, clientType, type, pageable);
     }
 
     @Override
