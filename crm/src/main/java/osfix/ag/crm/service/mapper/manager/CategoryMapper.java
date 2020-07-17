@@ -16,6 +16,7 @@ public class CategoryMapper implements EntityMapper<Category, CategoryDTO> {
         category.setId(dto.getId());
         category.setName(dto.getName());
         category.setVisibility(dto.getVisibility());
+        category.setType(dto.getType());
         return category;
     }
 
@@ -25,6 +26,7 @@ public class CategoryMapper implements EntityMapper<Category, CategoryDTO> {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setVisibility(entity.getVisibility());
+        dto.setType(dto.getType());
         return dto;
     }
 
