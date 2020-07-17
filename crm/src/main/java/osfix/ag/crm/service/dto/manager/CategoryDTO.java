@@ -7,4 +7,5 @@ public class CategoryDTO {
     Long id;
     String name;
     String visibility;
+    String type;
 }
