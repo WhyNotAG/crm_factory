@@ -30,6 +30,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setId(dto.getId());
         client.setManager(dto.getManager());
         client.setName(dto.getName());
+        client.setType(dto.getType());
         if(dto.getNextDateContact() != null){
             client.setNextDateContact(new Date(dto.getNextDateContact()*1000));
         }
@@ -56,6 +57,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         dto.setNextDateContact(entity.getNextDateContact().getTime());
         dto.setPrice(entity.getPrice());
         dto.setSite(entity.getSite());
+        dto.setType(entity.getType());
         dto.setStorageAddress(entity.getStorageAddress());
         dto.setWorkCondition(entity.getWorkCondition());
         dto.setFavorite(entity.getFavorite() ? entity.getFavorite() : false);

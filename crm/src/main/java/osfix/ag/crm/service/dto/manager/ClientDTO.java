@@ -18,4 +18,5 @@ public class ClientDTO {
     String categoryName;
     Long categoryId;
     Boolean favorite;
+    String type;
 }
