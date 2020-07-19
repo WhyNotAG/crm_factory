@@ -12,6 +12,9 @@ public class RequestDTO {
     String codeWord;
     String status;
     String responsible;
+    String factory;
+    String shippingDate;
+    String comment;
     List<Long> productsId;
 //    List<String> weight;
 }

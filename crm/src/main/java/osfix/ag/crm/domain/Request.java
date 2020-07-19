@@ -35,15 +35,16 @@ public class Request {
     @Column(name = "responsible") //кто отвественный
     String responsible;
 
+    @Column(name = "comment") //кто отвественный
+    String comment;
+
+    @Column(name = "shipping_date")
+    String shippingDate;
+
+    @Column(name = "factory")
+    String factory;
+
     @OneToMany(mappedBy = "request", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     public List<RequestProduct> requestProducts = new ArrayList<>();
-
-    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
-    @JsonBackReference
-    public LEMZ lemz;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "request")
-    @JsonBackReference
-    public Lepsari lepsari;
 }

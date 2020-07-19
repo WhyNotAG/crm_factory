@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface RequestService {
     List<Request> findAll();
+    List<Request> findByFactory(String factory);
     Request findById(Long id);
     Request update(Long id, Request request);
     Request save(Request request);
@@ -15,5 +16,5 @@ public interface RequestService {
     void changeStatus(Long id, String status);
     Request addProduct(Long id, List<String> products_id, List<String> quantity, List<String> packing);
     void deletePro(Long id);
-    Long copy(Long id, String factory);
+    Request copy(Long id, String factory);
 }

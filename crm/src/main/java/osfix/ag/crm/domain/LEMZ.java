@@ -43,7 +43,4 @@ public class LEMZ {
     @JsonManagedReference
     public List<LemzProduct> lemzProducts = new ArrayList<>();
 
-    @OneToOne
-    @JsonBackReference
-    Request request;
 }
