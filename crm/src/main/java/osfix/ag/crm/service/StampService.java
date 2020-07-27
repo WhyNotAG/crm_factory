@@ -13,4 +13,5 @@ public interface StampService {
     void delete(Long id);
     Stamp addParts(List<StampPart> stampParts);
     Stamp changeColor(Long id, String color);
+    List<Stamp> findAllByStatus(String status);
 }

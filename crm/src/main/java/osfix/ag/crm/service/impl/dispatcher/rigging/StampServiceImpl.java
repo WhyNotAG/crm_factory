@@ -54,4 +54,9 @@ public class StampServiceImpl implements StampService {
         stamp.setColor(color);
         return stampRepo.save(stamp);
     }
+
+    @Override
+    public List<Stamp> findAllByStatus(String status) {
+        return stampRepo.findAllByStatus(status);
+    }
 }

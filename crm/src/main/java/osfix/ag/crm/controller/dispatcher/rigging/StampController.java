@@ -38,6 +38,11 @@ public class StampController {
         return ResponseEntity.ok().body(stampService.findById(id));
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Stamp>> findById(@PathVariable(name = "status") String status) {
+        return ResponseEntity.ok().body(stampService.findAllByStatus(status));
+    }
+
     @PostMapping("/")
     public ResponseEntity<Stamp> add(@RequestBody Stamp stamp) {
         return ResponseEntity.ok().body(stampService.save(stamp));

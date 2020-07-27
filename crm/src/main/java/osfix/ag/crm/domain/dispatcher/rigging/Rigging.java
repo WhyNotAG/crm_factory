@@ -22,4 +22,7 @@ public abstract class Rigging {
 
     @Column(name = "color")
     String color;
+
+    @Column(name = "status")
+    String status;
 }
