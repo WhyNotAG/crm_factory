@@ -3,8 +3,10 @@ package osfix.ag.crm.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.repo.RequestRepo;
+import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.service.RequestService;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.List;
 @Service
 public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
+    private ClientRepo clientRepo;
 
-    public RequestServiceImpl(RequestRepo requestRepo) {
+    public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo) {
         this.requestRepo = requestRepo;
+        this.clientRepo = clientRepo;
     }
 
     @Override
@@ -77,6 +81,14 @@ public class RequestServiceImpl implements RequestService {
         Request request = requestRepo.findById(id).orElse(null);
         request.setFactory(factory);
         return requestRepo.save(request);
+    }
+
+    @Override
+    public Request addClient(Long requestId, Long clientId) {
+        Client client = clientRepo.findById(clientId).orElse(null);
+        Request request = requestRepo.findById(requestId).orElse(null);
+        request.setClient(client);
+        return request;
     }
 
     @Override

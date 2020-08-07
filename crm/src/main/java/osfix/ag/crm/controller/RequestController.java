@@ -76,4 +76,9 @@ public class RequestController {
         requestService.deletePro(id);
     }
 
+    @GetMapping("/request={request}&client={client}/")
+    public ResponseEntity<Request> addClient(@PathVariable(name = "client") Long clientId, @PathVariable(name = "request") Long requestId){
+        return ResponseEntity.ok().body(requestService.addClient(requestId, clientId));
+    }
+
 }

@@ -17,4 +17,5 @@ public interface RequestService {
     Request addProduct(Long id, List<String> products_id, List<String> quantity, List<String> packing);
     void deletePro(Long id);
     Request copy(Long id, String factory);
+    Request addClient(Long requestId, Long clientId);
 }

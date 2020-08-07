@@ -15,6 +15,8 @@ public class RequestDTO {
     String factory;
     String shippingDate;
     String comment;
+    Double sum;
+    Double reckoning;
     List<Long> productsId;
 //    List<String> weight;
 }

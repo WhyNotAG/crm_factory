@@ -10,6 +10,7 @@ import osfix.ag.crm.service.ClientService;
 
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -72,5 +73,10 @@ public class ClientServiceImpl implements ClientService {
         Client client = clientRepo.findById(id).orElse(null);
         client.setNextDateContact(new Date(date*1000));
         return clientRepo.save(client);
+    }
+
+    @Override
+    public Page<Client> findAllByCategory_NameAndClientTypeAndTypeIn(List<String> name, String clientType, String type, Pageable pageable) {
+        return clientRepo.findAllByCategory_NameInAndClientTypeAndType(name, clientType, type, pageable);
     }
 }

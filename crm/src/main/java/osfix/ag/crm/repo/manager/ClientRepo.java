@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import osfix.ag.crm.domain.manager.Client;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -16,4 +17,5 @@ public interface ClientRepo extends JpaRepository<Client, Long> {
     Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable);
     Page<Client> findAllByCategory_NameAndClientTypeAndType(String name, String clientType, String type, Pageable pageable);
     Set<Client> findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndType(String substring, String type, String substring2, String type2, String substring3, String type3);
+    Page<Client> findAllByCategory_NameInAndClientTypeAndType(List<String> name, String clientType, String type, Pageable pageable);
 }

@@ -2,6 +2,7 @@ package osfix.ag.crm.domain;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.product.Product;
 import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.domain.user.Role;
@@ -44,7 +45,18 @@ public class Request {
     @Column(name = "factory")
     String factory;
 
+    @Column(name = "reckoning")
+    Double reckoning;
+
+    @Column(name = "sum")
+    Double sum;
+
     @OneToMany(mappedBy = "request", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     public List<RequestProduct> requestProducts = new ArrayList<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("client")
+    @JsonBackReference
+    private Client client;
 }
