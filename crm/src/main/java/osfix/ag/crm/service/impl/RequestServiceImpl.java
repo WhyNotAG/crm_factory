@@ -30,7 +30,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public Request update(Long id, Request request) {
         Request requestFromDb = findId(id);
-        BeanUtils.copyProperties(request,requestFromDb, "id");
+        BeanUtils.copyProperties(request,requestFromDb, "id", "client");
         return requestRepo.save(requestFromDb);
     }
 
