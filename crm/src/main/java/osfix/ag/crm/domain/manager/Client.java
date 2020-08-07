@@ -75,7 +75,7 @@ public class Client {
     private Category category;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
-    @JsonManagedReference
+    @JsonBackReference
     public List<Request> requests = new ArrayList<>();
 
 }

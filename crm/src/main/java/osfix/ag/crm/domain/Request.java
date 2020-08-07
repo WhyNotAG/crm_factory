@@ -57,6 +57,6 @@ public class Request {
 
     @ManyToOne
     @JsonIgnoreProperties("client")
-    @JsonBackReference
+    @JsonManagedReference
     private Client client;
 }
