@@ -88,7 +88,7 @@ public class RequestServiceImpl implements RequestService {
         Client client = clientRepo.findById(clientId).orElse(null);
         Request request = requestRepo.findById(requestId).orElse(null);
         request.setClient(client);
-        return request;
+        return requestRepo.save(request);
     }
 
     @Override
