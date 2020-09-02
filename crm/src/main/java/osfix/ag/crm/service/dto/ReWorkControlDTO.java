@@ -16,6 +16,6 @@ public class ReWorkControlDTO {
     Integer day;
     Double hours;
     private EmployeeDTO employee;
-    List<WorkControlProduct> workControlProduct;
+    List<WorkControlProductWithoutPhotoDTO> workControlProduct;
     List<PartsWork> partsWorks;
 }
