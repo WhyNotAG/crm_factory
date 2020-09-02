@@ -7,5 +7,4 @@ public class WorkControlProductWithoutPhotoDTO {
     Long id;
     private ProductsWithoutPhotoDTO product;
     Long quantity;
-    WorkControl workControl;
 }

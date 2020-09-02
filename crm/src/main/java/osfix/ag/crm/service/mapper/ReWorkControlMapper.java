@@ -47,14 +47,14 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
         ReWorkControlDTO dto = new ReWorkControlDTO();
         if (entity.getWorkControlProduct() != null) { dto.setWorkControlProduct(workControlProductWithoutPhotoMapper.toDtoList(entity.getWorkControlProduct())); }
             else {
-                List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
-                dto.setWorkControlProduct(workControlProductWithoutPhotoMapper.toDtoList(products));
+                List<WorkControlProductWithoutPhotoDTO> products = workControlProductWithoutPhotoMapper.toDtoList(workControlProductRepo.findAllByWorkControl(entity));
+                dto.setWorkControlProduct(products);
         }
 
         if (entity.getPartsWork() != null) { dto.setPartsWorks(entity.getPartsWork()); }
         else {
-            List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
-            dto.setWorkControlProduct(workControlProductWithoutPhotoMapper.toDtoList(products));
+            List<WorkControlProductWithoutPhotoDTO> products = workControlProductWithoutPhotoMapper.toDtoList(workControlProductRepo.findAllByWorkControl(entity));
+            dto.setWorkControlProduct(products);
         }
         dto.setYear(entity.getYear());
         dto.setWorkList(entity.getWorkList());

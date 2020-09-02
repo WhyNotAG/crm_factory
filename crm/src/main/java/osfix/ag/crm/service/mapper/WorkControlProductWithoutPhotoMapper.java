@@ -19,7 +19,6 @@ public class WorkControlProductWithoutPhotoMapper implements EntityMapper<WorkCo
         workControlProduct.setId(dto.getId());
         workControlProduct.setProduct(productWithoutPhotoMapper.toEntity(dto.getProduct()));
         workControlProduct.setQuantity(dto.getQuantity());
-        workControlProduct.setWorkControl(dto.getWorkControl());
         return workControlProduct;
     }
 
@@ -29,7 +28,6 @@ public class WorkControlProductWithoutPhotoMapper implements EntityMapper<WorkCo
         dto.setId(entity.getId());
         dto.setProduct(productWithoutPhotoMapper.fromEntity(entity.getProduct()));
         dto.setQuantity(entity.getQuantity());
-        dto.setWorkControl(entity.getWorkControl());
         return dto;
     }
 
