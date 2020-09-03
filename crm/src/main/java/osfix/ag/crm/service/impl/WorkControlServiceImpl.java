@@ -160,17 +160,19 @@ public class WorkControlServiceImpl implements WorkControlService {
         }
 
         List<WorkControl> workControlsFirst = workControlRepo.findAllByMonth(monthFirst);
-        List<WorkControl> workControlsLast = workControlRepo.findAllByMonth(monthLast);
         List<WorkControl> result = new ArrayList<>();
 
         if (monthFirst != monthLast) {
+            //Запрашиваем данные за последний месяц только если месяцы в запросе не совпадают
+            List<WorkControl> workControlsLast = workControlRepo.findAllByMonth(monthLast);
+
             for(WorkControl workControl : workControlsFirst) {
                 if(workControl.getDay() >= dayFirst) { result.add(workControl); }
             }
 
             for(List<WorkControl> workControls1 : workControls) {
                 for(WorkControl workControl : workControls1) { result.add(workControl); }
-        }
+            }
 
             for (WorkControl workControl : workControlsLast) {
                 if (workControl.getDay() <= dayLast) { result.add(workControl); }
