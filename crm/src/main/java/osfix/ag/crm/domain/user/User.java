@@ -45,6 +45,9 @@ public class User {
     @Column(name = "updated")
     private Date updated;
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     @JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

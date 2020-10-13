@@ -36,7 +36,7 @@ public class WorkControl {
     Double hours;
 
     @Column(name = "comments")
-    Double comments;
+    String comments;
 
     @ManyToOne
     @JsonIgnoreProperties("workControls")

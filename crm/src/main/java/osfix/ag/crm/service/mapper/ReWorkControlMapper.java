@@ -35,6 +35,7 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
         workControl.setHours(dto.getHours());
         workControl.setDay(dto.getDay());
         workControl.setEmployee(employeeMapper.toEntity(dto.getEmployee()));
+        workControl.setComments(dto.getComment());
         return workControl;
     }
 
@@ -59,6 +60,7 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
         dto.setHours(entity.getHours());
         dto.setDay(entity.getDay());
         dto.setEmployee(employeeMapper.fromEntity(entity.getEmployee()));
+        dto.setComment(entity.getComments());
         return dto;
     }
 

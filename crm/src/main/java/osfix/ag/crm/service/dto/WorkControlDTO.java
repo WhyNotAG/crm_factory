@@ -11,4 +11,5 @@ public class WorkControlDTO {
     Integer day;
     Double hours;
     Long employeeId;
+    String comment;
 }

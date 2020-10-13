@@ -58,6 +58,9 @@ public class Client {
     @Column(name = "type")
     String type;
 
+    @Column(name = "city")
+    String city;
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
     @JsonIdentityReference
     public List<LegalEntity> legalEntities = new ArrayList<>();

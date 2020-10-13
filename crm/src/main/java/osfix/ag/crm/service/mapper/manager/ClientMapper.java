@@ -38,6 +38,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setSite(dto.getSite());
         client.setStorageAddress(dto.getStorageAddress());
         client.setWorkCondition(dto.getWorkCondition());
+        client.setCity(dto.getCity());
         client.setFavorite(dto.getFavorite() != null ? dto.getFavorite() : false);
         return client;
     }
@@ -56,6 +57,7 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         dto.setCategoryName(entity.getCategory().getName());
         dto.setNextDateContact(entity.getNextDateContact().getTime());
         dto.setPrice(entity.getPrice());
+        dto.setCity(entity.getCity());
         dto.setSite(entity.getSite());
         dto.setType(entity.getType());
         dto.setStorageAddress(entity.getStorageAddress());

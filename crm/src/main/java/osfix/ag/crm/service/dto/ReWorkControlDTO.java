@@ -15,6 +15,7 @@ public class ReWorkControlDTO {
     Integer month;
     Integer day;
     Double hours;
+    String comment;
     private EmployeeDTO employee;
     List<WorkControlProduct> workControlProduct;
     List<PartsWork> partsWorks;
