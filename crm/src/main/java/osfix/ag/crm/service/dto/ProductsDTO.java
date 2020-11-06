@@ -4,6 +4,7 @@ import lombok.Data;
 import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.product.TypeOfProduct;
 
+import javax.persistence.Column;
 import java.util.List;
 
 @Data
@@ -19,5 +20,7 @@ public class ProductsDTO {
     private String vendor;
     private String category;
     private String productionLocation;
+    private String description;
+    private String barcode;
     private List<Long> packings;
 }

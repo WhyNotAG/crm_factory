@@ -52,6 +52,12 @@ public class Product {
     @Column(name = "production_location")
     private String productionLocation;
 
+    @Column(name = "barcode")
+    private String barcode;
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JsonIgnoreProperties("products")
     @JsonBackReference

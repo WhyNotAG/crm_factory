@@ -49,6 +49,7 @@ public class ClientController {
         return ResponseEntity.ok().body(clientService.search(client.getName(), client.getType()));
     }
 
+
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name="id") long id) { clientService.delete(id);}
@@ -83,6 +84,5 @@ public class ClientController {
     public Client changeDate(@RequestBody ClientDTO client) {
         return clientService.updateDate(client.getId(), client.getNextDateContact());
     }
-
 
 }
