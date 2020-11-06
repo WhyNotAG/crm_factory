@@ -18,5 +18,7 @@ public class ProductsWithPackingsDTO {
     private String vendor;
     private String category;
     private String productionLocation;
+    private String description;
+    private String barcode;
     private List<Packing> packings;
 }

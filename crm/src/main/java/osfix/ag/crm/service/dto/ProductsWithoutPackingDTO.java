@@ -14,5 +14,7 @@ public class ProductsWithoutPackingDTO {
     private String comment;
     private String vendor;
     private String category;
+    private String description;
+    private String barcode;
     private String productionLocation;
 }

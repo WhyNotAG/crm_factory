@@ -32,6 +32,8 @@ public class ProductWithPackingsMapper implements EntityMapper<Product, Products
         product.setPhoto(dto.getPhoto());
         product.setVendor(dto.getVendor());
         product.setProductionLocation(dto.getProductionLocation());
+        product.setBarcode(dto.getBarcode());
+        product.setDescription(dto.getDescription());
 
         if (productCategoryService.findByCategory(dto.getCategory()) != null) {
             product.setProductCategory(productCategoryService.findByCategory(dto.getCategory()));
@@ -60,6 +62,8 @@ public class ProductWithPackingsMapper implements EntityMapper<Product, Products
         dto.setPhoto(entity.getPhoto());
         dto.setVendor(entity.getVendor());
         dto.setProductionLocation(entity.getProductionLocation());
+        dto.setBarcode(entity.getBarcode());
+        dto.setDescription(entity.getDescription());
 
         if(entity.getProductCategory() != null) {
             dto.setCategory(entity.getProductCategory().getCategory());
