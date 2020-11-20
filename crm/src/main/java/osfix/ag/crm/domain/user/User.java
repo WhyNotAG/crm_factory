@@ -1,12 +1,16 @@
 package osfix.ag.crm.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.manager.Client;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,4 +57,8 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
+    @JsonBackReference
+    public List<Client> clients = new ArrayList<>();
 }

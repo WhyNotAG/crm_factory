@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.product.RequestProduct;
+import osfix.ag.crm.domain.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -80,5 +81,10 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
     @JsonBackReference
     public List<Request> requests = new ArrayList<>();
+
+
+    @ManyToOne
+    @JsonIdentityReference
+    private User user;
 
 }

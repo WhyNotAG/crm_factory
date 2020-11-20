@@ -2,6 +2,8 @@ package osfix.ag.crm.service.impl.manager;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.repo.manager.ClientRepo;
@@ -60,7 +62,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable) {
-        return clientRepo.findAllByCategory_NameAndClientType(name, clientType, pageable);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        if(hasUserRole)
+            return clientRepo.findAllByCategory_NameAndClientType(name, clientType, pageable);
+        else return null;
     }
 
     @Override
@@ -77,6 +84,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Page<Client> findAllByCategory_NameAndClientTypeAndTypeIn(List<String> name, String clientType, String type, Pageable pageable) {
-        return clientRepo.findAllByCategory_NameInAndClientTypeAndType(name, clientType, type, pageable);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        if(hasUserRole)
+            return clientRepo.findAllByCategory_NameInAndClientTypeAndType(name, clientType, type, pageable);
+        return null;
     }
 }
