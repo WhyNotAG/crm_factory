@@ -63,9 +63,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean hasUserRole = authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
-        if(hasUserRole)
+        String hasUserRole = authentication.getAuthorities().toString();
+        if(hasUserRole.equals("ROLE_ADMIN"))
             return clientRepo.findAllByCategory_NameAndClientType(name, clientType, pageable);
         else return null;
     }
