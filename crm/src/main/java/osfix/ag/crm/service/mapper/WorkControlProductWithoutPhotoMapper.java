@@ -31,7 +31,7 @@ public class WorkControlProductWithoutPhotoMapper implements EntityMapper<WorkCo
     @Override
     public WorkControlProductWithoutPhotoDTO fromEntity(WorkControlProduct entity) {
         WorkControlProductWithoutPhotoDTO dto = new WorkControlProductWithoutPhotoDTO();
-        dto.setId(dto.getId());
+        dto.setId(entity.getId());
         dto.setProduct(withoutPhotoMapper.fromEntity(entity.getProduct()));
         dto.setQuantity(entity.getQuantity());
         return dto;
