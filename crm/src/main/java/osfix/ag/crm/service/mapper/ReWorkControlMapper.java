@@ -8,6 +8,7 @@ import osfix.ag.crm.repo.WorkControlRepo;
 import osfix.ag.crm.repo.product.WorkControlProductRepo;
 import osfix.ag.crm.repo.rigging.part.PartsWorkRepo;
 import osfix.ag.crm.service.dto.ReWorkControlDTO;
+import osfix.ag.crm.service.dto.WorkControlProductWithoutPhotoDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +24,13 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
     @Autowired
     PartsWorkRepo partsWorkRepo;
 
+    @Autowired
+    private WorkControlProductWithoutPhotoMapper workControlProductWithoutPhotoMapper;
+
     @Override
     public WorkControl toEntity(ReWorkControlDTO dto) {
         WorkControl workControl = new WorkControl();
-        workControl.setWorkControlProduct(dto.getWorkControlProduct());
+        workControl.setWorkControlProduct(workControlProductWithoutPhotoMapper.fromDtoList(dto.getWorkControlProduct()));
         workControl.setPartsWork(dto.getPartsWorks());
         workControl.setYear(dto.getYear());
         workControl.setWorkList(dto.getWorkList());
@@ -42,15 +46,15 @@ public class ReWorkControlMapper implements EntityMapper<WorkControl, ReWorkCont
     @Override
     public ReWorkControlDTO fromEntity(WorkControl entity) {
         ReWorkControlDTO dto = new ReWorkControlDTO();
-        if (entity.getWorkControlProduct() != null) { dto.setWorkControlProduct(entity.getWorkControlProduct()); }
+        if (entity.getWorkControlProduct() != null) { dto.setWorkControlProduct(workControlProductWithoutPhotoMapper.toDtoList(entity.getWorkControlProduct())); }
             else {
-                List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
+                List<WorkControlProductWithoutPhotoDTO> products = workControlProductWithoutPhotoMapper.toDtoList(workControlProductRepo.findAllByWorkControl(entity));
                 dto.setWorkControlProduct(products);
         }
 
         if (entity.getPartsWork() != null) { dto.setPartsWorks(entity.getPartsWork()); }
         else {
-            List<WorkControlProduct> products = workControlProductRepo.findAllByWorkControl(entity);
+            List<WorkControlProductWithoutPhotoDTO> products =workControlProductWithoutPhotoMapper.toDtoList(workControlProductRepo.findAllByWorkControl(entity));
             dto.setWorkControlProduct(products);
         }
         dto.setYear(entity.getYear());

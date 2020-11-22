@@ -17,6 +17,6 @@ public class ReWorkControlDTO {
     Double hours;
     String comment;
     private EmployeeDTO employee;
-    List<WorkControlProduct> workControlProduct;
+    List<WorkControlProductWithoutPhotoDTO> workControlProduct;
     List<PartsWork> partsWorks;
 }
