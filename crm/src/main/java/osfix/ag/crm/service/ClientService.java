@@ -16,7 +16,7 @@ public interface ClientService {
     Set<Client> search(String substring, String type);
     Page<Client> findAllByCategory_NameAndClientTypeAndTypeIn(List<String> name, String clientType, String type, Pageable pageable);
     Client findById(Long id);
-    Client update(Long id, Client client);
+    Client update(Long id, ClientDTO client);
     Client save(ClientDTO client);
     Client updateDate(Long id, Long date);
     void delete(Long id);

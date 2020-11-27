@@ -57,7 +57,7 @@ public class ClientController {
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/{id}")
     public Client update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
-        return clientService.update(id, clientMapper.toEntity(client));
+        return clientService.update(id, client);
     }
 
     @PostMapping("/category/")

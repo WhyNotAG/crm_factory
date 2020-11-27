@@ -51,9 +51,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client update(Long id, Client client) {
+    public Client update(Long id, ClientDTO client) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String hasUserRole = authentication.getAuthorities().toString();
+        Client entity = clientMapper.toEntity(client);
         Client clientFromDb = clientRepo.findById(id).orElse(null);
-        BeanUtils.copyProperties(client, clientFromDb, "id");
+        BeanUtils.copyProperties(entity, clientFromDb, "id");
+        if(client.getIsClosed()) {
+            entity.setUser(userRepo.findByUsername(authentication.getName()));
+            return clientRepo.save(clientFromDb);
+        }
         return clientRepo.save(clientFromDb);
     }
 

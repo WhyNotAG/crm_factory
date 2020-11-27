@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Repository
 public interface ClientRepo extends JpaRepository<Client, Long> {
+
     Page<Client> findAll(Pageable pageable);
     //Page<Client> findAllAndUser(User user, Pageable pageable);
     Page<Client> findAllByUserIsNull(Pageable pageable);
