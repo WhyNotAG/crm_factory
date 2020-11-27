@@ -40,7 +40,7 @@ public class ClientController {
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
     public Client create(@RequestBody ClientDTO client) {
-        return clientService.save(clientMapper.toEntity(client));
+        return clientService.save(client);
     }
 
 
@@ -85,4 +85,10 @@ public class ClientController {
         return clientService.updateDate(client.getId(), client.getNextDateContact());
     }
 
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("/set_close/{id}")
+    public Client setClosed(@PathVariable(name = "id") Long id) {
+        return  null;
+    }
 }

@@ -20,4 +20,5 @@ public class ClientDTO {
     Boolean favorite;
     String type;
     String city;
+    Boolean isClosed;
 }

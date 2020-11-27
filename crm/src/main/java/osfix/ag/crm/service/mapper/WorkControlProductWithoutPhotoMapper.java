@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.product.WorkControlProduct;
 import osfix.ag.crm.service.WorkControlService;
-import osfix.ag.crm.service.dto.ProductsWithoutPhotoDTO;
-import osfix.ag.crm.service.dto.WorkControlProductDTO;
 import osfix.ag.crm.service.dto.WorkControlProductWithoutPhotoDTO;
 
 import java.util.List;
