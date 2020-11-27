@@ -84,9 +84,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findAllByCategory_Name(String name, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String hasUserRole = authentication.getAuthorities().toString();
-        System.out.println(hasUserRole);
-        if(hasUserRole.equals("ROLE_ADMIN"))
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        if(hasUserRole)
             return clientRepo.findAllByCategory_Name(name, pageable);
         return clientRepo.findAllByCategory_NameAndUserIsNull(name, pageable);
     }
@@ -94,9 +94,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String hasUserRole = authentication.getAuthorities().toString();
-        System.out.println(hasUserRole);
-        if(hasUserRole.equals("ROLE_ADMIN"))
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        if(hasUserRole)
             return clientRepo.findAllByCategory_NameAndClientType(name, clientType, pageable);
         return clientRepo.findAllByCategory_NameAndClientTypeAndUserIsNull(name, clientType, pageable);
     }
