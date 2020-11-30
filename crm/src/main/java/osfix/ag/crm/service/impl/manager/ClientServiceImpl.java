@@ -57,6 +57,7 @@ public class ClientServiceImpl implements ClientService {
         Client entity = clientMapper.toEntity(client);
         Client clientFromDb = clientRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(entity, clientFromDb, "id");
+        if (client.getIsClosed() == null) client.setIsClosed(false);
         if(client.getIsClosed()) {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(clientFromDb);
