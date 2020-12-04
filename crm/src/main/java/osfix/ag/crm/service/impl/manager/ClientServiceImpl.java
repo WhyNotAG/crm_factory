@@ -6,8 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.manager.Client;
+import osfix.ag.crm.domain.manager.Contact;
+import osfix.ag.crm.domain.manager.LegalEntity;
+import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import org.springframework.data.domain.Page;
+import osfix.ag.crm.repo.manager.ContactRepo;
+import osfix.ag.crm.repo.manager.LegalEntityRepo;
 import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.ClientService;
 import osfix.ag.crm.service.dto.manager.ClientDTO;
@@ -15,6 +20,8 @@ import osfix.ag.crm.service.mapper.manager.ClientMapper;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,12 +29,17 @@ import java.util.Set;
 public class ClientServiceImpl implements ClientService {
     private ClientRepo clientRepo;
     private ClientMapper clientMapper;
+    private LegalEntityRepo legalEntityRepo;
+    private ContactRepo contactRepo;
     private UserRepo userRepo;
 
-    public ClientServiceImpl(ClientRepo clientRepo, ClientMapper clientMapper, UserRepo userRepo) {
+    public ClientServiceImpl(ClientRepo clientRepo, ClientMapper clientMapper, UserRepo userRepo,
+                             LegalEntityRepo legalEntityRepo, ContactRepo contactRepo) {
         this.clientRepo = clientRepo;
         this.clientMapper = clientMapper;
         this.userRepo = userRepo;
+        this.contactRepo = contactRepo;
+        this.legalEntityRepo = legalEntityRepo;
     }
 
     @Override
@@ -42,7 +54,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> search(String substring, String type) {
-        return clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndType(substring, type, substring, type, substring, type);
+        Set<Contact> contacts = contactRepo.findAllByPhoneNumberContainsOrEmailContainsOrLastNameContains(substring, substring, substring);
+        Set<LegalEntity> legalEntities = legalEntityRepo.findAllByInnContains(substring);
+        Set<Client> searchingClient = new HashSet<>();
+
+        for(Contact contact : contacts) { searchingClient.addAll(clientRepo.findAllByContacts(contact)); }
+        for(LegalEntity legalEntity : legalEntities) { searchingClient.addAll(clientRepo.findAllByLegalEntities(legalEntity)); }
+        searchingClient.addAll(clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndType(substring, type, substring, type, substring, type));
+        return searchingClient;
     }
 
     @Override
