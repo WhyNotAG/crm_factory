@@ -9,5 +9,5 @@ import java.util.Set;
 
 @Repository
 public interface ContactRepo extends JpaRepository<Contact, Long> {
-    Set<Contact> findAllByPhoneNumberContainsOrEmailContainsOrLastNameContains(String phone, String email, String lastName);
+    Set<Contact> findAllByPhoneNumberContainsOrEmailIgnoreCaseContainsOrLastNameIgnoreCaseContains(String phone, String email, String lastName);
 }

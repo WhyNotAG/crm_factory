@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface LegalEntityRepo extends JpaRepository<LegalEntity, Long> {
-    Set<LegalEntity> findAllByInnContains(String inn);
+    Set<LegalEntity> findAllByInnIgnoreCaseContains(String inn);
 }

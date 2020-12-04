@@ -54,8 +54,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> search(String substring, String type) {
-        Set<Contact> contacts = contactRepo.findAllByPhoneNumberContainsOrEmailContainsOrLastNameContains(substring, substring, substring);
-        Set<LegalEntity> legalEntities = legalEntityRepo.findAllByInnContains(substring);
+        Set<Contact> contacts = contactRepo.findAllByPhoneNumberContainsOrEmailIgnoreCaseContainsOrLastNameIgnoreCaseContains(substring, substring, substring);
+        Set<LegalEntity> legalEntities = legalEntityRepo.findAllByInnIgnoreCaseContains(substring);
         Set<Client> searchingClient = new HashSet<>();
 
         for(Contact contact : contacts) { searchingClient.addAll(clientRepo.findAllByContacts(contact)); }
