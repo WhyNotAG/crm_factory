@@ -19,4 +19,6 @@ public class EmployeeDTO {
     String comment;
     String relevance;
     Date dateOfBirth;
+    Date patentExpirationDate;
+    Date registrationExpirationDate;
 }

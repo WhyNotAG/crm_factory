@@ -6,9 +6,11 @@ import osfix.ag.crm.domain.Employee;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface EmployeeRepo extends JpaRepository<Employee, Long> {
     List<Employee> findAllByWorkshop(String workshop);
-    List<Employee> findAllByDateOfBirthContaining(Date date);
+    Set<Employee> findAllByRegistrationExpirationDateBetweenOrPatentExpirationDateBetween(Date regFrom, Date regTo, Date patFrom, Date patTo);
+
 }

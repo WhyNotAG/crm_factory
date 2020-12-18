@@ -7,10 +7,7 @@ import osfix.ag.crm.repo.EmployeeRepo;
 import osfix.ag.crm.service.EmployeeService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -54,6 +51,17 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         return result;
+    }
+
+    @Override
+    public Set<Employee> findAllByPatentOrRegistration() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        return employeeRepo.findAllByRegistrationExpirationDateBetweenOrPatentExpirationDateBetween(
+                java.sql.Date.valueOf(localDateTime.minusWeeks(1).toLocalDate()),
+                java.sql.Date.valueOf(localDateTime.plusWeeks(1).toLocalDate()),
+                java.sql.Date.valueOf(localDateTime.minusWeeks(1).toLocalDate()),
+                java.sql.Date.valueOf(localDateTime.plusWeeks(1).toLocalDate()));
     }
 
     @Override

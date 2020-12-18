@@ -7,6 +7,7 @@ import osfix.ag.crm.service.EmployeeService;
 import osfix.ag.crm.service.dto.EmployeeDTO;
 import osfix.ag.crm.service.mapper.EmployeeMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,6 +47,12 @@ public class EmployeeController {
     @GetMapping("/birth/")
     public ResponseEntity<List<EmployeeDTO>> findBirth() {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findBirth()));
+    }
+
+    @GetMapping("/docs/")
+    public ResponseEntity<List<EmployeeDTO>> findDocs() {
+
+        return ResponseEntity.ok().body(employeeMapper.toDtoList(new ArrayList<>(employeeService.findAllByPatentOrRegistration())));
     }
 
     @PutMapping("/{id}")

@@ -58,6 +58,12 @@ public class Employee {
     @Column(name = "date_of_birth")
     Date dateOfBirth;
 
+    @Column(name = "patent_expiration_date")
+    Date patentExpirationDate;
+
+    @Column(name = "registration_expiration_date")
+    Date registrationExpirationDate;
+
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     @JsonBackReference
     public List<WorkControl> workControls = new ArrayList<>();
