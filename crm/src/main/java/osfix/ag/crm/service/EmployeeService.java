@@ -10,5 +10,6 @@ public interface EmployeeService {
     Employee update(Long id, Employee employee);
     Employee save(Employee employee);
     List<Employee> findByWorkshop(String workshop);
+    List<Employee> findBirth();
     void delete(Long id);
 }

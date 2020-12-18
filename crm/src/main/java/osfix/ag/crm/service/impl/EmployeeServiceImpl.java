@@ -6,6 +6,10 @@ import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.repo.EmployeeRepo;
 import osfix.ag.crm.service.EmployeeService;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +39,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findByWorkshop(String workshop) {
         List<Employee> employees = employeeRepo.findAllByWorkshop(workshop);
         return employees;
+    }
+
+    @Override
+    public List<Employee> findBirth() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        List<Employee> employees = employeeRepo.findAll();
+        List<Employee> result = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for(Employee employee : employees) {
+            cal.setTimeInMillis(employee.getDateOfBirth().getTime());
+            if(cal.get(Calendar.DAY_OF_MONTH) == localDateTime.getDayOfMonth() && cal.get(Calendar.MONTH)+1 == localDateTime.getMonthValue()) {
+                result.add(employee);
+            }
+        }
+        return result;
     }
 
     @Override

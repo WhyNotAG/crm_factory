@@ -42,6 +42,12 @@ public class EmployeeController {
                         employeeMapper.toEntity(employee))));
     }
 
+
+    @GetMapping("/birth/")
+    public ResponseEntity<List<EmployeeDTO>> findBirth() {
+        return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findBirth()));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @RequestBody EmployeeDTO employee) {
         return ResponseEntity.ok().body(

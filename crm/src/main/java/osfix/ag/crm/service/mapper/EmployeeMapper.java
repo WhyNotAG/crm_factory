@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.service.dto.EmployeeDTO;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         employee.setPosition(dto.getPosition());
         employee.setRelevance(dto.getRelevance());
         employee.setWorkshop(dto.getWorkshop());
+        employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime() * 1000));
         employee.setYearOfBirth(dto.getYearOfBirth());
         return employee;
     }
@@ -39,6 +41,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         dto.setPosition(entity.getPosition());
         dto.setRelevance(entity.getRelevance());
         dto.setWorkshop(entity.getWorkshop());
+        dto.setDateOfBirth(entity.getDateOfBirth());
         dto.setYearOfBirth(entity.getYearOfBirth());
         return dto;
     }

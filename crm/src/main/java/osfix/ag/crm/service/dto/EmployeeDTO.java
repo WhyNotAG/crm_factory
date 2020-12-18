@@ -2,6 +2,8 @@ package osfix.ag.crm.service.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class EmployeeDTO {
 
@@ -16,4 +18,5 @@ public class EmployeeDTO {
     String patent;
     String comment;
     String relevance;
+    Date dateOfBirth;
 }

@@ -7,6 +7,7 @@ import osfix.ag.crm.domain.product.RequestProduct;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -53,6 +54,9 @@ public class Employee {
 
     @Column(name = "relevance")
     String relevance;
+
+    @Column(name = "date_of_birth")
+    Date dateOfBirth;
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     @JsonBackReference
