@@ -23,7 +23,8 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         employee.setPosition(dto.getPosition());
         employee.setRelevance(dto.getRelevance());
         employee.setWorkshop(dto.getWorkshop());
-        employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime() * 1000));
+        if(dto.getDateOfBirth() != null)
+            employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime() * 1000));
         if(dto.getPatentExpirationDate() != null && dto.getRegistrationExpirationDate() != null ) {
             employee.setPatentExpirationDate(new Date(dto.getPatentExpirationDate().getTime() * 1000));
             employee.setRegistrationExpirationDate(new Date(dto.getRegistrationExpirationDate().getTime() * 1000));
@@ -45,7 +46,8 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         dto.setPosition(entity.getPosition());
         dto.setRelevance(entity.getRelevance());
         dto.setWorkshop(entity.getWorkshop());
-        dto.setDateOfBirth(entity.getDateOfBirth());
+        if(entity.getDateOfBirth() != null)
+            dto.setDateOfBirth(entity.getDateOfBirth());
         if(entity.getPatentExpirationDate() != null && entity.getRegistrationExpirationDate() != null ) {
             dto.setPatentExpirationDate(entity.getPatentExpirationDate());
             dto.setRegistrationExpirationDate(entity.getRegistrationExpirationDate());
