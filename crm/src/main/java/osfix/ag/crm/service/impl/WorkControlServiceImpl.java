@@ -75,12 +75,12 @@ public class WorkControlServiceImpl implements WorkControlService {
     }
 
     @Override
-    public List<WorkControl> findAllByMonth(Integer month) {
-        return workControlRepo.findAllByMonth(month);
+    public List<WorkControl> findAllByMonth(Integer month, Integer year) {
+        return workControlRepo.findAllByMonthAndYear(month, year);
     }
 
     @Override
-    public WorkReportDTO reportByEmployeeId(Long id, Integer month) {
+    public WorkReportDTO reportByEmployeeId(Long id, Integer month, Integer year) {
 
         Employee employee = employeeRepo.findById(id).orElse(null);
         WorkReportDTO workReportDTO = new WorkReportDTO();
@@ -89,7 +89,7 @@ public class WorkControlServiceImpl implements WorkControlService {
         List<DayDTO> days = new ArrayList<>();
         DayDTO day = new DayDTO();
 
-        List<WorkControl> byEmployee = workControlRepo.findAllByEmployeeAndMonth(employee, month);
+        List<WorkControl> byEmployee = workControlRepo.findAllByEmployeeAndMonthAndYear(employee, month, year);
         byEmployee.sort((o1, o2) -> o1.getDay().compareTo(o2.getDay()));
         Integer temp;
 
@@ -147,20 +147,20 @@ public class WorkControlServiceImpl implements WorkControlService {
     }
 
     @Override
-    public List<WorkControl> findByDayAndMonth(Integer day, Integer month) {
-        return workControlRepo.findAllByDayAndMonth(day, month);
+    public List<WorkControl> findByDayAndMonth(Integer day, Integer month, Integer year) {
+        return workControlRepo.findAllByDayAndMonthAndYear(day, month, year);
     }
 
     @Override
-    public List<WorkControl> findByRange(Integer dayFirst, Integer monthFirst, Integer dayLast, Integer monthLast) {
+    public List<WorkControl> findByRange(Integer dayFirst, Integer monthFirst, Integer dayLast, Integer monthLast, Integer year ) {
         List<List<WorkControl>> workControls = new ArrayList<>(Math.abs(monthLast - monthFirst));
 
         for (int i = monthFirst + 1; i < monthLast; i++) {
             workControls.add(workControlRepo.findAllByMonth(i));
         }
 
-        List<WorkControl> workControlsFirst = workControlRepo.findAllByMonth(monthFirst);
-        List<WorkControl> workControlsLast = workControlRepo.findAllByMonth(monthLast);
+        List<WorkControl> workControlsFirst = workControlRepo.findAllByMonthAndYear(monthFirst, year);
+        List<WorkControl> workControlsLast = workControlRepo.findAllByMonthAndYear(monthLast, year);
         List<WorkControl> result = new ArrayList<>();
 
         if (monthFirst != monthLast) {

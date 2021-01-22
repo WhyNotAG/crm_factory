@@ -52,20 +52,23 @@ public class WorkControlController {
         return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findAllByEmployeeId(id)));
     }
 
-    @GetMapping("/month/{month}")
-    public ResponseEntity<List<ReWorkControlDTO>> findByMonth(@PathVariable(name = "month") Integer month) {
-        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findAllByMonth(month)));
+    @GetMapping("/month/{month}&{year}")
+    public ResponseEntity<List<ReWorkControlDTO>> findByMonth(@PathVariable(name = "month") Integer month,
+                                                              @PathVariable(name = "year") Integer year) {
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findAllByMonth(month, year)));
     }
 
-    @GetMapping("/day/{day}&{month}")
+    @GetMapping("/day/{day}&{month}&{year}")
     public ResponseEntity<List<ReWorkControlDTO>> findByDayAndMonth(@PathVariable(name = "day") Integer day,
-                                                               @PathVariable(name = "month") Integer month) {
-        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByDayAndMonth(day,month)));
+                                                               @PathVariable(name = "month") Integer month,
+                                                                    @PathVariable(name = "year") Integer year) {
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByDayAndMonth(day,month,year)));
     }
 
-    @GetMapping("/report/{id}&{month}")
-    public ResponseEntity<WorkReportDTO> reportByMonth(@PathVariable(name = "id") Long id, @PathVariable(name = "month") Integer month) {
-        return ResponseEntity.ok().body(workControlService.reportByEmployeeId(id,month));
+    @GetMapping("/report/{id}&{month}&{year}")
+    public ResponseEntity<WorkReportDTO> reportByMonth(@PathVariable(name = "id") Long id, @PathVariable(name = "month") Integer month,
+                                                       @PathVariable(name = "year") Integer year) {
+        return ResponseEntity.ok().body(workControlService.reportByEmployeeId(id,month,year));
     }
 
     @PostMapping("/")
@@ -119,12 +122,13 @@ public class WorkControlController {
         workControlService.delete(id);
     }
 
-    @GetMapping("/range/{dF}&{mF}&{dL}&{mL}")
+    @GetMapping("/range/{dF}&{mF}&{dL}&{mL}&{year}")
     public ResponseEntity<List<ReWorkControlDTO>> findByRange(@PathVariable(name = "dF") Integer dF,
                                                               @PathVariable(name = "mF") Integer mF,
                                                               @PathVariable(name = "dL") Integer dL,
-                                                              @PathVariable(name = "mL") Integer mL) {
-        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL)));
+                                                              @PathVariable(name = "mL") Integer mL,
+                                                              @PathVariable(name = "year") Integer year) {
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL,year)));
     }
 }
 
