@@ -68,7 +68,7 @@ public class RequestServiceImpl implements RequestService {
     public void changeStatus(Long id, String status) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);
-        loging("Изменение статуса", "Изменение статуса на " + request.getStatus(), "request", request.getId());
+        loging("Изменение статуса", "Изменение статуса на \"" + request.getStatus() + "\"", "request", request.getId());
         requestRepo.save(request);
     }
 
