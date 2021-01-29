@@ -38,20 +38,20 @@ public class RequestServiceImpl implements RequestService {
     public Request update(Long id, Request request) {
         Request requestFromDb = findId(id);
         BeanUtils.copyProperties(request,requestFromDb, "id", "client");
-        loging("Изменение", "request", requestFromDb.getId());
+        loging("Изменение", "Изменение", "request", requestFromDb.getId());
         return requestRepo.save(requestFromDb);
     }
 
     @Override
     public Request save(Request request) {
         requestRepo.save(request);
-        loging("Создание", "request", request.getId());
+        loging("Создание", "Создание", "request", request.getId());
         return request;
     }
 
     @Override
     public void delete(Long id) {
-        loging("Удаление", "request", id);
+        loging("Удаление", "Удаление", "request", id);
         requestRepo.deleteById(id);
     }
 
@@ -68,7 +68,7 @@ public class RequestServiceImpl implements RequestService {
     public void changeStatus(Long id, String status) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);
-        loging("Изменение статуса на" + request.getStatus(), "request", request.getId());
+        loging("Изменение статуса", "Изменение статуса на " + request.getStatus(), "request", request.getId());
         requestRepo.save(request);
     }
 
@@ -84,7 +84,7 @@ public class RequestServiceImpl implements RequestService {
             requestProduct.setQuantity(quantity.get(i));
             request.getRequestProducts().add(requestProduct);
         }
-        loging("Добавление продукта", "request", request.getId());
+        loging("Добавление продукта","Добавление продукта", "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -92,7 +92,7 @@ public class RequestServiceImpl implements RequestService {
     public Request copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setFactory(factory);
-        loging("Перенос в цех" + request.getFactory(), "request", request.getId());
+        loging("Перенос в цех", "Перенос в цех" + request.getFactory(), "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -101,7 +101,7 @@ public class RequestServiceImpl implements RequestService {
         Client client = clientRepo.findById(clientId).orElse(null);
         Request request = requestRepo.findById(requestId).orElse(null);
         request.setClient(client);
-        loging("Добавление клиента", "request", request.getId());
+        loging("Добавление клиента", "Добавление клиента", "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -113,9 +113,9 @@ public class RequestServiceImpl implements RequestService {
     public void deletePro(Long id) {
     }
 
-    public void loging(String action, String type, Long id) {
+    public void loging(String actionShort, String action, String type, Long id) {
         Log log = new Log();
-        log.setAction(action);
+        log.setAction(actionShort);
         log.setDate(java.util.Calendar.getInstance().getTime());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.setAuthor(authentication.getName());
