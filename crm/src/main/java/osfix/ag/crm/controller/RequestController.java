@@ -61,8 +61,8 @@ public class RequestController {
         return ResponseEntity.ok().body(request);
     }
 
-    @GetMapping("/copy/{id}/{factory}")
-    public ResponseEntity<Request> copy(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
+    @GetMapping("/transfer/{id}/{factory}")
+    public ResponseEntity<Request> transfer(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
         return ResponseEntity.ok().body(requestService.copy(id,factory));
     }
 
