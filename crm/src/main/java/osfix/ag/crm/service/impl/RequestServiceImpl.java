@@ -1,22 +1,29 @@
 package osfix.ag.crm.service.impl;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.product.RequestProduct;
+import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.service.RequestService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
     private ClientRepo clientRepo;
+    private LogRepo logRepo;
 
-    public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo) {
+    public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo) {
+        this.logRepo = logRepo;
         this.requestRepo = requestRepo;
         this.clientRepo = clientRepo;
     }
@@ -31,17 +38,22 @@ public class RequestServiceImpl implements RequestService {
     public Request update(Long id, Request request) {
         Request requestFromDb = findId(id);
         BeanUtils.copyProperties(request,requestFromDb, "id", "client");
+        loging("Изменение", "request", requestFromDb.getId());
         return requestRepo.save(requestFromDb);
     }
 
     @Override
     public Request save(Request request) {
         requestRepo.save(request);
+        loging("Создание", "request", request.getId());
         return request;
     }
 
     @Override
-    public void delete(Long id) { requestRepo.deleteById(id); }
+    public void delete(Long id) {
+        loging("Удаление", "request", id);
+        requestRepo.deleteById(id);
+    }
 
     public Request findId(Long id) {
         Request request = requestRepo.findById(id).orElse(null);
@@ -56,7 +68,7 @@ public class RequestServiceImpl implements RequestService {
     public void changeStatus(Long id, String status) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);
-
+        loging("Изменение статуса на" + request.getStatus(), "request", request.getId());
         requestRepo.save(request);
     }
 
@@ -72,7 +84,7 @@ public class RequestServiceImpl implements RequestService {
             requestProduct.setQuantity(quantity.get(i));
             request.getRequestProducts().add(requestProduct);
         }
-
+        loging("Добавление продукта", "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -80,6 +92,7 @@ public class RequestServiceImpl implements RequestService {
     public Request copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setFactory(factory);
+        loging("Перенос в цех" + request.getFactory(), "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -88,6 +101,7 @@ public class RequestServiceImpl implements RequestService {
         Client client = clientRepo.findById(clientId).orElse(null);
         Request request = requestRepo.findById(requestId).orElse(null);
         request.setClient(client);
+        loging("Добавление клиента", "request", request.getId());
         return requestRepo.save(request);
     }
 
@@ -97,5 +111,16 @@ public class RequestServiceImpl implements RequestService {
     }
 
     public void deletePro(Long id) {
+    }
+
+    public void loging(String action, String type, Long id) {
+        Log log = new Log();
+        log.setAction(action);
+        log.setDate(java.util.Calendar.getInstance().getTime());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.setAuthor(authentication.getName());
+        log.setDescription( action + " заявки №" + id);
+        log.setType(type);
+        logRepo.save(log);
     }
 }

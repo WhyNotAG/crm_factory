@@ -122,13 +122,14 @@ public class WorkControlController {
         workControlService.delete(id);
     }
 
-    @GetMapping("/range/{dF}&{mF}&{dL}&{mL}&{year}")
+    @GetMapping("/range/{dF}&{mF}&{dL}&{mL}&{yearF}&{yearL}")
     public ResponseEntity<List<ReWorkControlDTO>> findByRange(@PathVariable(name = "dF") Integer dF,
                                                               @PathVariable(name = "mF") Integer mF,
                                                               @PathVariable(name = "dL") Integer dL,
                                                               @PathVariable(name = "mL") Integer mL,
-                                                              @PathVariable(name = "year") Integer year) {
-        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL,year)));
+                                                              @PathVariable(name = "yearF") Integer yearF,
+                                                              @PathVariable(name = "yearL") Integer yearL) {
+        return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL,yearF,yearL)));
     }
 }
 
