@@ -92,7 +92,10 @@ public class RequestServiceImpl implements RequestService {
     public Request copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setFactory(factory);
-        loging("Перенос в цех", "Перенос в цех" + request.getFactory(), "request", request.getId());
+        String factoryName = "";
+        if(factory.equals("lepsari")) factoryName = "Лепсари";
+        if(factory.equals("lemz")) factoryName = "ЛЭМЗ";
+        loging("Перенос в цех", "Перенос в цех " + factoryName, "request", request.getId());
         return requestRepo.save(request);
     }
 

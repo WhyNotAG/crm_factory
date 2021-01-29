@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import osfix.ag.crm.domain.Log;
@@ -24,5 +25,11 @@ public class LogController {
     @GetMapping("/")
     public Page<Log> getAllClients(@PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC, size = 20) Pageable pageable) {
        return logService.findAll(pageable);
+    }
+
+    @GetMapping("/{type}/")
+    public Page<Log> getAllClientsByType(@PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC, size = 20) Pageable pageable,
+                                         @PathVariable(name = "type") String type) {
+        return logService.findAllByType(type, pageable);
     }
 }

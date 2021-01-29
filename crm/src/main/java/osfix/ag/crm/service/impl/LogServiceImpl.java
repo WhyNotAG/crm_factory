@@ -20,4 +20,9 @@ public class LogServiceImpl implements LogService {
     public Page<Log> findAll(Pageable pageable) {
         return logRepo.findAll(pageable);
     }
+
+    @Override
+    public Page<Log> findAllByType(String type, Pageable pageable) {
+        return logRepo.findAllByType(type, pageable);
+    }
 }

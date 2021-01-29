@@ -9,4 +9,5 @@ import osfix.ag.crm.domain.Log;
 @Repository
 public interface LogRepo extends JpaRepository<Log, Long> {
     Page<Log> findAll(Pageable pageable);
+    Page<Log> findAllByType(String type, Pageable pageable);
 }
