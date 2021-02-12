@@ -47,7 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         for(Employee employee : employees) {
             if (employee.getDateOfBirth() == null) continue;
             cal.setTimeInMillis(employee.getDateOfBirth().getTime());
-            if(cal.get(Calendar.DAY_OF_MONTH) == localDateTime.getDayOfMonth() && cal.get(Calendar.MONTH)+1 == localDateTime.getMonthValue()) {
+            if(cal.get(Calendar.DAY_OF_MONTH) <= localDateTime.getDayOfMonth() + 2 &&
+                    cal.get(Calendar.DAY_OF_MONTH) >= localDateTime.getDayOfMonth() - 2 &&
+                    cal.get(Calendar.MONTH)+1 == localDateTime.getMonthValue()) {
                 result.add(employee);
             }
         }
