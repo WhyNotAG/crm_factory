@@ -63,6 +63,9 @@ public class PLC {
     @Column(name = "accountant")
     String accountant;
 
+    @Column(name = "email")
+    String email;
+
     @Column(name = "logo")
     String logo;
 }
