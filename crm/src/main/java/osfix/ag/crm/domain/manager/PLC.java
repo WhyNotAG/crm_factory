@@ -45,13 +45,13 @@ public class PLC {
     @Column(name = "okved")
     String okved;
 
-    @Column(name = "checking account")
+    @Column(name = "checking_account")
     String checkingAccount;
 
     @Column(name = "bank")
     String bank;
 
-    @Column(name = "сorrespondent_account")
+    @Column(name = "correspondent_account")
     String correspondentAccount;
 
     @Column(name = "bik")
