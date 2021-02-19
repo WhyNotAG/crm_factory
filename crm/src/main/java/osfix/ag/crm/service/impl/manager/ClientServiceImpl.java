@@ -55,13 +55,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> search(String substring, String type) {
-        Set<Contact> contacts = contactRepo.findAllByPhoneNumberContainsOrEmailIgnoreCaseContainsOrLastNameIgnoreCaseContains(substring, substring, substring);
+        Set<Contact> contacts = contactRepo.findAllByNameContainsOrPhoneNumberContainsOrEmailIgnoreCaseContainsOrLastNameIgnoreCaseContains(substring, substring, substring, substring);
         Set<LegalEntity> legalEntities = legalEntityRepo.findAllByInnIgnoreCaseContains(substring);
         Set<Client> searchingClient = new HashSet<>();
 
         for(Contact contact : contacts) { searchingClient.addAll(clientRepo.findAllByContacts(contact)); }
         for(LegalEntity legalEntity : legalEntities) { searchingClient.addAll(clientRepo.findAllByLegalEntities(legalEntity)); }
-        searchingClient.addAll(clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndType(substring, type, substring, type, substring, type));
+        searchingClient.addAll(clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndTypeOrSiteContainsAndTypeOrPriceContainsAndType
+                (substring, type, substring, type, substring, type, substring, type, substring, type));
         return searchingClient;
     }
 
@@ -95,8 +96,9 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(entity);
         }
+        clientRepo.save(entity);
         loging("Создание", "Добавление", "clients", client.getId());
-        return clientRepo.save(entity);
+        return entity;
     }
 
     @Override
@@ -139,7 +141,7 @@ public class ClientServiceImpl implements ClientService {
     public Client updateDate(Long id, Long date) {
         Client client = clientRepo.findById(id).orElse(null);
         client.setNextDateContact(new Date(date*1000));
-        loging("Обновление даты", "Обновление даты связи на \"" + client.getNextDateContact() + "\"", "clients", client.getId());
+        loging("Обновление даты", "Обновление даты след. контакта на \"" + client.getNextDateContact() + "\"", "clients", client.getId());
         return clientRepo.save(client);
     }
 
