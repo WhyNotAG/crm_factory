@@ -97,7 +97,7 @@ public class ClientServiceImpl implements ClientService {
             return clientRepo.save(entity);
         }
         clientRepo.save(entity);
-        loging("Создание", "Добавление", "clients", client.getId());
+        loging("Создание", "Добавление", "clients", entity.getId());
         return entity;
     }
 
