@@ -61,7 +61,7 @@ public class ClientServiceImpl implements ClientService {
 
         for(Contact contact : contacts) { searchingClient.addAll(clientRepo.findAllByContacts(contact)); }
         for(LegalEntity legalEntity : legalEntities) { searchingClient.addAll(clientRepo.findAllByLegalEntities(legalEntity)); }
-        searchingClient.addAll(clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndTypeOrSiteContainsAndTypeOrPriceContainsAndType
+        searchingClient.addAll(clientRepo.findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndTypeOrSiteContainsAndTypeOrPriceIgnoreCaseContainsAndType
                 (substring, type, substring, type, substring, type, substring, type, substring, type));
         return searchingClient;
     }
@@ -78,12 +78,19 @@ public class ClientServiceImpl implements ClientService {
         Client entity = clientMapper.toEntity(client);
         Client clientFromDb = clientRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(entity, clientFromDb, "id");
+        Boolean isFavorite = client.getFavorite();
+        Boolean isClosed = client.getIsClosed();
         if (client.getIsClosed() == null) client.setIsClosed(false);
         if(client.getIsClosed()) {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(clientFromDb);
         }
-        loging("Изменение", "Изменение", "clients", clientFromDb.getId());
+        if (clientFromDb.getFavorite() != isFavorite) {
+            loging("Добавление в избранное", "Добавление в избранное", "clients", clientFromDb.getId());
+        }
+         else {
+             loging("Изменение", "Изменение", "clients", clientFromDb.getId());
+         }
         return clientRepo.save(clientFromDb);
     }
 

@@ -34,7 +34,7 @@ public interface ClientRepo extends JpaRepository<Client, Long> {
     Page<Client> findAllByCategory_NameAndClientTypeAndTypeAndUserIsNull(String name, String clientType, String type, Pageable pageable);
 //    Page<Client> findAllByCategory_NameAndClientTypeAndTypeAndUser(String name, String clientType, String type, User user, Pageable pageable);
 
-    Set<Client> findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndTypeOrSiteContainsAndTypeOrPriceContainsAndType
+    Set<Client> findAllByNameIgnoreCaseContainsAndTypeOrCommentIgnoreCaseContainsAndTypeOrSiteIgnoreCaseContainsAndTypeOrSiteContainsAndTypeOrPriceIgnoreCaseContainsAndType
             (String substring, String type, String substring2, String type2, String substring3, String type3, String substring4, String type4, String substring5, String type5);
     Set<Client> findAllByContacts(Contact contact);
     Set<Client> findAllByLegalEntities(LegalEntity legalEntity);
