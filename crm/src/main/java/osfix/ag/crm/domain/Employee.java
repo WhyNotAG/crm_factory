@@ -3,6 +3,7 @@ package osfix.ag.crm.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import osfix.ag.crm.domain.admin.Journal;
 import osfix.ag.crm.domain.product.RequestProduct;
 
 import javax.persistence.*;
@@ -67,5 +68,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     @JsonBackReference
     public List<WorkControl> workControls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @JsonBackReference
+    public List<Journal> journals = new ArrayList<>();
 
 }

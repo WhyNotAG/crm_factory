@@ -77,7 +77,6 @@ public class ClientServiceImpl implements ClientService {
         String hasUserRole = authentication.getAuthorities().toString();
         Client entity = clientMapper.toEntity(client);
         Client clientFromDb = clientRepo.findById(id).orElse(null);
-        Boolean isFavorite = entity.getFavorite();
         BeanUtils.copyProperties(entity, clientFromDb, "id");
         Boolean isClosed = client.getIsClosed();
         if (client.getIsClosed() == null) client.setIsClosed(false);
@@ -85,6 +84,7 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(clientFromDb);
         }
+        Boolean isFavorite = entity.getFavorite();
         if (clientFromDb.getFavorite() != isFavorite) {
             loging("Добавление в избранное", "Добавление в избранное", "clients", clientFromDb.getId());
         }
