@@ -86,7 +86,10 @@ public class ClientServiceImpl implements ClientService {
         }
         Boolean isFavorite = entity.getFavorite();
         if (clientFromDb.getFavorite() != isFavorite) {
-            loging("Добавление в избранное", "Добавление в избранное", "clients", clientFromDb.getId());
+            if(clientFromDb.getFavorite())
+                loging("Добавление в избранное", "Добавление в избранное", "clients", clientFromDb.getId());
+            else
+                loging("Удаление из избранного", "Удаление из избранного", "clients", clientFromDb.getId());
         }
          else {
              loging("Изменение", "Изменение", "clients", clientFromDb.getId());
