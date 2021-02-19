@@ -1,16 +1,17 @@
 package osfix.ag.crm.service.impl.manager;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.manager.Contact;
 import osfix.ag.crm.domain.manager.LegalEntity;
-import osfix.ag.crm.domain.user.User;
+import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
-import org.springframework.data.domain.Page;
 import osfix.ag.crm.repo.manager.ContactRepo;
 import osfix.ag.crm.repo.manager.LegalEntityRepo;
 import osfix.ag.crm.repo.user.UserRepo;
@@ -18,9 +19,7 @@ import osfix.ag.crm.service.ClientService;
 import osfix.ag.crm.service.dto.manager.ClientDTO;
 import osfix.ag.crm.service.mapper.manager.ClientMapper;
 
-
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,14 +31,16 @@ public class ClientServiceImpl implements ClientService {
     private LegalEntityRepo legalEntityRepo;
     private ContactRepo contactRepo;
     private UserRepo userRepo;
+    private LogRepo logRepo;
 
     public ClientServiceImpl(ClientRepo clientRepo, ClientMapper clientMapper, UserRepo userRepo,
-                             LegalEntityRepo legalEntityRepo, ContactRepo contactRepo) {
+                             LegalEntityRepo legalEntityRepo, ContactRepo contactRepo, LogRepo logRepo) {
         this.clientRepo = clientRepo;
         this.clientMapper = clientMapper;
         this.userRepo = userRepo;
         this.contactRepo = contactRepo;
         this.legalEntityRepo = legalEntityRepo;
+        this.logRepo = logRepo;
     }
 
     @Override
@@ -81,6 +82,7 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(clientFromDb);
         }
+        loging("Изменение", "Изменение", "client", clientFromDb.getId());
         return clientRepo.save(clientFromDb);
     }
 
@@ -93,12 +95,14 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(entity);
         }
+        loging("Создание", "Добавление", "client", client.getId());
         return clientRepo.save(entity);
     }
 
     @Override
     public void delete(Long id) {
         clientRepo.deleteById(id);
+        loging("Удаление", "Удаление", "client", id);
     }
 
     @Override
@@ -135,6 +139,7 @@ public class ClientServiceImpl implements ClientService {
     public Client updateDate(Long id, Long date) {
         Client client = clientRepo.findById(id).orElse(null);
         client.setNextDateContact(new Date(date*1000));
+        loging("Обновление даты", "Обновление даты связи на \"" + client.getNextDateContact() + "\"", "client", client.getId());
         return clientRepo.save(client);
     }
 
@@ -146,5 +151,16 @@ public class ClientServiceImpl implements ClientService {
         if(hasUserRole)
             return clientRepo.findAllByCategory_NameInAndClientTypeAndType(name, clientType, type, pageable);
         return null;
+    }
+
+    public void loging(String actionShort, String action, String type, Long id) {
+        Log log = new Log();
+        log.setAction(actionShort);
+        log.setDate(java.util.Calendar.getInstance().getTime());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.setAuthor(authentication.getName());
+        log.setDescription( action + " клиента №" + id);
+        log.setType(type);
+        logRepo.save(log);
     }
 }
