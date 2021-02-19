@@ -32,6 +32,9 @@ public class JournalController {
 
     @GetMapping("/{id}")
     public ResponseEntity<JournalDTO> getById (@PathVariable(name = "id") Long id) {
+        Journal journal = journalService.findById(id);
+        if (journal == null)
+            return null;
         return ResponseEntity.ok().body(journalMapper.fromEntity(journalService.findById(id)));
     }
 

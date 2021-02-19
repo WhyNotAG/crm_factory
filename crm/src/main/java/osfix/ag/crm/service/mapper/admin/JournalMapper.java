@@ -23,6 +23,8 @@ public class JournalMapper implements EntityMapper<Journal, JournalDTO> {
     @Override
     public Journal toEntity(JournalDTO dto) {
         Journal journal = new Journal();
+        if(dto.getId() == null)
+            return null;
         journal.setId(dto.getId());
         journal.setComment(dto.getComment());
         journal.setEmployee(employeeService.findById(dto.getEmployeeId()));
@@ -37,6 +39,8 @@ public class JournalMapper implements EntityMapper<Journal, JournalDTO> {
     @Override
     public JournalDTO fromEntity(Journal entity) {
         JournalDTO journalDTO = new JournalDTO();
+        if(entity.getId() == null)
+            return null;
         journalDTO.setId(entity.getId());
         journalDTO.setComment(entity.getComment());
         if(entity.getEmployee() != null) {
