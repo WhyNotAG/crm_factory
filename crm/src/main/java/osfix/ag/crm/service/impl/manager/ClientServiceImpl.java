@@ -82,7 +82,7 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(clientFromDb);
         }
-        loging("Изменение", "Изменение", "client", clientFromDb.getId());
+        loging("Изменение", "Изменение", "clients", clientFromDb.getId());
         return clientRepo.save(clientFromDb);
     }
 
@@ -95,14 +95,14 @@ public class ClientServiceImpl implements ClientService {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(entity);
         }
-        loging("Создание", "Добавление", "client", client.getId());
+        loging("Создание", "Добавление", "clients", client.getId());
         return clientRepo.save(entity);
     }
 
     @Override
     public void delete(Long id) {
         clientRepo.deleteById(id);
-        loging("Удаление", "Удаление", "client", id);
+        loging("Удаление", "Удаление", "clients", id);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ClientServiceImpl implements ClientService {
     public Client updateDate(Long id, Long date) {
         Client client = clientRepo.findById(id).orElse(null);
         client.setNextDateContact(new Date(date*1000));
-        loging("Обновление даты", "Обновление даты связи на \"" + client.getNextDateContact() + "\"", "client", client.getId());
+        loging("Обновление даты", "Обновление даты связи на \"" + client.getNextDateContact() + "\"", "clients", client.getId());
         return clientRepo.save(client);
     }
 
