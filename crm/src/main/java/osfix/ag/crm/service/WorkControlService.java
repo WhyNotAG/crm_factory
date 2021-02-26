@@ -8,6 +8,7 @@ import java.util.List;
 public interface WorkControlService {
     List<WorkControl> findAll();
     List<WorkControl> findAllByEmployeeId(Long id);
+    List<WorkControl> findAllByEmployeeAndYearAndMonthAndDay(Long id, Integer year, Integer month, Integer day);
     WorkControl save(WorkControl workControl);
     WorkControl update(Long id, WorkControl workControl);
     void delete(Long id);

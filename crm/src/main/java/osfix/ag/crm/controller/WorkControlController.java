@@ -16,6 +16,7 @@ import osfix.ag.crm.service.mapper.ReWorkControlMapper;
 import osfix.ag.crm.service.mapper.WorkControlMapper;
 import osfix.ag.crm.service.mapper.factory.PartsWorkMapper;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -50,6 +51,16 @@ public class WorkControlController {
     @GetMapping("/employee/{id}")
     public ResponseEntity<List<ReWorkControlDTO>> findByEmployeeId(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findAllByEmployeeId(id)));
+    }
+
+    @GetMapping("/employeeDay/{id}&{year}&{month}&{day}")
+    public ResponseEntity<List<ReWorkControlDTO>> findByEmployeeInDay(@PathVariable(name = "id") Long id,
+                                                                      @PathVariable(name = "year") Integer year,
+                                                                      @PathVariable(name = "month") Integer month,
+                                                                      @PathVariable(name = "day") Integer day) {
+        return ResponseEntity.ok().body(
+                reWorkControlMapper.toDtoList(
+                        workControlService.findAllByEmployeeAndYearAndMonthAndDay(id, year, month, day)));
     }
 
     @GetMapping("/month/{month}&{year}")

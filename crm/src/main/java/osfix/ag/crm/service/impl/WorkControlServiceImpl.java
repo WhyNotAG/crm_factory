@@ -75,6 +75,12 @@ public class WorkControlServiceImpl implements WorkControlService {
     }
 
     @Override
+    public List<WorkControl> findAllByEmployeeAndYearAndMonthAndDay(Long id, Integer year, Integer month, Integer day) {
+        Employee employee = employeeRepo.findById(id).orElse(null);
+        return workControlRepo.findAllByEmployeeAndYearAndMonthAndDay(employee, year, month, day);
+    }
+
+    @Override
     public List<WorkControl> findAllByMonth(Integer month, Integer year) {
         return workControlRepo.findAllByMonthAndYear(month, year);
     }
