@@ -7,11 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.JwtRefreshToken;
+import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.user.User;
+import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.security.jwt.AccessToken;
 import osfix.ag.crm.security.jwt.JwtAuthenticationException;
 import osfix.ag.crm.security.jwt.JwtTokenProvider;
@@ -32,16 +36,18 @@ public class AuthenticationController {
     private UserService userService;
     private JwtRefreshTokenService jwtRefreshTokenService;
     private UserMapper userMapper;
+    private LogRepo logRepo;
 
     @Autowired
     public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider,
                                     UserService userService, JwtRefreshTokenService jwtRefreshTokenService,
-                                    UserMapper userMapper) {
+                                    UserMapper userMapper, LogRepo logRepo) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
         this.jwtRefreshTokenService = jwtRefreshTokenService;
         this.userMapper = userMapper;
+        this.logRepo = logRepo;
     }
 
 
@@ -77,9 +83,10 @@ public class AuthenticationController {
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
             response.setUser(userMapper.fromEntity(loadedUser));
-
+            loging("Вход", "Вход", "login", loadedUser.getId());
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
+            loging("Неудачная попытка входа", "Неудачная попытка входа", "login", null);
             throw new BadCredentialsException("Invalid username or password");
         }
     }
@@ -114,5 +121,17 @@ public class AuthenticationController {
         jwtRefreshToken.setUser(user);
         jwtRefreshToken = jwtRefreshTokenService.save(jwtRefreshToken);
         return jwtRefreshToken;
+    }
+
+    public void loging(String actionShort, String action, String type, Long id) {
+        Log log = new Log();
+        log.setAction(actionShort);
+        log.setDate(java.util.Calendar.getInstance().getTime());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.setAuthor(authentication.getName());
+        log.setDescription(action);
+        log.setType(type);
+        log.setElementId(id);
+        logRepo.save(log);
     }
 }

@@ -124,6 +124,7 @@ public class RequestServiceImpl implements RequestService {
         log.setAuthor(authentication.getName());
         log.setDescription( action + " заявки №" + id);
         log.setType(type);
+        log.setElementId(id);
         logRepo.save(log);
     }
 }

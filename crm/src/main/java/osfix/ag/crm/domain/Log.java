@@ -27,4 +27,7 @@ public class Log {
 
     @Column(name = "date")
     Date date;
+
+    @Column(name = "element_id")
+    Long elementId;
 }

@@ -173,6 +173,7 @@ public class ClientServiceImpl implements ClientService {
         log.setAuthor(authentication.getName());
         log.setDescription( action + " клиента №" + id);
         log.setType(type);
+        log.setElementId(id);
         logRepo.save(log);
     }
 }
