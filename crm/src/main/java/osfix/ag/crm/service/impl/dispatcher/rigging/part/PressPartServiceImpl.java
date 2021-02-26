@@ -36,21 +36,21 @@ public class PressPartServiceImpl implements PressPartService {
     public PressPart update(Long id, PressPart pressPart) {
         PressPart pressPartFromDb = pressPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(pressPart, pressPartFromDb, "id");
-        loging("Изменение детали", "Изменение в оснастке №" + pressPartFromDb.getPress().getId(), "rigging", pressPartFromDb.getId());
+        loging("Изменение детали", "Изменение в оснастке №" + pressPartFromDb.getPress().getId(), "riggingPart", pressPartFromDb.getId());
         return pressPartRepo.save(pressPartFromDb);
     }
 
     @Override
     public PressPart save(PressPart pressPart) {
         pressPartRepo.save(pressPart);
-        loging("Добавление детали", "Добавление в оснастке №" + pressPart.getPress().getId(), "rigging", pressPart.getId());
+        loging("Добавление детали", "Добавление в оснастке №" + pressPart.getPress().getId(), "riggingPart", pressPart.getId());
         return pressPart;
     }
 
     @Override
     public void delete(Long id) {
         pressPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "rigging", id);
+        loging("Удаление детали", "Удаление детали", "riggingPart", id);
     }
 
     @Override

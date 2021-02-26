@@ -77,7 +77,12 @@ public class StampServiceImpl implements StampService {
         log.setDate(java.util.Calendar.getInstance().getTime());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.setAuthor(authentication.getName());
-        log.setDescription( action + " оснастки №" + id + " в \"" + elementType + "\"" );
+        String riggingType = "";
+        if (elementType.equals("pressForm")) riggingType = "Пресс";
+        if (elementType.equals("stamp")) riggingType = "Штамп";
+        if (elementType.equals("bench")) riggingType = "Станок";
+        if (elementType.equals("detail")) riggingType = "Деталь";
+        log.setDescription( action + " оснастки №" + id + " в \"" + riggingType + "\"" );
         log.setType(type);
         log.setElementId(id);
         logRepo.save(log);

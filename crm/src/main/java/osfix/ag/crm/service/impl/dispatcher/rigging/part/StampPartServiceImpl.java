@@ -71,7 +71,12 @@ public class StampPartServiceImpl implements StampPartService {
         log.setDate(java.util.Calendar.getInstance().getTime());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.setAuthor(authentication.getName());
-        log.setDescription( action + " детали №" + id + " в \"" + elementType + "\"" );
+        String riggingType = "";
+        if (elementType.equals("pressForm")) riggingType = "Пресс";
+        if (elementType.equals("stamp")) riggingType = "Штамп";
+        if (elementType.equals("bench")) riggingType = "Станок";
+        if (elementType.equals("detail")) riggingType = "Деталь";
+        log.setDescription( action + " детали №" + id + " в \"" + riggingType + "\"" );
         log.setType(type);
         log.setElementId(id);
         logRepo.save(log);
