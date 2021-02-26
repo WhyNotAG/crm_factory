@@ -74,7 +74,7 @@ public class StampPartServiceImpl implements StampPartService {
         String riggingType = "";
         if (elementType.equals("pressForm")) riggingType = "Пресс";
         if (elementType.equals("stamp")) riggingType = "Штамп";
-        if (elementType.equals("bench")) riggingType = "Станок";
+        if (elementType.equals("machine")) riggingType = "Станок";
         if (elementType.equals("parts")) riggingType = "Запчасти";
         log.setDescription( action + " детали №" + id + " в \"" + riggingType + "\"" );
         log.setType(type);

@@ -80,7 +80,7 @@ public class StampServiceImpl implements StampService {
         String riggingType = "";
         if (elementType.equals("pressForm")) riggingType = "Пресс";
         if (elementType.equals("stamp")) riggingType = "Штамп";
-        if (elementType.equals("bench")) riggingType = "Станок";
+        if (elementType.equals("machine")) riggingType = "Станок";
         if (elementType.equals("detail")) riggingType = "Деталь";
         log.setDescription( action + " оснастки №" + id + " в \"" + riggingType + "\"" );
         log.setType(type);
