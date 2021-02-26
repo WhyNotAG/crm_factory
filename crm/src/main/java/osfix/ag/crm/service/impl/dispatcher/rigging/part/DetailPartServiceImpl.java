@@ -32,21 +32,21 @@ public class DetailPartServiceImpl implements DetailPartService {
     public DetailPart update(Long id, DetailPart detailPart) {
         DetailPart detailPartFromDb = detailPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(detailPart, detailPartFromDb, "id");
-        loging("Изменение детали", "Изменение в оснастке №" + detailPartFromDb.getDetail().getId(), "riggingPart", detailPartFromDb.getId());
+        loging("Изменение детали", "Изменение в оснастке №" + detailPartFromDb.getDetail().getId(), "rigging", detailPartFromDb.getId());
         return detailPartRepo.save(detailPartFromDb);
     }
 
     @Override
     public DetailPart save(DetailPart detailPart) {
         detailPartRepo.save(detailPart);
-        loging("Добавление детали", "Добавление в оснастке №" + detailPart.getDetail().getId(), "riggingPart", detailPart.getId());
+        loging("Добавление детали", "Добавление в оснастке №" + detailPart.getDetail().getId(), "rigging", detailPart.getId());
         return detailPart;
     }
 
     @Override
     public void delete(Long id) {
         detailPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "riggingPart", id);
+        loging("Удаление детали", "Удаление детали", "rigging", id);
     }
 
     @Override

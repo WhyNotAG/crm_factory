@@ -36,21 +36,22 @@ public class StampServiceImpl implements StampService {
     public Stamp update(Long id, Stamp stamp) {
         Stamp stampFromDb = stampRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(stamp, stampFromDb, "id");
-        loging("Изменение", "Изменение", "rigging", stampFromDb.getId());
+        loging("Изменение", "Изменение", "rigging", stampFromDb.getId(), stampFromDb.getStatus());
         return stampRepo.save(stampFromDb);
     }
 
     @Override
     public Stamp save(Stamp stamp) {
         stampRepo.save(stamp);
-        loging("Создание", "Создание", "rigging", stamp.getId());
+        loging("Создание", "Создание", "rigging", stamp.getId(), stamp.getStatus());
         return stamp;
     }
 
     @Override
     public void delete(Long id) {
+        Stamp stamp = stampRepo.findById(id).orElse(null);
         stampRepo.deleteById(id);
-        loging("Удаление", "Удаление", "rigging", id);
+        loging("Удаление", "Удаление", "rigging", id, stamp.getStatus());
     }
 
     @Override
@@ -70,13 +71,13 @@ public class StampServiceImpl implements StampService {
         return stampRepo.findAllByStatus(status);
     }
 
-    public void loging(String actionShort, String action, String type, Long id) {
+    public void loging(String actionShort, String action, String type, Long id, String elementType) {
         Log log = new Log();
         log.setAction(actionShort);
         log.setDate(java.util.Calendar.getInstance().getTime());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.setAuthor(authentication.getName());
-        log.setDescription( action + " оснастки №" + id + " в \"Штамп\"" );
+        log.setDescription( action + " оснастки №" + id + " в \"" + elementType + "\"" );
         log.setType(type);
         log.setElementId(id);
         logRepo.save(log);

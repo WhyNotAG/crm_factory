@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.Log;
+import osfix.ag.crm.domain.dispatcher.rigging.Stamp;
 import osfix.ag.crm.domain.dispatcher.rigging.parts.StampPart;
 import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.rigging.part.StampPartRepo;
@@ -37,21 +38,24 @@ public class StampPartServiceImpl implements StampPartService {
     public StampPart update(Long id, StampPart stampPart) {
         StampPart stampPartFromDb = stampPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(stampPart, stampPartFromDb, "id");
-        loging("Изменение детали", "Изменение в оснастке №" + stampPartFromDb.getStamp().getId(), "riggingPart", stampPartFromDb.getId());
+        loging("Изменение детали", "Изменение в оснастке №" + stampPartFromDb.getStamp().getId(),
+                "rigging",stampPartFromDb.getStamp().getId(), stampPartFromDb.getStamp().getStatus());
         return stampPartRepo.save(stampPartFromDb);
     }
 
     @Override
     public StampPart save(StampPart stampPart) {
         stampPartRepo.save(stampPart);
-        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "riggingPart", stampPart.getId());
+        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "rigging", stampPart.getStamp().getId(),
+                stampPart.getStamp().getStatus());
         return stampPart;
     }
 
     @Override
     public void delete(Long id) {
+        StampPart stampPart = stampPartRepo.findById(id).orElse(null);
         stampPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "riggingPart", id);
+        loging("Удаление детали", "Удаление детали", "rigging", stampPart.getStamp().getId(),  stampPart.getStamp().getStatus());
     }
 
     @Override
@@ -61,13 +65,13 @@ public class StampPartServiceImpl implements StampPartService {
         return stampPartRepo.save(stampPart);
     }
 
-    public void loging(String actionShort, String action, String type, Long id) {
+    public void loging(String actionShort, String action, String type, Long id, String elementType) {
         Log log = new Log();
         log.setAction(actionShort);
         log.setDate(java.util.Calendar.getInstance().getTime());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.setAuthor(authentication.getName());
-        log.setDescription( action + " детали №" + id + " в \"Штамп\"" );
+        log.setDescription( action + " детали №" + id + " в \"" + elementType + "\"" );
         log.setType(type);
         log.setElementId(id);
         logRepo.save(log);

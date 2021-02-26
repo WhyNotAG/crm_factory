@@ -36,21 +36,21 @@ public class BenchPartServiceImpl implements BenchPartService {
     public BenchPart update(Long id, BenchPart benchPart) {
         BenchPart benchPartFromDb = benchPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(benchPart, benchPartFromDb, "id");
-        loging("Изменение детали", "Изменение в оснастке №" + benchPartFromDb.getBench().getId(), "riggingPart", benchPartFromDb.getId());
+        loging("Изменение детали", "Изменение в оснастке №" + benchPartFromDb.getBench().getId(), "rigging", benchPartFromDb.getId());
         return benchPartRepo.save(benchPartFromDb);
     }
 
     @Override
     public BenchPart save(BenchPart benchPart) {
          benchPartRepo.save(benchPart);
-        loging("Добавление детали", "Добавление в оснастке №" + benchPart.getBench().getId(), "riggingPart", benchPart.getId());
+        loging("Добавление детали", "Добавление в оснастке №" + benchPart.getBench().getId(), "rigging", benchPart.getId());
         return benchPart;
     }
 
     @Override
     public void delete(Long id) {
         benchPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "riggingPart", id);
+        loging("Удаление детали", "Удаление детали", "rigging", id);
     }
 
     @Override
