@@ -39,14 +39,14 @@ public class StampPartServiceImpl implements StampPartService {
         StampPart stampPartFromDb = stampPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(stampPart, stampPartFromDb, "id");
         loging("Изменение детали", "Изменение в оснастке №" + stampPartFromDb.getStamp().getId(),
-                "rigging",stampPartFromDb.getStamp().getId(), stampPartFromDb.getStamp().getStatus());
+                "riggingPart",stampPartFromDb.getStamp().getId(), stampPartFromDb.getStamp().getStatus());
         return stampPartRepo.save(stampPartFromDb);
     }
 
     @Override
     public StampPart save(StampPart stampPart) {
         stampPartRepo.save(stampPart);
-        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "rigging", stampPart.getStamp().getId(),
+        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "riggingPart", stampPart.getStamp().getId(),
                 stampPart.getStamp().getStatus());
         return stampPart;
     }
@@ -55,7 +55,7 @@ public class StampPartServiceImpl implements StampPartService {
     public void delete(Long id) {
         StampPart stampPart = stampPartRepo.findById(id).orElse(null);
         stampPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "rigging", stampPart.getStamp().getId(),  stampPart.getStamp().getStatus());
+        loging("Удаление детали", "Удаление детали", "riggingPart", stampPart.getStamp().getId(),  stampPart.getStamp().getStatus());
     }
 
     @Override
@@ -75,7 +75,7 @@ public class StampPartServiceImpl implements StampPartService {
         if (elementType.equals("pressForm")) riggingType = "Пресс";
         if (elementType.equals("stamp")) riggingType = "Штамп";
         if (elementType.equals("bench")) riggingType = "Станок";
-        if (elementType.equals("detail")) riggingType = "Деталь";
+        if (elementType.equals("parts")) riggingType = "Запчасти";
         log.setDescription( action + " детали №" + id + " в \"" + riggingType + "\"" );
         log.setType(type);
         log.setElementId(id);

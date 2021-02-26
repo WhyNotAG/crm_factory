@@ -83,10 +83,10 @@ public class AuthenticationController {
             response.setExpiredIn(accessToken.getExpiredIn());
             response.setRefreshToken(refreshToken.getToken());
             response.setUser(userMapper.fromEntity(loadedUser));
-            loging("Вход", "Вход", "login", loadedUser.getId());
+            loging("Вход", "Вход", "login", loadedUser.getId(), loadedUser.getUsername());
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
-            loging("Неудачная попытка входа", "Неудачная попытка входа", "login", null);
+            loging("Неудачная попытка входа", "Неудачная попытка входа", "login", null, null);
             throw new BadCredentialsException("Invalid username or password");
         }
     }
@@ -123,12 +123,11 @@ public class AuthenticationController {
         return jwtRefreshToken;
     }
 
-    public void loging(String actionShort, String action, String type, Long id) {
+    public void loging(String actionShort, String action, String type, Long id, String username) {
         Log log = new Log();
         log.setAction(actionShort);
         log.setDate(java.util.Calendar.getInstance().getTime());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.setAuthor(authentication.getName());
+        log.setAuthor(username);
         log.setDescription(action);
         log.setType(type);
         log.setElementId(id);
