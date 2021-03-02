@@ -11,6 +11,6 @@ import java.util.Set;
 @Repository
 public interface EmployeeRepo extends JpaRepository<Employee, Long> {
     List<Employee> findAllByWorkshop(String workshop);
-    Set<Employee> findAllByRegistrationExpirationDateBetweenOrPatentExpirationDateBetween(Date regFrom, Date regTo, Date patFrom, Date patTo);
+    Set<Employee> findAllByRegistrationExpirationDateBetweenOrPatentExpirationDateBetweenOrRegistrationExpirationDateIsNullAndCitizenshipNotContainsOrPatentExpirationDateIsNullAndCitizenshipNotContains(Date regFrom, Date regTo, Date patFrom, Date patTo, String city, String city2);
 
 }
