@@ -61,9 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         return employeeRepo.findAllByRegistrationExpirationDateBetweenOrPatentExpirationDateBetweenOrRegistrationExpirationDateIsNullAndCitizenshipNotContainsOrPatentExpirationDateIsNullAndCitizenshipNotContains(
-                java.sql.Date.valueOf(localDateTime.minusWeeks(1).toLocalDate()),
+                java.sql.Date.valueOf(localDateTime.minusWeeks(53).toLocalDate()),
                 java.sql.Date.valueOf(localDateTime.plusWeeks(1).toLocalDate()),
-                java.sql.Date.valueOf(localDateTime.minusWeeks(1).toLocalDate()),
+                java.sql.Date.valueOf(localDateTime.minusWeeks(53).toLocalDate()),
                 java.sql.Date.valueOf(localDateTime.plusWeeks(1).toLocalDate()),
                 "РФ", "РФ");
     }
