@@ -55,7 +55,7 @@ public class StampPartServiceImpl implements StampPartService {
     public void delete(Long id) {
         StampPart stampPart = stampPartRepo.findById(id).orElse(null);
         stampPartRepo.deleteById(id);
-        loging("Удаление детали", "Удаление детали", "riggingPart", stampPart.getStamp().getId(),  stampPart.getStamp().getStatus());
+        loging("Удаление детали", "Удаление детали", "riggingPart", stampPart.getId(),  stampPart.getStamp().getStatus());
     }
 
     @Override
