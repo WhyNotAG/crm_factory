@@ -39,14 +39,14 @@ public class StampPartServiceImpl implements StampPartService {
         StampPart stampPartFromDb = stampPartRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(stampPart, stampPartFromDb, "id");
         loging("Изменение детали", "Изменение в оснастке №" + stampPartFromDb.getStamp().getId(),
-                "riggingPart",stampPartFromDb.getStamp().getId(), stampPartFromDb.getStamp().getStatus());
+                "riggingPart",stampPartFromDb.getId(), stampPartFromDb.getStamp().getStatus());
         return stampPartRepo.save(stampPartFromDb);
     }
 
     @Override
     public StampPart save(StampPart stampPart) {
         stampPartRepo.save(stampPart);
-        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "riggingPart", stampPart.getStamp().getId(),
+        loging("Добавление детали", "Добавление в оснастке №" + stampPart.getStamp().getId(), "riggingPart", stampPart.getId(),
                 stampPart.getStamp().getStatus());
         return stampPart;
     }
