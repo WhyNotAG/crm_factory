@@ -73,4 +73,8 @@ public class Employee {
     @JsonBackReference
     public List<Journal> journals = new ArrayList<>();
 
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @JsonBackReference
+    public List<EmployeePhoto> employeePhotos = new ArrayList<>();
+
 }

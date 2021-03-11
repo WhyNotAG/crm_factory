@@ -1,8 +1,10 @@
 package osfix.ag.crm.service.dto;
 
 import lombok.Data;
+import osfix.ag.crm.domain.EmployeePhoto;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class EmployeeDTO {
@@ -21,4 +23,5 @@ public class EmployeeDTO {
     Date dateOfBirth;
     Date patentExpirationDate;
     Date registrationExpirationDate;
+    List<EmployeePhotoDTO> employeePhotos;
 }

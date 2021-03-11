@@ -2,8 +2,13 @@ package osfix.ag.crm.service.impl;
 
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.config.FileStorageProperties;
+import osfix.ag.crm.domain.Employee;
+import osfix.ag.crm.domain.EmployeePhoto;
 import osfix.ag.crm.exceptions.FileStorageException;
 import osfix.ag.crm.exceptions.MyFileNotFoundException;
+import osfix.ag.crm.repo.EmployeePhotoRepo;
+import osfix.ag.crm.repo.EmployeeRepo;
+import osfix.ag.crm.service.EmployeeService;
 import osfix.ag.crm.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,13 +22,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path fileStorageLocation;
+    private EmployeePhotoRepo employeePhotoRepo;
+    private EmployeeRepo employeeRepo;
 
     @Autowired
-    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties, EmployeePhotoRepo employeePhotoRepo,
+                                  EmployeeRepo employeeRepo) {
+        this.employeePhotoRepo = employeePhotoRepo;
+        this.employeeRepo = employeeRepo;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
 
@@ -48,6 +59,29 @@ public class FileStorageServiceImpl implements FileStorageService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
+            return fileName;
+        } catch (IOException ex) {
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    public String storeFileEmployee(MultipartFile file, Long id) {
+        // Normalize file name
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        try {
+            // Check if the file's name contains invalid characters
+            if(fileName.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            // Copy file to the target location (Replacing existing file with the same name)
+            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            EmployeePhoto employeePhoto = new EmployeePhoto();
+            employeePhoto.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+            employeePhoto.setEmployee(employeeRepo.findById(id).orElse(null));
+            employeePhotoRepo.save(employeePhoto);
             return fileName;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);

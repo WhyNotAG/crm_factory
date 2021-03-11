@@ -1,5 +1,6 @@
 package osfix.ag.crm.service.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.service.dto.EmployeeDTO;
@@ -10,6 +11,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
+    @Autowired
+    EmployeePhotoMapper employeePhotoMapper;
     @Override
     public Employee toEntity(EmployeeDTO dto) {
         Employee employee = new Employee();
@@ -23,6 +26,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         employee.setPosition(dto.getPosition());
         employee.setRelevance(dto.getRelevance());
         employee.setWorkshop(dto.getWorkshop());
+        employee.setEmployeePhotos(employeePhotoMapper.fromDtoList(dto.getEmployeePhotos()));
         if(dto.getDateOfBirth() != null)
             employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime() * 1000));
         if(dto.getPatentExpirationDate() != null && dto.getRegistrationExpirationDate() != null ) {
@@ -46,6 +50,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         dto.setPosition(entity.getPosition());
         dto.setRelevance(entity.getRelevance());
         dto.setWorkshop(entity.getWorkshop());
+        dto.setEmployeePhotos(employeePhotoMapper.toDtoList(entity.getEmployeePhotos()));
         if(entity.getDateOfBirth() != null)
             dto.setDateOfBirth(entity.getDateOfBirth());
         if(entity.getPatentExpirationDate() != null && entity.getRegistrationExpirationDate() != null ) {
