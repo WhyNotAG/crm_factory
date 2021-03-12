@@ -2,9 +2,12 @@ package osfix.ag.crm.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.service.EmployeeService;
 import osfix.ag.crm.service.dto.EmployeeDTO;
+import osfix.ag.crm.service.dto.EmployeeDownloadDTO;
+import osfix.ag.crm.service.mapper.EmployeeDownloadMapper;
 import osfix.ag.crm.service.mapper.EmployeeMapper;
 
 import java.util.ArrayList;
@@ -15,10 +18,16 @@ import java.util.List;
 public class EmployeeController {
     private EmployeeService employeeService;
     private EmployeeMapper employeeMapper;
+    private FileControllerWithoutDB fileControllerWithoutDB;
+    private EmployeeDownloadMapper employeeDownloadMapper;
 
-    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
+
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper,
+                              FileControllerWithoutDB fileControllerWithoutDB, EmployeeDownloadMapper employeeDownloadMapper) {
         this.employeeService = employeeService;
         this.employeeMapper = employeeMapper;
+        this.fileControllerWithoutDB = fileControllerWithoutDB;
+        this.employeeDownloadMapper = employeeDownloadMapper;
     }
 
     @GetMapping("/")
@@ -27,7 +36,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/workshop")
-    public ResponseEntity<List<EmployeeDTO>> findByWorkshop(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<List<EmployeeDTO>> findByWorkshop(@RequestBody EmployeeDownloadDTO employeeDTO) {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findByWorkshop(employeeDTO.getWorkshop())));
     }
 
@@ -36,11 +45,13 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(id)));
     }
 
-    @PostMapping("/")
-    public ResponseEntity<EmployeeDTO> add(@RequestBody EmployeeDTO employee) {
-        return ResponseEntity.ok().body(employeeMapper.fromEntity(
-                employeeService.save(
-                        employeeMapper.toEntity(employee))));
+    @PostMapping(path = "/", consumes = {"multipart/form-data"})
+    public ResponseEntity<EmployeeDTO> add(@ModelAttribute EmployeeDownloadDTO employee) {
+        MultipartFile[] files = employee.getFiles();
+        System.out.println(files.length);
+        Employee savedEmployee = employeeService.save(employeeDownloadMapper.toEntity(employee));
+        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(savedEmployee.getId())));
     }
 
 
@@ -55,11 +66,13 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(new ArrayList<>(employeeService.findAllByPatentOrRegistration())));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @RequestBody EmployeeDTO employee) {
+    @PutMapping(path = "/{id}", consumes = {"multipart/form-data"})
+    public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @ModelAttribute EmployeeDownloadDTO employee) {
+        MultipartFile[] files = employee.getFiles();
+        Employee savedEmployee = employeeService.update(id, employeeDownloadMapper.toEntity(employee));
+        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
         return ResponseEntity.ok().body(
-                employeeMapper.fromEntity(
-                        employeeService.update(id, employeeMapper.toEntity(employee))));
+                employeeMapper.fromEntity(employeeService.findById(id)));
     }
 
     @DeleteMapping("/{id}")
