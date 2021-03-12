@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
+    private static final String PHOTO_ENDPOINT = "/api/v1/fileWithoutDB/downloadFile/**";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(LOGIN_ENDPOINT, PHOTO_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT, "/api/v1/users/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/admin/user").hasRole("DISPATCHER")
                 .anyRequest().authenticated()
