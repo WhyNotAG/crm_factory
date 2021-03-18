@@ -25,10 +25,10 @@ public class EmployeeDownloadMapper implements EntityMapper<Employee, EmployeeDo
         employee.setRelevance(dto.getRelevance());
         employee.setWorkshop(dto.getWorkshop());
         if(dto.getDateOfBirth() != null)
-            employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime() * 1000));
+            employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime()));
         if(dto.getPatentExpirationDate() != null && dto.getRegistrationExpirationDate() != null ) {
-            employee.setPatentExpirationDate(new Date(dto.getPatentExpirationDate().getTime() * 1000));
-            employee.setRegistrationExpirationDate(new Date(dto.getRegistrationExpirationDate().getTime() * 1000));
+            employee.setPatentExpirationDate(new Date(dto.getPatentExpirationDate().getTime()));
+            employee.setRegistrationExpirationDate(new Date(dto.getRegistrationExpirationDate().getTime()));
         }
         employee.setYearOfBirth(dto.getYearOfBirth());
         return employee;

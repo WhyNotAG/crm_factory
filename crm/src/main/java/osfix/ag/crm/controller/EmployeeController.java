@@ -1,6 +1,8 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import osfix.ag.crm.domain.Employee;
@@ -30,6 +32,11 @@ public class EmployeeController {
         this.employeeDownloadMapper = employeeDownloadMapper;
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<EmployeeDTO>> findAll() {
         return ResponseEntity.ok().body(employeeMapper.toDtoList(employeeService.findAll()));
@@ -48,9 +55,10 @@ public class EmployeeController {
     @PostMapping(path = "/", consumes = {"multipart/form-data"})
     public ResponseEntity<EmployeeDTO> add(@ModelAttribute EmployeeDownloadDTO employee) {
         MultipartFile[] files = employee.getFiles();
-        System.out.println(files.length);
         Employee savedEmployee = employeeService.save(employeeDownloadMapper.toEntity(employee));
-        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        if(savedEmployee.getEmployeePhotos().size() > 0) {
+            fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        }
         return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(savedEmployee.getId())));
     }
 
@@ -70,7 +78,9 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @ModelAttribute EmployeeDownloadDTO employee) {
         MultipartFile[] files = employee.getFiles();
         Employee savedEmployee = employeeService.update(id, employeeDownloadMapper.toEntity(employee));
-        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        if(savedEmployee.getEmployeePhotos().size() > 0) {
+            fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        }
         return ResponseEntity.ok().body(
                 employeeMapper.fromEntity(employeeService.findById(id)));
     }
