@@ -8,4 +8,6 @@ public interface FileStorageService {
     String storeFile(MultipartFile file);
     Resource loadFileAsResource(String fileName);
     String storeFileEmployee(MultipartFile file, Long id);
+    void deleteFile(String filename);
+    void deleteFileWithUri(String filename);
 }

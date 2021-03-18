@@ -16,6 +16,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -100,5 +102,20 @@ public class FileStorageServiceImpl implements FileStorageService {
         } catch (MalformedURLException ex) {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
+    }
+
+    @Override
+    public void deleteFile(String fileName) {
+        Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+        File file = filePath.toFile();
+        file.delete();
+    }
+
+    @Override
+    public void deleteFileWithUri(String filename) {
+        String newFileName = filename.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "");
+        Path filePath = this.fileStorageLocation.resolve(newFileName).normalize();
+        File file = filePath.toFile();
+        file.delete();
     }
 }

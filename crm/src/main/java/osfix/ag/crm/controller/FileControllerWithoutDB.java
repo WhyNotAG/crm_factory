@@ -40,7 +40,6 @@ public class FileControllerWithoutDB {
     }
 
 
-
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
@@ -93,5 +92,15 @@ public class FileControllerWithoutDB {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @GetMapping("/delete/{fileName:.+}")
+    public void deleteFile(@PathVariable String fileName) {
+        fileStorageService.deleteFile(fileName);
+    }
+
+    @GetMapping("/delete/employee/{fileName:.+}")
+    public void deleteFileByEmployee(@PathVariable String fileName) {
+        fileStorageService.deleteFile(fileName);
     }
 }

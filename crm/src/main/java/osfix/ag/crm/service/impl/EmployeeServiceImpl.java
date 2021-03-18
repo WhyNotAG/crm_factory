@@ -2,9 +2,13 @@ package osfix.ag.crm.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import osfix.ag.crm.controller.FileControllerWithoutDB;
 import osfix.ag.crm.domain.Employee;
+import osfix.ag.crm.domain.EmployeePhoto;
+import osfix.ag.crm.repo.EmployeePhotoRepo;
 import osfix.ag.crm.repo.EmployeeRepo;
 import osfix.ag.crm.service.EmployeeService;
+import osfix.ag.crm.service.FileStorageService;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,8 +16,14 @@ import java.util.*;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepo employeeRepo;
+    private FileStorageService fileStorageService;
+    private EmployeePhotoRepo employeePhotoRepo;
 
-    public EmployeeServiceImpl(EmployeeRepo employeeRepo) { this.employeeRepo = employeeRepo; }
+    public EmployeeServiceImpl(EmployeeRepo employeeRepo, FileStorageService fileStorageService, EmployeePhotoRepo employeePhotoRepo) {
+        this.employeeRepo = employeeRepo;
+        this.fileStorageService = fileStorageService;
+        this.employeePhotoRepo = employeePhotoRepo;
+    }
 
     @Override
     public List<Employee> findAll() { return employeeRepo.findAll(); }
@@ -24,6 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee update(Long id, Employee employee) {
         Employee employeeFromDb = employeeRepo.findById(id).orElse(null);
+        for (EmployeePhoto employeePhoto : employeeFromDb.getEmployeePhotos()) {
+            employeePhotoRepo.delete(employeePhoto);
+            fileStorageService.deleteFileWithUri(employeePhoto.getUrl());
+        }
         BeanUtils.copyProperties(employee, employeeFromDb, "id");
         employeeRepo.save(employeeFromDb);
         return employeeFromDb;
