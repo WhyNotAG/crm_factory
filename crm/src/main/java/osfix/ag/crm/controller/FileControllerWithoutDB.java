@@ -70,6 +70,11 @@ public class FileControllerWithoutDB {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/deleteAll/employee/{id}")
+    public void deleteAll(Long id) {
+         fileStorageService.deleteAll(id);
+    }
+
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource

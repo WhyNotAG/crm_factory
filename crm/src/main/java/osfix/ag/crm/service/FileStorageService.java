@@ -10,4 +10,5 @@ public interface FileStorageService {
     String storeFileEmployee(MultipartFile file, Long id);
     void deleteFile(String filename);
     void deleteFileWithUri(String filename);
+    void deleteAll(Long id);
 }

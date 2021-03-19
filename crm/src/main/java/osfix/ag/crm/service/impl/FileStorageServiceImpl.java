@@ -118,4 +118,11 @@ public class FileStorageServiceImpl implements FileStorageService {
         File file = filePath.toFile();
         file.delete();
     }
+
+    public void deleteAll(Long id) {
+       Employee employee = employeeRepo.findById(id).orElse(null);
+       for(EmployeePhoto employeePhoto : employee.getEmployeePhotos()) {
+           deleteFileWithUri(employeePhoto.getUrl());
+       }
+    }
 }
