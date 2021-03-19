@@ -71,23 +71,23 @@ public class FileStorageServiceImpl implements FileStorageService {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-        try {
-            // Check if the file's name contains invalid characters
-            if(fileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-            }
-
-            // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            EmployeePhoto employeePhoto = new EmployeePhoto();
-            employeePhoto.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
-            employeePhoto.setEmployee(employeeRepo.findById(id).orElse(null));
-            employeePhotoRepo.save(employeePhoto);
-            return fileName;
-        } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+        // Check if the file's name contains invalid characters
+        if(fileName.contains("..")) {
+            throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
         }
+
+        // Copy file to the target location (Replacing existing file with the same name)
+        Path targetLocation = this.fileStorageLocation.resolve(fileName);
+        try {
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            return null;
+        }
+        EmployeePhoto employeePhoto = new EmployeePhoto();
+        employeePhoto.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        employeePhoto.setEmployee(employeeRepo.findById(id).orElse(null));
+        employeePhotoRepo.save(employeePhoto);
+        return fileName;
     }
 
     public Resource loadFileAsResource(String fileName) {

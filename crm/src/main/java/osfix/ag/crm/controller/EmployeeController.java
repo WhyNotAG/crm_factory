@@ -56,9 +56,8 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> add(@ModelAttribute EmployeeDownloadDTO employee) {
         MultipartFile[] files = employee.getFiles();
         Employee savedEmployee = employeeService.save(employeeDownloadMapper.toEntity(employee));
-        if(savedEmployee.getEmployeePhotos().size() > 0) {
-            fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
-        }
+        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        savedEmployee = employeeService.findById(savedEmployee.getId());
         return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(savedEmployee.getId())));
     }
 
@@ -78,11 +77,8 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> update(@PathVariable(name = "id") Long id, @ModelAttribute EmployeeDownloadDTO employee) {
         MultipartFile[] files = employee.getFiles();
         Employee savedEmployee = employeeService.update(id, employeeDownloadMapper.toEntity(employee));
-        if(savedEmployee.getEmployeePhotos().size() > 0) {
-            fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
-        }
-        return ResponseEntity.ok().body(
-                employeeMapper.fromEntity(employeeService.findById(id)));
+        fileControllerWithoutDB.employeeUploadMultipleFiles(savedEmployee.getId(), files);
+        return ResponseEntity.ok().body(employeeMapper.fromEntity(employeeService.findById(id)));
     }
 
     @DeleteMapping("/{id}")

@@ -26,8 +26,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         employee.setPosition(dto.getPosition());
         employee.setRelevance(dto.getRelevance());
         employee.setWorkshop(dto.getWorkshop());
-        if(dto.getEmployeePhotos().size() > 0)
-            employee.setEmployeePhotos(employeePhotoMapper.fromDtoList(dto.getEmployeePhotos()));
+        employee.setEmployeePhotos(employeePhotoMapper.fromDtoList(dto.getEmployeePhotos()));
         if(dto.getDateOfBirth() != null)
             employee.setDateOfBirth(new Date(dto.getDateOfBirth().getTime()));
         if(dto.getPatentExpirationDate() != null && dto.getRegistrationExpirationDate() != null ) {
@@ -51,8 +50,7 @@ public class EmployeeMapper implements EntityMapper<Employee, EmployeeDTO> {
         dto.setPosition(entity.getPosition());
         dto.setRelevance(entity.getRelevance());
         dto.setWorkshop(entity.getWorkshop());
-        if (entity.getEmployeePhotos().size() > 0)
-            dto.setEmployeePhotos(employeePhotoMapper.toDtoList(entity.getEmployeePhotos()));
+        dto.setEmployeePhotos(employeePhotoMapper.toDtoList(entity.getEmployeePhotos()));
         if(entity.getDateOfBirth() != null)
             dto.setDateOfBirth(entity.getDateOfBirth());
         if(entity.getPatentExpirationDate() != null && entity.getRegistrationExpirationDate() != null ) {
