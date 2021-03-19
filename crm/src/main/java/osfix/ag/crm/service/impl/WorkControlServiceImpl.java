@@ -190,4 +190,11 @@ public class WorkControlServiceImpl implements WorkControlService {
 
         return result;
     }
+
+    @Override
+    public WorkControl deleteProductV2(Long id, Long product_id) {
+        WorkControl workControl = workControlRepo.findById(id).orElse(null);
+        workControlRepo.deleteById(id);
+        return workControl;
+    }
 }

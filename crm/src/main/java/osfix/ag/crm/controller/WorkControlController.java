@@ -128,6 +128,12 @@ public class WorkControlController {
         return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.deleteProduct(id,pr_id)));
     }
 
+    @DeleteMapping("/product/V2/{id}")
+    public ResponseEntity<ReWorkControlDTO> deleteProductV2(@PathVariable(name = "id") Long id,
+                                                          @PathVariable(name = "pr_id") Long pr_id) {
+        return ResponseEntity.ok().body(reWorkControlMapper.fromEntity(workControlService.deleteProductV2(id,pr_id)));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         workControlService.delete(id);
