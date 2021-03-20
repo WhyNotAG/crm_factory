@@ -84,7 +84,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             return null;
         }
         EmployeePhoto employeePhoto = new EmployeePhoto();
-        employeePhoto.setUrl("http://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        employeePhoto.setUrl("https://194-58-104-192.ovz.vps.regruhosting.ru:1337/api/v1/fileWithoutDB/downloadFile/" + fileName);
         employeePhoto.setEmployee(employeeRepo.findById(id).orElse(null));
         employeePhotoRepo.save(employeePhoto);
         return fileName;
@@ -113,7 +113,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public void deleteFileWithUri(String filename) {
-        String newFileName = filename.replace("http://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/", "");
+        String newFileName = filename.replace("https://194-58-104-192.ovz.vps.regruhosting.ru:1337/api/v1/fileWithoutDB/downloadFile/", "");
         Path filePath = this.fileStorageLocation.resolve(newFileName).normalize();
         File file = filePath.toFile();
         file.delete();
