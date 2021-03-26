@@ -108,7 +108,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             return null;
         }
         Prices prices = new Prices();
-        prices.setUri("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        prices.setUri("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
         priceListRepo.save(prices);
         return fileName;
     }

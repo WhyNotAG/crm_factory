@@ -4,16 +4,20 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.repo.manager.PriceListRepo;
+import osfix.ag.crm.service.FileStorageService;
 import osfix.ag.crm.service.PriceListService;
+import osfix.ag.crm.service.impl.FileStorageServiceImpl;
 
 import java.util.List;
 
 @Service
 public class PriceListServiceImpl implements PriceListService {
     PriceListRepo priceListRepo;
+    FileStorageService fileStorageService;
 
-    public PriceListServiceImpl(PriceListRepo priceListRepo) {
+    public PriceListServiceImpl(PriceListRepo priceListRepo, FileStorageService fileStorageService) {
         this.priceListRepo = priceListRepo;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -40,6 +44,10 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Override
     public void delete(Long id) {
+        Prices priceList = priceListRepo.findById(id).orElse(null);
+        if(priceList != null) {
+            fileStorageService.deleteFileWithUri(priceList.getUri());
+        }
         priceListRepo.deleteById(id);
     }
 }
