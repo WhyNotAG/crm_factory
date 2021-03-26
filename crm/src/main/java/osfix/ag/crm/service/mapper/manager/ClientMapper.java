@@ -36,7 +36,9 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setName(dto.getName());
         client.setType(dto.getType());
         client.setTaxes(dto.getTaxes());
-        client.setPrices(priceListRepo.findById(dto.getPriceId()).orElse(null));
+        if(dto.getPriceId() != null) {
+            client.setPrices(priceListRepo.findById(dto.getPriceId()).orElse(null));
+        }
         if(dto.getNextDateContact() != null){
             client.setNextDateContact(new Date(dto.getNextDateContact()*1000));
         }
