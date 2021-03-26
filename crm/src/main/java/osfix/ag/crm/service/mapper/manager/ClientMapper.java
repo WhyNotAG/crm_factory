@@ -3,7 +3,9 @@ package osfix.ag.crm.service.mapper.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.manager.Client;
+import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.repo.manager.CategoryRepo;
+import osfix.ag.crm.repo.manager.PriceListRepo;
 import osfix.ag.crm.service.dto.manager.ClientDTO;
 import osfix.ag.crm.service.mapper.EntityMapper;
 
@@ -16,6 +18,8 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
     @Autowired
     private CategoryRepo categoryRepo;
 
+    @Autowired
+    private PriceListRepo priceListRepo;
 
     @Override
     public Client toEntity(ClientDTO dto) {
@@ -31,6 +35,8 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         client.setManager(dto.getManager());
         client.setName(dto.getName());
         client.setType(dto.getType());
+        client.setTaxes(dto.getTaxes());
+        client.setPrices(priceListRepo.findById(dto.getPriceId()).orElse(null));
         if(dto.getNextDateContact() != null){
             client.setNextDateContact(new Date(dto.getNextDateContact()*1000));
         }
@@ -59,7 +65,9 @@ public class ClientMapper implements EntityMapper<Client, ClientDTO> {
         dto.setPrice(entity.getPrice());
         dto.setCity(entity.getCity());
         dto.setSite(entity.getSite());
+        dto.setPrice(entity.getPrice());
         dto.setType(entity.getType());
+        dto.setTaxes(entity.getTaxes());
         dto.setStorageAddress(entity.getStorageAddress());
         dto.setWorkCondition(entity.getWorkCondition());
         dto.setFavorite(entity.getFavorite() ? entity.getFavorite() : false);

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import osfix.ag.crm.domain.UploadFileResponse;
 import osfix.ag.crm.service.FileStorageService;
+import osfix.ag.crm.service.PriceListService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -25,6 +26,9 @@ public class FileControllerWithoutDB {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired
+    private PriceListService priceListService;
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
@@ -69,6 +73,28 @@ public class FileControllerWithoutDB {
                 .map(file -> employeeUploadFile(id, file))
                 .collect(Collectors.toList());
     }
+
+    @PostMapping("/uploadFile/priceList/{id}")
+    public UploadFileResponse priceListUploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFilePrice(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("api/v1/fileWithoutDB/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles/priceList/")
+    public List<UploadFileResponse> priceListUploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> priceListUploadFile(file))
+                .collect(Collectors.toList());
+    }
+
 
     @PostMapping("/deleteAll/employee/{id}")
     public void deleteAll(Long id) {

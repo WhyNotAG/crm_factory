@@ -4,16 +4,16 @@ import org.springframework.stereotype.Service;
 import osfix.ag.crm.config.FileStorageProperties;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.EmployeePhoto;
+import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.exceptions.FileStorageException;
 import osfix.ag.crm.exceptions.MyFileNotFoundException;
 import osfix.ag.crm.repo.EmployeePhotoRepo;
 import osfix.ag.crm.repo.EmployeeRepo;
-import osfix.ag.crm.service.EmployeeService;
+import osfix.ag.crm.repo.manager.PriceListRepo;
 import osfix.ag.crm.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,19 +24,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path fileStorageLocation;
     private EmployeePhotoRepo employeePhotoRepo;
     private EmployeeRepo employeeRepo;
+    private PriceListRepo priceListRepo;
 
     @Autowired
     public FileStorageServiceImpl(FileStorageProperties fileStorageProperties, EmployeePhotoRepo employeePhotoRepo,
-                                  EmployeeRepo employeeRepo) {
+                                  EmployeeRepo employeeRepo, PriceListRepo priceListRepo) {
         this.employeePhotoRepo = employeePhotoRepo;
         this.employeeRepo = employeeRepo;
+        this.priceListRepo = priceListRepo;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
 
@@ -87,6 +88,28 @@ public class FileStorageServiceImpl implements FileStorageService {
         employeePhoto.setUrl("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
         employeePhoto.setEmployee(employeeRepo.findById(id).orElse(null));
         employeePhotoRepo.save(employeePhoto);
+        return fileName;
+    }
+
+    public String storeFilePrice(MultipartFile file) {
+        // Normalize file name
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        // Check if the file's name contains invalid characters
+        if(fileName.contains("..")) {
+            throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+        }
+
+        // Copy file to the target location (Replacing existing file with the same name)
+        Path targetLocation = this.fileStorageLocation.resolve(fileName);
+        try {
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            return null;
+        }
+        Prices prices = new Prices();
+        prices.setUri("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        priceListRepo.save(prices);
         return fileName;
     }
 

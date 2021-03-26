@@ -2,10 +2,8 @@ package osfix.ag.crm.domain.manager;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.Request;
-import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.domain.user.User;
 
 import javax.persistence.*;
@@ -62,6 +60,9 @@ public class Client {
     @Column(name = "city")
     String city;
 
+    @Column(name = "taxes")
+    Boolean taxes;
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH)
     @JsonIdentityReference
     public List<LegalEntity> legalEntities = new ArrayList<>();
@@ -82,9 +83,12 @@ public class Client {
     @JsonBackReference
     public List<Request> requests = new ArrayList<>();
 
-
     @ManyToOne
     @JsonIdentityReference
     private User user;
+
+    @ManyToOne
+    @JsonIdentityReference
+    private Prices prices;
 
 }

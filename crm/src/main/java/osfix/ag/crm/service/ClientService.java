@@ -14,6 +14,8 @@ public interface ClientService {
     Page<Client> findAllByCategory_NameAndClientType(String name, String clientType, Pageable pageable);
     Page<Client> findAllByCategory_NameAndClientTypeAndTypeOrType(String name, String clientType, String type, String type2, Pageable pageable);
     Set<Client> search(String substring, String type);
+    Set<Client> findByCity(String substring, Boolean taxes, String type);
+    Set<Client> findByCityWithoutTaxes(String substring, String type);
     Page<Client> findAllByCategory_NameAndClientTypeAndTypeIn(List<String> name, String clientType, String type, Pageable pageable);
     Client findById(Long id);
     Client update(Long id, ClientDTO client);

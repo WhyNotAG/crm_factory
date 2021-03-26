@@ -10,16 +10,19 @@ import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.manager.Contact;
 import osfix.ag.crm.domain.manager.LegalEntity;
+import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.repo.manager.ContactRepo;
 import osfix.ag.crm.repo.manager.LegalEntityRepo;
+import osfix.ag.crm.repo.manager.PriceListRepo;
 import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.ClientService;
 import osfix.ag.crm.service.dto.manager.ClientDTO;
 import osfix.ag.crm.service.mapper.manager.ClientMapper;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,15 +35,18 @@ public class ClientServiceImpl implements ClientService {
     private ContactRepo contactRepo;
     private UserRepo userRepo;
     private LogRepo logRepo;
+    private PriceListRepo priceListRepo;
 
     public ClientServiceImpl(ClientRepo clientRepo, ClientMapper clientMapper, UserRepo userRepo,
-                             LegalEntityRepo legalEntityRepo, ContactRepo contactRepo, LogRepo logRepo) {
+                             LegalEntityRepo legalEntityRepo, ContactRepo contactRepo,
+                             LogRepo logRepo, PriceListRepo priceListRepo) {
         this.clientRepo = clientRepo;
         this.clientMapper = clientMapper;
         this.userRepo = userRepo;
         this.contactRepo = contactRepo;
         this.legalEntityRepo = legalEntityRepo;
         this.logRepo = logRepo;
+        this.priceListRepo = priceListRepo;
     }
 
     @Override
@@ -80,6 +86,7 @@ public class ClientServiceImpl implements ClientService {
         Boolean isFavorite = clientFromDb.getFavorite();
         BeanUtils.copyProperties(entity, clientFromDb, "id");
         Boolean isClosed = client.getIsClosed();
+        List<Prices> prices = new ArrayList<>();
         if (client.getIsClosed() == null) client.setIsClosed(false);
         if(client.getIsClosed()) {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
@@ -175,5 +182,15 @@ public class ClientServiceImpl implements ClientService {
         log.setType(type);
         log.setElementId(id);
         logRepo.save(log);
+    }
+
+    @Override
+    public Set<Client> findByCity(String substring, Boolean taxes, String type) {
+        return clientRepo.findAllByCityIgnoreCaseContainsAndTaxesAndType(substring, taxes, type);
+    }
+
+    @Override
+    public Set<Client> findByCityWithoutTaxes(String substring, String type) {
+        return clientRepo.findAllByCityIgnoreCaseContainsAndTypeAndTaxesIsNull(substring, type);
     }
 }

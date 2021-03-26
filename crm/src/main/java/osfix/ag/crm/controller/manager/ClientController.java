@@ -4,8 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.service.ClientService;
@@ -27,6 +29,11 @@ public class ClientController {
         this.clientMapper = clientMapper;
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
+    }
+
     @GetMapping("/")
     public Page<Client> getAllClients(@PageableDefault(sort = {"name"}, direction = Sort.Direction.DESC, size = 20) Pageable pageable) {
         Page<Client> clients = clientService.findAll(pageable);
@@ -39,7 +46,7 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public Client create(@RequestBody ClientDTO client) {
+    public Client create(@ModelAttribute ClientDTO client) {
         return clientService.save(client);
     }
 
@@ -49,6 +56,16 @@ public class ClientController {
         return ResponseEntity.ok().body(clientService.search(client.getName(), client.getType()));
     }
 
+    @PostMapping("/search/city&taxes/")
+    public ResponseEntity<Set<Client>> searchByCity(@RequestBody ClientDTO client) {
+        return ResponseEntity.ok().body(clientService.findByCity(client.getCity(), client.getTaxes(), client.getType()));
+    }
+
+    @PostMapping("/search/city/")
+    public ResponseEntity<Set<Client>> searchByCityWithoutTaxes(@RequestBody ClientDTO client) {
+        return ResponseEntity.ok().body(clientService.findByCityWithoutTaxes(client.getCity(), client.getType()));
+    }
+
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
@@ -56,7 +73,7 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Client update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
+    public Client update(@PathVariable(name="id") Long id, @ModelAttribute ClientDTO client) {
         return clientService.update(id, client);
     }
 

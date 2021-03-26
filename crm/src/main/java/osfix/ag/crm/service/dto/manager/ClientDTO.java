@@ -1,6 +1,9 @@
 package osfix.ag.crm.service.dto.manager;
 
 import lombok.Data;
+
+import java.util.List;
+
 @Data
 public class ClientDTO {
     Long id;
@@ -21,4 +24,6 @@ public class ClientDTO {
     String type;
     String city;
     Boolean isClosed;
+    Boolean taxes;
+    Long priceId;
 }
