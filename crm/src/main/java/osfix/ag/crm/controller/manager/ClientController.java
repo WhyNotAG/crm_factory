@@ -73,7 +73,7 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public Client update(@PathVariable(name="id") Long id, @ModelAttribute ClientDTO client) {
+    public Client update(@PathVariable(name="id") Long id, @RequestBody ClientDTO client) {
         System.out.println(client.getId());
         return clientService.update(id, client);
     }
