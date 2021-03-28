@@ -49,5 +49,5 @@ public interface ClientRepo extends JpaRepository<Client, Long> {
     Set<Client>  findAllByNameIgnoreCaseContainsOrCommentContainsOrSiteContains(String name, String comment, String site);
 
     Set<Client> findAllByCityIgnoreCaseContainsAndTaxesAndType(String substring, Boolean taxes, String type);
-    Set<Client> findAllByCityIgnoreCaseContainsAndTypeAndTaxesIsNull(String substring, String type);
+    Set<Client> findAllByCityIgnoreCaseContainsAndType(String substring, String type);
 }
