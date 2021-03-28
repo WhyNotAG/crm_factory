@@ -109,7 +109,8 @@ public class ClientServiceImpl implements ClientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String hasUserRole = authentication.getAuthorities().toString();
         Client entity = clientMapper.toEntity(client);
-        if(client.getIsClosed()) {
+        System.out.println(client.getIsClosed());
+        if(client.getIsClosed() != null && client.getIsClosed()) {
             entity.setUser(userRepo.findByUsername(authentication.getName()));
             return clientRepo.save(entity);
         }

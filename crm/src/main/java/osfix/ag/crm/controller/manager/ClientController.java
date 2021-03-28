@@ -29,11 +29,6 @@ public class ClientController {
         this.clientMapper = clientMapper;
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
-    }
-
     @GetMapping("/")
     public Page<Client> getAllClients(@PageableDefault(sort = {"name"}, direction = Sort.Direction.DESC, size = 20) Pageable pageable) {
         Page<Client> clients = clientService.findAll(pageable);
@@ -46,7 +41,7 @@ public class ClientController {
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public Client create(@ModelAttribute ClientDTO client) {
+    public Client create(@RequestBody ClientDTO client) {
         return clientService.save(client);
     }
 
