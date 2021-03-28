@@ -191,6 +191,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> findByCityWithoutTaxes(String substring, String type) {
-        return clientRepo.findAllByCityIgnoreCaseContainsAndTypeAndTaxesIsNull(substring, type);
+        return clientRepo.findAllByCityIgnoreCaseContainsAndType(substring, type);
     }
 }
