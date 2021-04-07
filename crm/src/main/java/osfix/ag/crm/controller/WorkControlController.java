@@ -12,6 +12,7 @@ import osfix.ag.crm.service.dto.WorkControlDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
 import osfix.ag.crm.service.dto.factory.PartsDTO;
 import osfix.ag.crm.service.dto.factory.PartsWorkDTO;
+import osfix.ag.crm.service.dto.factory.WorkStatisticDTO;
 import osfix.ag.crm.service.mapper.ReWorkControlMapper;
 import osfix.ag.crm.service.mapper.WorkControlMapper;
 import osfix.ag.crm.service.mapper.factory.PartsWorkMapper;
@@ -147,6 +148,12 @@ public class WorkControlController {
                                                               @PathVariable(name = "mL") Integer mL,
                                                               @PathVariable(name = "yearL") Integer yearL) {
         return ResponseEntity.ok().body(reWorkControlMapper.toDtoList(workControlService.findByRange(dF,mF,dL,mL,yearF,yearL)));
+    }
+
+    @GetMapping("statistic/{month}/{year}")
+    public ResponseEntity<List<WorkStatisticDTO>> getStatistic(@PathVariable(name = "month") Integer month,
+                                               @PathVariable(name = "year") Integer year) {
+        return ResponseEntity.ok().body(workControlService.getStatisticByRange(month, year));
     }
 }
 

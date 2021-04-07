@@ -15,10 +15,13 @@ import osfix.ag.crm.service.WorkControlProductService;
 import osfix.ag.crm.service.WorkControlService;
 import osfix.ag.crm.service.dto.DayDTO;
 import osfix.ag.crm.service.dto.WorkReportDTO;
+import osfix.ag.crm.service.dto.factory.WorkStatisticDTO;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class WorkControlServiceImpl implements WorkControlService {
@@ -196,5 +199,50 @@ public class WorkControlServiceImpl implements WorkControlService {
         WorkControl workControl = workControlRepo.findById(id).orElse(null);
         workControlProductRepo.delete(product_id);
         return workControl;
+    }
+
+    @Override
+    public List<WorkStatisticDTO> getStatisticByRange(Integer month, Integer year) {
+        Set<Product> products = new HashSet<>();
+        Set<WorkControlProduct> workControlProducts = new HashSet<>();
+        List<WorkStatisticDTO> workStatistics = new ArrayList<>();
+        List<WorkControl> workControls = workControlRepo.findAllByMonthAndYear(month, year);
+
+        for (WorkControl workControl : workControls) {
+            workControlProducts.addAll(workControl.getWorkControlProduct());
+            for(WorkControlProduct workControlProduct : workControlProducts) {
+                products.add(workControlProduct.getProduct());
+            }
+        }
+
+
+        for (Product product : products){
+            System.out.println(product.getName());
+            WorkStatisticDTO workStatisticDTO = new WorkStatisticDTO();
+            workStatisticDTO.setProductName(product.getName());
+            workStatisticDTO.setAverage(0.0);
+            workStatisticDTO.setValue(0L);
+            workStatisticDTO.setHoursSum(0.0);
+            workStatistics.add(workStatisticDTO);
+        }
+
+
+        for (WorkControl workControl : workControls) {
+            workControlProducts = new HashSet<>(workControl.getWorkControlProduct());
+            for(WorkControlProduct workControlProduct : workControlProducts) {
+                for(WorkStatisticDTO workStatisticDTO : workStatistics) {
+                    if(workStatisticDTO.getProductName().equals(workControlProduct.getProduct().getName())) {
+                        workStatisticDTO.setValue(workStatisticDTO.getValue() + workControlProduct.getQuantity());
+                        workStatisticDTO.setHoursSum(workStatisticDTO.getHoursSum() + workControl.getHours());
+                    }
+                }
+            }
+        }
+
+        for (WorkStatisticDTO workStatisticDTO : workStatistics) {
+            workStatisticDTO.setAverage(workStatisticDTO.getValue() / workStatisticDTO.getHoursSum());
+        }
+
+        return  workStatistics;
     }
 }

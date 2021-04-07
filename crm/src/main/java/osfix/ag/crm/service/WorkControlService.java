@@ -2,6 +2,7 @@ package osfix.ag.crm.service;
 
 import osfix.ag.crm.domain.WorkControl;
 import osfix.ag.crm.service.dto.WorkReportDTO;
+import osfix.ag.crm.service.dto.factory.WorkStatisticDTO;
 
 import java.util.List;
 
@@ -21,5 +22,6 @@ public interface WorkControlService {
     List<WorkControl> findByDayAndMonth(Integer day, Integer month, Integer year);
     List<WorkControl> findByRange(Integer dayFirst,  Integer monthFirst, Integer dayLast, Integer monthLast,
                                   Integer yearFirst, Integer yearLast);
+    List<WorkStatisticDTO> getStatisticByRange(Integer month, Integer year);
 
 }
