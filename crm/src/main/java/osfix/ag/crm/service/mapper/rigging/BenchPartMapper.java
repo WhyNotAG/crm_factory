@@ -20,8 +20,9 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
     public BenchPart toEntity(RiggingPartDTO dto) {
         BenchPart benchPart = new BenchPart();
         benchPart.setComment(dto.getComment());
-        benchPart.setControll(dto.getControll());
-        benchPart.setCuttingDimensions(dto.getCuttingDimensions());
+        benchPart.setControll(dto.getControl());
+        benchPart.setCuttingDimensions(dto.getCutting());
+        benchPart.setDimensions(dto.getDimensions());
         benchPart.setErosion(dto.getErosion());
         benchPart.setGrinding(dto.getGrinding());
         benchPart.setHarding(dto.getHarding());
@@ -41,8 +42,9 @@ public class BenchPartMapper implements EntityMapper<BenchPart, RiggingPartDTO> 
     public RiggingPartDTO fromEntity(BenchPart entity) {
         RiggingPartDTO dto = new RiggingPartDTO();
         dto.setComment(entity.getComment());
-        dto.setControll(entity.getControll());
-        dto.setCuttingDimensions(entity.getCuttingDimensions());
+        dto.setControl(entity.getControll());
+        dto.setDimensions(entity.getDimensions());
+        dto.setCutting(entity.getCuttingDimensions());
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
         dto.setAmount(entity.getAmount());

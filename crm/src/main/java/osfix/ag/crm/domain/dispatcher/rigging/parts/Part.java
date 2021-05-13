@@ -32,6 +32,9 @@ public abstract class Part {
     @Column(name = "cutting_dimensions")
     String cuttingDimensions;
 
+    @Column(name = "dimensions")
+    String dimensions;
+
     @Column(name = "milling")
     String milling;
 

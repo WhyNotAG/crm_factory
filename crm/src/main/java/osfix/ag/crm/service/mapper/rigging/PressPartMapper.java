@@ -19,8 +19,8 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
     public PressPart toEntity(RiggingPartDTO dto) {
         PressPart pressPart = new PressPart();
         pressPart.setComment(dto.getComment());
-        pressPart.setControll(dto.getControll());
-        pressPart.setCuttingDimensions(dto.getCuttingDimensions());
+        pressPart.setControll(dto.getControl());
+        pressPart.setCuttingDimensions(dto.getCutting());
         pressPart.setErosion(dto.getErosion());
         pressPart.setGrinding(dto.getGrinding());
         pressPart.setHarding(dto.getHarding());
@@ -29,6 +29,7 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
         pressPart.setMilling(dto.getMilling());
         pressPart.setAmount(dto.getAmount());
         pressPart.setName(dto.getName());
+        pressPart.setDimensions(dto.getDimensions());
         pressPart.setNumber(dto.getNumber());
         pressPart.setColor(dto.getColor());
         pressPart.setPress(pressService.findById(dto.getRiggingId()));
@@ -40,10 +41,11 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
     public RiggingPartDTO fromEntity(PressPart entity) {
         RiggingPartDTO dto = new RiggingPartDTO();
         dto.setComment(entity.getComment());
-        dto.setControll(entity.getControll());
-        dto.setCuttingDimensions(entity.getCuttingDimensions());
+        dto.setControl(entity.getControll());
+        dto.setCutting(entity.getCuttingDimensions());
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
+        dto.setDimensions(entity.getDimensions());
         dto.setHarding(entity.getHarding());
         dto.setAmount(entity.getAmount());
         dto.setId(entity.getId());

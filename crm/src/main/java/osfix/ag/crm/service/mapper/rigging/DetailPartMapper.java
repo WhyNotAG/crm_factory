@@ -20,10 +20,11 @@ public class DetailPartMapper implements EntityMapper<DetailPart, RiggingPartDTO
     public DetailPart toEntity(RiggingPartDTO dto) {
         DetailPart detailPart = new DetailPart();
         detailPart.setComment(dto.getComment());
-        detailPart.setControll(dto.getControll());
-        detailPart.setCuttingDimensions(dto.getCuttingDimensions());
+        detailPart.setControll(dto.getControl());
+        detailPart.setCuttingDimensions(dto.getCutting());
         detailPart.setErosion(dto.getErosion());
         detailPart.setGrinding(dto.getGrinding());
+        detailPart.setDimensions(dto.getDimensions());
         detailPart.setHarding(dto.getHarding());
         detailPart.setAmount(dto.getAmount());
         detailPart.setId(dto.getId());
@@ -41,8 +42,9 @@ public class DetailPartMapper implements EntityMapper<DetailPart, RiggingPartDTO
     public RiggingPartDTO fromEntity(DetailPart entity) {
         RiggingPartDTO dto = new RiggingPartDTO();
         dto.setComment(entity.getComment());
-        dto.setControll(entity.getControll());
-        dto.setCuttingDimensions(entity.getCuttingDimensions());
+        dto.setControl(entity.getControll());
+        dto.setCutting(entity.getCuttingDimensions());
+        dto.setDimensions(entity.getDimensions());
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
         dto.setAmount(entity.getAmount());
