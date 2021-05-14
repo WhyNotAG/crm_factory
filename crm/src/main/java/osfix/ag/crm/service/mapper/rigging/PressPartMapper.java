@@ -19,8 +19,8 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
     public PressPart toEntity(RiggingPartDTO dto) {
         PressPart pressPart = new PressPart();
         pressPart.setComment(dto.getComment());
-        pressPart.setControll(dto.getControl());
-        pressPart.setCuttingDimensions(dto.getCutting());
+        pressPart.setControll(dto.getControll());
+        pressPart.setCuttingDimensions(dto.getCuttingDimensions());
         pressPart.setErosion(dto.getErosion());
         pressPart.setGrinding(dto.getGrinding());
         pressPart.setHarding(dto.getHarding());
@@ -41,8 +41,8 @@ public class PressPartMapper implements EntityMapper<PressPart, RiggingPartDTO> 
     public RiggingPartDTO fromEntity(PressPart entity) {
         RiggingPartDTO dto = new RiggingPartDTO();
         dto.setComment(entity.getComment());
-        dto.setControl(entity.getControll());
-        dto.setCutting(entity.getCuttingDimensions());
+        dto.setControll(entity.getControll());
+        dto.setCuttingDimensions(entity.getCuttingDimensions());
         dto.setErosion(entity.getErosion());
         dto.setGrinding(entity.getGrinding());
         dto.setDimensions(entity.getDimensions());

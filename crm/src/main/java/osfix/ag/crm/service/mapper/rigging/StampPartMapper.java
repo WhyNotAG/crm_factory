@@ -19,8 +19,8 @@ public class StampPartMapper implements EntityMapper<StampPart, RiggingPartDTO> 
     public StampPart toEntity(RiggingPartDTO dto) {
         StampPart stampPart = new StampPart();
         stampPart.setComment(dto.getComment());
-        stampPart.setControll(dto.getControl());
-        stampPart.setCuttingDimensions(dto.getCutting());
+        stampPart.setControll(dto.getControll());
+        stampPart.setCuttingDimensions(dto.getCuttingDimensions());
         stampPart.setErosion(dto.getErosion());
         stampPart.setGrinding(dto.getGrinding());
         stampPart.setHarding(dto.getHarding());
@@ -42,8 +42,8 @@ public class StampPartMapper implements EntityMapper<StampPart, RiggingPartDTO> 
         RiggingPartDTO dto = new RiggingPartDTO();
         dto.setComment(entity.getComment());
         dto.setDimensions(entity.getDimensions());
-        dto.setControl(entity.getControll());
-        dto.setCutting(entity.getCuttingDimensions());
+        dto.setControll(entity.getControll());
+        dto.setCuttingDimensions(entity.getCuttingDimensions());
         dto.setErosion(entity.getErosion());
         dto.setAmount(entity.getAmount());
         dto.setGrinding(entity.getGrinding());

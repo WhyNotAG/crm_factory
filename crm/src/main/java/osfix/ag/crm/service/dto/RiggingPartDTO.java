@@ -11,13 +11,13 @@ public class RiggingPartDTO {
     String location;
     String comment;
     String amount;
-    String cutting;
+    String cuttingDimensions;
     String dimensions;
     String milling;
     String harding;
     String grinding;
     String erosion;
-    String control;
+    String controll;
     Long riggingId;
     String color;
     String drawing;
