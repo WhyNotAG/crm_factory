@@ -8,6 +8,7 @@ import lombok.Data;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.Lepsari;
 import osfix.ag.crm.domain.WorkControl;
+import osfix.ag.crm.domain.factory.Goods;
 import osfix.ag.crm.domain.factory.Packing;
 import osfix.ag.crm.domain.manager.History;
 import osfix.ag.crm.domain.user.Role;
@@ -67,10 +68,8 @@ public class Product {
     @JsonBackReference
     private List<WorkControlProduct> workControlProducts;
 
-    @JsonIgnoreProperties("products")
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_packing", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "packing_id", referencedColumnName = "id")})
-    private List<Packing> packings;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Goods> goods;
+
 }

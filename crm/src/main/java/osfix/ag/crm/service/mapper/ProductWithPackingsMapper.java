@@ -40,11 +40,11 @@ public class ProductWithPackingsMapper implements EntityMapper<Product, Products
         } else {product.setProductCategory(null);}
 
 
-        if(dto.getPackings() != null) {
-            for (Packing packing : dto.getPackings()) {
-                product.getPackings().add(packingRepo.findById(packing.getId()).orElse(null));
-            }
-        }
+//        if(dto.getPackings() != null) {
+//            for (Packing packing : dto.getPackings()) {
+//                product.getPackings().add(packingRepo.findById(packing.getId()).orElse(null));
+//            }
+//        }
 
         return product;
     }
@@ -69,13 +69,13 @@ public class ProductWithPackingsMapper implements EntityMapper<Product, Products
             dto.setCategory(entity.getProductCategory().getCategory());
         } else { dto.setCategory(null);}
 
-        if(entity.getPackings() != null) {
-            List<Packing> packings = new ArrayList<>();
-            for(Packing packing : entity.getPackings()) {
-                packings.add(packing);
-            }
-            dto.setPackings(packings);
-        }
+//        if(entity.getPackings() != null) {
+//            List<Packing> packings = new ArrayList<>();
+//            for(Packing packing : entity.getPackings()) {
+//                packings.add(packing);
+//            }
+//            dto.setPackings(packings);
+//        }
         return dto;
     }
 

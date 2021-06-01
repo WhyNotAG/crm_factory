@@ -73,14 +73,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addPacking(Long productId, List<Long> packingId) {
-        Product product = productRepo.findById(productId).orElse(null);
-        if(packingId != null) {
-            List<Packing> packings = new ArrayList<>();
-            for (Long packing : packingId) {
-                packings.add(packingRepo.findById(packing).orElse(null));
-            }
-            product.setPackings(packings);
-        } else product.setPackings(null);
-        return productRepo.save(product);
+//        Product product = productRepo.findById(productId).orElse(null);
+//        if(packingId != null) {
+//            List<Packing> packings = new ArrayList<>();
+//            for (Long packing : packingId) {
+//                packings.add(packingRepo.findById(packing).orElse(null));
+//            }
+//            product.setPackings(packings);
+//        } else product.setPackings(null);
+//        return productRepo.save(product);
+        return null;
     }
 }
