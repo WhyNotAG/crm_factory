@@ -25,7 +25,7 @@ public class ProductWithoutPackingsMapper implements EntityMapper<Product, Produ
         product.setWeight(dto.getWeight());
         product.setUnit(dto.getUnit());
         product.setComment(dto.getComment());
-        product.setPackaging(dto.getPackaging());
+        //product.setPackaging(dto.getPackaging());
         product.setName(dto.getName());
         product.setTypeOfProduct(dto.getTypeOfProduct());
         product.setPhoto(dto.getPhoto());
@@ -48,7 +48,7 @@ public class ProductWithoutPackingsMapper implements EntityMapper<Product, Produ
         dto.setWeight(entity.getWeight());
         dto.setUnit(entity.getUnit());
         dto.setComment(entity.getComment());
-        dto.setPackaging(entity.getPackaging());
+        //dto.setPackaging(entity.getPackaging());
         dto.setName(entity.getName());
         dto.setTypeOfProduct(entity.getTypeOfProduct());
         dto.setPhoto(entity.getPhoto());

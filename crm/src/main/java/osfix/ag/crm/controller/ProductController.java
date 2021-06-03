@@ -75,8 +75,8 @@ public class ProductController {
         productService.delete(id);
     }
 
-    @PostMapping("/add/{id}")
-    public ResponseEntity<ProductsWithPackingsDTO> addPackings(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO productsDTO) {
-        return ResponseEntity.ok().body(productWithPackingsMapper.fromEntity(productService.addPacking(id, productsDTO.getPackings())));
-    }
+//    @PostMapping("/add/{id}")
+//    public ResponseEntity<ProductsWithPackingsDTO> addPackings(@PathVariable(name = "id") Long id, @RequestBody ProductsDTO productsDTO) {
+//        return ResponseEntity.ok().body(productWithPackingsMapper.fromEntity(productService.addPacking(id, productsDTO.getPackings())));
+//    }
 }

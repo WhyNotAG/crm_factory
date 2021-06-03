@@ -2,8 +2,10 @@ package osfix.ag.crm.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.factory.Goods;
 
 import javax.persistence.*;
 
@@ -31,4 +33,9 @@ public class RequestProduct {
     @JsonIgnoreProperties("requestProducts")
     @JsonBackReference
     private Request request;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JsonIgnoreProperties("requestProducts")
+    private Goods goods;
 }

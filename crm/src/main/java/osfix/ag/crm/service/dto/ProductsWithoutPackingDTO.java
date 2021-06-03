@@ -10,7 +10,7 @@ public class ProductsWithoutPackingDTO {
     private String photo;
     private String unit;
     private Float weight;
-    private String packaging;
+    //private String packaging;
     private String comment;
     private String vendor;
     private String category;

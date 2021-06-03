@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import osfix.ag.crm.domain.product.Product;
+import osfix.ag.crm.domain.product.RequestProduct;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 
 @Entity
@@ -36,4 +37,9 @@ public class Goods {
 
     @Column(name = "unit")
     String unit;
+
+    @OneToMany(mappedBy = "goods", fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JsonIgnoreProperties("goods")
+    private List<RequestProduct> requestProducts;
 }

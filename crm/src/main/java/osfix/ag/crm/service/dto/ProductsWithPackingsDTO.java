@@ -13,12 +13,12 @@ public class ProductsWithPackingsDTO {
     private String photo;
     private String unit;
     private Float weight;
-    private String packaging;
+    //private String packaging;
     private String comment;
     private String vendor;
     private String category;
     private String productionLocation;
     private String description;
     private String barcode;
-    private List<Packing> packings;
+    //private List<Packing> packings;
 }
