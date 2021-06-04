@@ -12,8 +12,9 @@ import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.service.RequestService;
+import osfix.ag.crm.service.dto.request.RequestViewDTO;
+import osfix.ag.crm.service.mapper.RequestViewMapper;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,32 +22,35 @@ public class RequestServiceImpl implements RequestService {
     private RequestRepo requestRepo;
     private ClientRepo clientRepo;
     private LogRepo logRepo;
+    private RequestViewMapper requestViewMapper;
 
-    public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo) {
+    public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo,
+                              RequestViewMapper requestViewMapper) {
         this.logRepo = logRepo;
         this.requestRepo = requestRepo;
         this.clientRepo = clientRepo;
+        this.requestViewMapper = requestViewMapper;
     }
 
     @Override
-    public List<Request> findAll() { return requestRepo.findAll(); }
+    public List<RequestViewDTO> findAll() { return requestViewMapper.toDtoList(requestRepo.findAll()); }
 
     @Override
-    public Request findById(Long id) { return findId(id); }
+    public RequestViewDTO findById(Long id) { return requestViewMapper.fromEntity(findId(id)); }
 
     @Override
-    public Request update(Long id, Request request) {
+    public RequestViewDTO update(Long id, Request request) {
         Request requestFromDb = findId(id);
         BeanUtils.copyProperties(request,requestFromDb, "id", "client");
         loging("Изменение", "Изменение", "request", requestFromDb.getId());
-        return requestRepo.save(requestFromDb);
+        return requestViewMapper.fromEntity(requestRepo.save(requestFromDb));
     }
 
     @Override
-    public Request save(Request request) {
+    public RequestViewDTO save(Request request) {
         requestRepo.save(request);
         loging("Создание", "Создание", "request", request.getId());
-        return request;
+        return requestViewMapper.fromEntity(request);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request addProduct(Long id, List<String> prName, List<String> quantity, List<String> packaging) {
+    public RequestViewDTO addProduct(Long id, List<String> prName, List<String> quantity, List<String> packaging) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setRequestProducts(null);
         RequestProduct requestProduct = new RequestProduct();
@@ -85,32 +89,32 @@ public class RequestServiceImpl implements RequestService {
             request.getRequestProducts().add(requestProduct);
         }
         loging("Добавление продукта","Добавление продукта", "request", request.getId());
-        return requestRepo.save(request);
+        return requestViewMapper.fromEntity(requestRepo.save(request));
     }
 
     @Override
-    public Request copy(Long id, String factory) {
+    public RequestViewDTO copy(Long id, String factory) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setFactory(factory);
         String factoryName = "";
         if(factory.equals("lepsari")) factoryName = "Лепсари";
         if(factory.equals("lemz")) factoryName = "ЛЭМЗ";
         loging("Перенос в цех", "Перенос в цех " + factoryName, "request", request.getId());
-        return requestRepo.save(request);
+        return requestViewMapper.fromEntity(requestRepo.save(request));
     }
 
     @Override
-    public Request addClient(Long requestId, Long clientId) {
+    public RequestViewDTO addClient(Long requestId, Long clientId) {
         Client client = clientRepo.findById(clientId).orElse(null);
         Request request = requestRepo.findById(requestId).orElse(null);
         request.setClient(client);
         loging("Добавление клиента", "Добавление клиента", "request", request.getId());
-        return requestRepo.save(request);
+        return requestViewMapper.fromEntity(requestRepo.save(request));
     }
 
     @Override
-    public List<Request> findByFactory(String factory) {
-        return requestRepo.findAllByFactory(factory);
+    public List<RequestViewDTO> findByFactory(String factory) {
+        return requestViewMapper.toDtoList(requestRepo.findAllByFactory(factory));
     }
 
     public void deletePro(Long id) {

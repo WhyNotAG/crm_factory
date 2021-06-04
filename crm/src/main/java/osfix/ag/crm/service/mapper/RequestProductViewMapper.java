@@ -16,10 +16,11 @@ import java.util.stream.Collectors;
 public class RequestProductViewMapper implements EntityMapper<RequestProduct, RequestProductViewDTO> {
 
     @Autowired
-    private RequestService requestService;
+    private GoodsViewMapper goodsViewMapper;
 
     @Autowired
-    private GoodsViewMapper goodsViewMapper;
+    private RequestViewMapper requestViewMapper;
+
 
 
     @Override
@@ -29,9 +30,11 @@ public class RequestProductViewMapper implements EntityMapper<RequestProduct, Re
         requestProduct.setQuantity(dto.getQuantity());
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
-        requestProduct.setRequest(requestService.findById(dto.getRequestId()));
+        //requestProduct.setRequest(requestService.findById(dto.getRequestId()));
         requestProduct.setStatus(dto.getStatus());
-        requestProduct.setGoods(goodsViewMapper.toEntity(dto.getGoods()));
+        if(dto.getGoods() != null) {
+            requestProduct.setGoods(goodsViewMapper.toEntity(dto.getGoods()));
+        }
         return requestProduct;
     }
 
@@ -42,9 +45,13 @@ public class RequestProductViewMapper implements EntityMapper<RequestProduct, Re
         dto.setQuantity(entity.getQuantity());
         dto.setName(entity.getName());
         dto.setPackaging(entity.getPackaging());
-        dto.setRequestId(entity.getRequest().getId());
+        if(entity.getRequest() != null) {
+            dto.setRequestId(entity.getRequest().getId());
+        }
         dto.setStatus(entity.getStatus());
-        dto.setGoods(goodsViewMapper.fromEntity(entity.getGoods()));
+        if(entity.getGoods() != null) {
+            dto.setGoods(goodsViewMapper.fromEntity(entity.getGoods()));
+        }
         return dto;
     }
 

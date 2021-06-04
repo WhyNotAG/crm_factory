@@ -7,6 +7,7 @@ import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.request.AddProductsDTO;
 import osfix.ag.crm.service.dto.request.RequestDTO;
+import osfix.ag.crm.service.dto.request.RequestViewDTO;
 import osfix.ag.crm.service.mapper.RequestMapper;
 
 import java.util.List;
@@ -23,26 +24,26 @@ public class RequestController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Request>> getAllClients() {
+    public ResponseEntity<List<RequestViewDTO>> getAllClients() {
         return ResponseEntity.ok().body(requestService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Request> getClient(@PathVariable(name = "id") long id) {
+    public ResponseEntity<RequestViewDTO> getClient(@PathVariable(name = "id") long id) {
         return  ResponseEntity.ok().body(requestService.findById(id));
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PostMapping()
-    public ResponseEntity<Request> create(@RequestBody RequestDTO request) {
-        Request result = requestService.save(requestMapper.toEntity(request));
+    public ResponseEntity<RequestViewDTO> create(@RequestBody RequestDTO request) {
+        RequestViewDTO result = requestService.save(requestMapper.toEntity(request));
         return ResponseEntity.ok().body(result);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping("/{id}")
-    public ResponseEntity<Request> update(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
-        Request result =  requestService.update(id, requestMapper.toEntity(request));
+    public ResponseEntity<RequestViewDTO> update(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
+        RequestViewDTO result =  requestService.update(id, requestMapper.toEntity(request));
         return ResponseEntity.ok().body(result);
     }
 
@@ -56,18 +57,18 @@ public class RequestController {
     public void delete(@PathVariable(name = "id") long id) { requestService.delete(id);}
 
     @PostMapping("/{id}")
-    public ResponseEntity<Request> addProducts(@PathVariable(name = "id") Long id, @RequestBody AddProductsDTO addProductsDTO) {
-        Request request = requestService.addProduct(id, addProductsDTO.getProductsName(), addProductsDTO.getQuantity(), addProductsDTO.getPackaging());
+    public ResponseEntity<RequestViewDTO> addProducts(@PathVariable(name = "id") Long id, @RequestBody AddProductsDTO addProductsDTO) {
+        RequestViewDTO request = requestService.addProduct(id, addProductsDTO.getProductsName(), addProductsDTO.getQuantity(), addProductsDTO.getPackaging());
         return ResponseEntity.ok().body(request);
     }
 
     @GetMapping("/transfer/{id}/{factory}")
-    public ResponseEntity<Request> transfer(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
+    public ResponseEntity<RequestViewDTO> transfer(@PathVariable(name = "id") Long id, @PathVariable(name = "factory") String factory) {
         return ResponseEntity.ok().body(requestService.copy(id,factory));
     }
 
     @GetMapping("/factory/{factory}")
-    public ResponseEntity<List<Request>> findByFactory(@PathVariable(name = "factory") String factory) {
+    public ResponseEntity<List<RequestViewDTO>> findByFactory(@PathVariable(name = "factory") String factory) {
         return ResponseEntity.ok().body(requestService.findByFactory(factory));
     }
 
@@ -77,7 +78,7 @@ public class RequestController {
     }
 
     @GetMapping("/addClient/{request}/{client}/")
-    public ResponseEntity<Request> addClient(@PathVariable(name = "client") Long clientId, @PathVariable(name = "request") Long requestId){
+    public ResponseEntity<RequestViewDTO> addClient(@PathVariable(name = "client") Long clientId, @PathVariable(name = "request") Long requestId){
         return ResponseEntity.ok().body(requestService.addClient(requestId, clientId));
     }
 

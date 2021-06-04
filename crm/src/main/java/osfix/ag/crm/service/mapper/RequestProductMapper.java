@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 @Component
 public class RequestProductMapper implements EntityMapper<RequestProduct, RequestProductDTO> {
 
-    @Autowired
-    private RequestService requestService;
 
     @Autowired
     private GoodsRepo goodsService;
@@ -29,7 +27,7 @@ public class RequestProductMapper implements EntityMapper<RequestProduct, Reques
         requestProduct.setQuantity(dto.getQuantity());
         requestProduct.setName(dto.getName());
         requestProduct.setPackaging(dto.getPackaging());
-        requestProduct.setRequest(requestService.findById(dto.getRequestId()));
+        //requestProduct.setRequest(requestService.findById(dto.getRequestId()));
         requestProduct.setStatus(dto.getStatus());
         requestProduct.setGoods(goodsService.findById(dto.getGoodsId()).orElse(null));
         return requestProduct;
