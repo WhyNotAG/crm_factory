@@ -47,7 +47,9 @@ public class RequestProductServiceImpl implements RequestProductService {
     public RequestProductViewDTO update(Long id, RequestProductDTO requestProduct) {
         RequestProduct requestProductFromDb = requestProductRepo.findById(id).orElse(null);
         BeanUtils.copyProperties(requestProduct,requestProductFromDb,"id");
-        requestProductFromDb.setGoods(goodsService.findById(requestProduct.getGoodsId()).orElse(null));
+        if(requestProduct.getGoodsId() != null) {
+            requestProductFromDb.setGoods(goodsService.findById(requestProduct.getGoodsId()).orElse(null));
+        }
         requestProductFromDb.setRequest(requestRepo.findById(requestProduct.getRequestId()).orElse(null));
         return requestProductViewMapper.fromEntity(requestProductRepo.save(requestProductFromDb));
     }
@@ -55,7 +57,9 @@ public class RequestProductServiceImpl implements RequestProductService {
     @Override
     public RequestProductViewDTO save(RequestProductDTO requestProduct) {
         RequestProduct result = requestProductMapper.toEntity(requestProduct);
-        result.setGoods(goodsService.findById(requestProduct.getGoodsId()).orElse(null));
+        if(requestProduct.getGoodsId() != null) {
+            result.setGoods(goodsService.findById(requestProduct.getGoodsId()).orElse(null));
+        }
         result.setRequest(requestRepo.findById(requestProduct.getRequestId()).orElse(null));
         return requestProductViewMapper.fromEntity(requestProductRepo.save(result));
     }
