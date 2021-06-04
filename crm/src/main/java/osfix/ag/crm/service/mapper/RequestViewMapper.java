@@ -27,6 +27,7 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         request.setComment(dto.getComment());
         request.setSum(dto.getSum());
         request.setReckoning(dto.getReckoning());
+        request.setClient(dto.getClient());
         request.setRequestProducts(requestProductViewMapper.fromDtoList(dto.getRequestProducts()));
         return request;
     }
@@ -42,9 +43,10 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         dto.setStatus(entity.getStatus());
         dto.setShippingDate(entity.getShippingDate());
         dto.setComment(entity.getComment());
-        dto.setFactory(dto.getFactory());
-        dto.setReckoning(dto.getReckoning());
-        dto.setSum(dto.getSum());
+        dto.setFactory(entity.getFactory());
+        dto.setReckoning(entity.getReckoning());
+        dto.setSum(entity.getSum());
+        dto.setClient(entity.getClient());
         dto.setRequestProducts(requestProductViewMapper.toDtoList(entity.getRequestProducts()));
         return dto;
     }

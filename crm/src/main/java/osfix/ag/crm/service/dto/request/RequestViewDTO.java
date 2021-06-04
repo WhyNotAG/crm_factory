@@ -1,6 +1,7 @@
 package osfix.ag.crm.service.dto.request;
 
 import lombok.Data;
+import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.service.dto.RequestProductViewDTO;
 
 import java.util.List;
@@ -18,5 +19,6 @@ public class RequestViewDTO {
     String comment;
     Double sum;
     Double reckoning;
+    Client client;
     List<RequestProductViewDTO> requestProducts;
 }
