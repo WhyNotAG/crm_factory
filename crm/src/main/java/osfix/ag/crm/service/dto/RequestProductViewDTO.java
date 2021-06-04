@@ -12,5 +12,6 @@ public class RequestProductViewDTO {
     private String quantity;
     private Long requestId;
     private String status;
+    private Long productId;
     private GoodsViewDTO goods;
 }

@@ -12,4 +12,5 @@ public class RequestProductDTO {
     private Long requestId;
     private String status;
     private Long goodsId;
+    private Long productId;
 }

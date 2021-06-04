@@ -29,6 +29,9 @@ public class RequestProduct {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "product_id")
+    private Long productId;
+
     @ManyToOne
     @JsonIgnoreProperties("requestProducts")
     @JsonBackReference
