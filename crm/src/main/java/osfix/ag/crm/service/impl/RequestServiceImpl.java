@@ -104,10 +104,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestViewDTO addClient(Long requestId, Long clientId) {
+    public RequestViewDTO addClient(Long requestId, Long clientId, String ltd, String inn) {
         Client client = clientRepo.findById(clientId).orElse(null);
         Request request = requestRepo.findById(requestId).orElse(null);
         request.setClient(client);
+        request.setInn(inn);
+        request.setLtd(ltd);
         loging("Добавление клиента", "Добавление клиента", "request", request.getId());
         return requestViewMapper.fromEntity(requestRepo.save(request));
     }

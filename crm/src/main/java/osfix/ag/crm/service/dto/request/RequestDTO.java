@@ -17,6 +17,9 @@ public class RequestDTO {
     String comment;
     Double sum;
     Double reckoning;
+    String ltd;
+    String inn;
+    Boolean paid;
     List<Long> productsId;
 //    List<String> weight;
 }

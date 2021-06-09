@@ -3,6 +3,7 @@ package osfix.ag.crm.service.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.repo.InvoicingRequestRepo;
 import osfix.ag.crm.service.dto.request.RequestDTO;
 import osfix.ag.crm.service.dto.request.RequestViewDTO;
 
@@ -13,6 +14,10 @@ import java.util.stream.Collectors;
 public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> {
     @Autowired
     private RequestProductViewMapper requestProductViewMapper;
+
+    @Autowired
+    InvoicingRequestRepo invoicingRequestRepo;
+
     @Override
     public Request toEntity(RequestViewDTO dto) {
         Request request = new Request();
@@ -28,7 +33,11 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         request.setSum(dto.getSum());
         request.setReckoning(dto.getReckoning());
         request.setClient(dto.getClient());
+        request.setLtd(dto.getLtd());
+        request.setInn(dto.getInn());
         request.setRequestProducts(requestProductViewMapper.fromDtoList(dto.getRequestProducts()));
+        request.setInvoicingRequests(dto.getInvoicingRequest());
+        request.setPaid(dto.getPaid());
         return request;
     }
 
@@ -47,7 +56,11 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         dto.setReckoning(entity.getReckoning());
         dto.setSum(entity.getSum());
         dto.setClient(entity.getClient());
+        dto.setLtd(entity.getLtd());
+        dto.setInn(entity.getInn());
         dto.setRequestProducts(requestProductViewMapper.toDtoList(entity.getRequestProducts()));
+        dto.setInvoicingRequest(entity.invoicingRequests);
+        dto.setPaid(entity.getPaid());
         return dto;
     }
 

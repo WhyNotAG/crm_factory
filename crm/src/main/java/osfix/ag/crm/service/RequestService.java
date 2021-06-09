@@ -18,5 +18,5 @@ public interface RequestService {
     RequestViewDTO addProduct(Long id, List<String> products_id, List<String> quantity, List<String> packing);
     void deletePro(Long id);
     RequestViewDTO copy(Long id, String factory);
-    RequestViewDTO addClient(Long requestId, Long clientId);
+    RequestViewDTO addClient(Long requestId, Long clientId, String ltd, String inn);
 }

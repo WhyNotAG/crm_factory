@@ -1,6 +1,7 @@
 package osfix.ag.crm.service.dto.request;
 
 import lombok.Data;
+import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.service.dto.RequestProductViewDTO;
 
@@ -20,5 +21,9 @@ public class RequestViewDTO {
     Double sum;
     Double reckoning;
     Client client;
+    String ltd;
+    String inn;
+    Boolean paid;
     List<RequestProductViewDTO> requestProducts;
+    List<InvoicingRequest> invoicingRequest;
 }

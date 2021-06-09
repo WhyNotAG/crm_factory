@@ -1,15 +1,28 @@
 package osfix.ag.crm.controller;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.UploadFileResponse;
 import osfix.ag.crm.service.RequestService;
+import osfix.ag.crm.service.dto.EmployeeDownloadDTO;
 import osfix.ag.crm.service.dto.request.AddProductsDTO;
 import osfix.ag.crm.service.dto.request.RequestDTO;
 import osfix.ag.crm.service.dto.request.RequestViewDTO;
 import osfix.ag.crm.service.mapper.RequestMapper;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -17,10 +30,15 @@ import java.util.List;
 public class RequestController {
     private RequestService requestService;
     private RequestMapper requestMapper;
+    private FileControllerWithoutDB fileControllerWithoutDB;
+    private JavaMailSender javaMailSender;
 
-    public RequestController(RequestService requestService, RequestMapper requestMapper) {
+    public RequestController(RequestService requestService, RequestMapper requestMapper,
+                             FileControllerWithoutDB fileControllerWithoutDB, JavaMailSender javaMailSender) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
+        this.fileControllerWithoutDB = fileControllerWithoutDB;
+        this.javaMailSender = javaMailSender;
     }
 
     @GetMapping("/")
@@ -34,7 +52,7 @@ public class RequestController {
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
-    @PostMapping()
+    @PostMapping("/")
     public ResponseEntity<RequestViewDTO> create(@RequestBody RequestDTO request) {
         RequestViewDTO result = requestService.save(requestMapper.toEntity(request));
         return ResponseEntity.ok().body(result);
@@ -77,9 +95,49 @@ public class RequestController {
         requestService.deletePro(id);
     }
 
-    @GetMapping("/addClient/{request}/{client}/")
-    public ResponseEntity<RequestViewDTO> addClient(@PathVariable(name = "client") Long clientId, @PathVariable(name = "request") Long requestId){
-        return ResponseEntity.ok().body(requestService.addClient(requestId, clientId));
+    @GetMapping("/addClient/{request}/{client}/{email}/{inn}/{ltd}")
+    public ResponseEntity<RequestViewDTO> addClient(@PathVariable(name = "client") Long clientId,
+                                                    @PathVariable(name = "request") Long requestId,
+                                                    @PathVariable(name = "email") String email,
+                                                    @PathVariable(name = "inn") String inn,
+                                                    @PathVariable(name = "ltd") String ltd){
+        RequestViewDTO result = requestService.addClient(requestId, clientId, ltd, inn);
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject("Создание заявки №" + result.getId());
+        msg.setText("Это письмо сформированно автоматически!" +
+                "\nЗаявка №" + result.getId() + " была создана" +
+                "\nКлиент: " + result.getClient().getName() +
+                "\nИНН: " + inn +
+                "\nООО: " + ltd +
+                "\nНеобходимо выставить счет.");
+
+        javaMailSender.send(msg);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping("/invoicing/{id}/{email}")
+    public ResponseEntity<RequestViewDTO> addInvocing(@PathVariable(name = "id") Long id,
+                                                      @PathVariable(name = "email") String email,
+                                                      @ModelAttribute EmployeeDownloadDTO employee) throws MessagingException, URISyntaxException, MalformedURLException {
+        MultipartFile[] files = employee.getFiles();
+        if (files == null) {
+            return null;
+        }
+        List<UploadFileResponse> response = fileControllerWithoutDB.invoicngUploadMultipleFiles(id, files);
+
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(email);
+        helper.setSubject("Счет по заявке.");
+        helper.setText("Это письмо сформированно автоматически!" +
+                "\nПо вашей заявке был выставлен счет.");
+        File file = new File( "\\uploads\\" + response.get(0).getFileName());
+        helper.addAttachment("Счет.pdf", file);
+        javaMailSender.send(message);
+
+        return ResponseEntity.ok().body(requestService.findById(id));
     }
 
 }

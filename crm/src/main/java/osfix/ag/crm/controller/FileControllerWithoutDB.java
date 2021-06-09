@@ -74,6 +74,27 @@ public class FileControllerWithoutDB {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/uploadFile/invoicng/{id}")
+    public UploadFileResponse invoicngUploadFile(@PathVariable(name = "id")  long id, @RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFileInvocing(file, id);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("api/v1/fileWithoutDB/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles/invoicng/{id}")
+    public List<UploadFileResponse> invoicngUploadMultipleFiles(@PathVariable(name = "id")  long id, @RequestParam("files") MultipartFile[] files) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> invoicngUploadFile(id, file))
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/uploadFile/priceList/{id}")
     public UploadFileResponse priceListUploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFilePrice(file);
