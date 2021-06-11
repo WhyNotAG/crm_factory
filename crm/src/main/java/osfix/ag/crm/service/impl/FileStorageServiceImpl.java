@@ -117,7 +117,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 
         InvoicingRequest invoicingRequest = new InvoicingRequest();
-        invoicingRequest.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        invoicingRequest.setUrl("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
         invoicingRequest.setRequest(requestRepo.findById(id).orElse(null));
         invoicingRequestRepo.save(invoicingRequest);
         return fileName;
