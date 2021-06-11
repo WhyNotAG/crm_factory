@@ -133,7 +133,7 @@ public class RequestController {
         helper.setSubject("Счет по заявке.");
         helper.setText("Это письмо сформированно автоматически!" +
                 "\nПо вашей заявке был выставлен счет.");
-        File file = new File( "\\uploads\\" + response.get(0).getFileName());
+        File file = new File( "/uploads/" + response.get(0).getFileName());
         helper.addAttachment("Счет.pdf", file);
         javaMailSender.send(message);
 
