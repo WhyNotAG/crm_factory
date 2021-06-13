@@ -4,13 +4,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.product.RequestProduct;
+import osfix.ag.crm.repo.InvoicingRequestRepo;
 import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
+import osfix.ag.crm.repo.product.RequestProductRepo;
 import osfix.ag.crm.service.FileStorageService;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.request.RequestViewDTO;
@@ -25,14 +28,19 @@ public class RequestServiceImpl implements RequestService {
     private LogRepo logRepo;
     private RequestViewMapper requestViewMapper;
     private FileStorageService fileStorageService;
+    private RequestProductRepo requestProductRepo;
+    private InvoicingRequestRepo invoicingRequestRepo;
 
     public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo,
-                              RequestViewMapper requestViewMapper, FileStorageService fileStorageService) {
+                              RequestViewMapper requestViewMapper, FileStorageService fileStorageService,
+                              RequestProductRepo requestProductRepo, InvoicingRequestRepo invoicingRequestRepo) {
         this.logRepo = logRepo;
         this.requestRepo = requestRepo;
         this.clientRepo = clientRepo;
         this.requestViewMapper = requestViewMapper;
         this.fileStorageService = fileStorageService;
+        this.requestProductRepo = requestProductRepo;
+        this.invoicingRequestRepo = invoicingRequestRepo;
     }
 
     @Override
@@ -62,7 +70,17 @@ public class RequestServiceImpl implements RequestService {
         Request request = requestRepo.findById(id).orElse(null);
         request.setClient(null);
         fileStorageService.deleteInvoicing(id);
-        request.setInvoicingRequests(null);
+
+        List<InvoicingRequest> invoicingRequests = request.getInvoicingRequests();
+        for(InvoicingRequest invoicingRequest : invoicingRequests) {
+            invoicingRequestRepo.delete(invoicingRequest);
+        }
+
+        List<RequestProduct> requestProducts = request.getRequestProducts();
+        for(RequestProduct requestProduct : requestProducts) {
+            requestProductRepo.delete(requestProduct);
+        }
+
         requestRepo.delete(request);
     }
 
