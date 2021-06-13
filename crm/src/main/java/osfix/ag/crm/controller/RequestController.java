@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.UploadFileResponse;
 import osfix.ag.crm.service.RequestService;
@@ -116,7 +117,7 @@ public class RequestController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/invoicing/{id}/{email}")
+    @PostMapping("/invoicing/{id}/")
     public ResponseEntity<RequestViewDTO> addInvocing(@PathVariable(name = "id") Long id,
                                                       @PathVariable(name = "email") String email,
                                                       @ModelAttribute EmployeeDownloadDTO employee) throws MessagingException, URISyntaxException, MalformedURLException {
@@ -126,18 +127,28 @@ public class RequestController {
         }
         List<UploadFileResponse> response = fileControllerWithoutDB.invoicngUploadMultipleFiles(id, files);
 
+        return ResponseEntity.ok().body(requestService.findById(id));
+    }
 
+    @GetMapping("/invoicing/{id}/{email}/")
+    public void sendInvoicing(@PathVariable(name = "id") Long id,
+                              @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
+        List<InvoicingRequest> invoicingRequests = requestService.findById(id).getInvoicingRequest();
+        String path = invoicingRequests.get(invoicingRequests.size() - 1).getUrl();
+        URI uri = new URI(path);
+        int startIndex = uri.toString().lastIndexOf('/');
+        String fileName = uri.toString().substring(startIndex + 1);
+        File file = new File(fileName);
+        System.out.println(file.getName());
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Счет по заявке.");
         helper.setText("Это письмо сформированно автоматически!" +
                 "\nПо вашей заявке был выставлен счет.");
-        File file = new File( "/uploads/" + response.get(0).getFileName());
-        helper.addAttachment("Счет.pdf", file);
+        File file1 = new File( "/uploads/" + file.getName());
+        helper.addAttachment("Счет.pdf", file1);
         javaMailSender.send(message);
-
-        return ResponseEntity.ok().body(requestService.findById(id));
     }
 
 }
