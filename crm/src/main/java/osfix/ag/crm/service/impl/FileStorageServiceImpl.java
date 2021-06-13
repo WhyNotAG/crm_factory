@@ -169,7 +169,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public void deleteFileWithUri(String filename) {
-        String newFileName = filename.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "");
+        String newFileName = filename.replace("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/", "");
         Path filePath = this.fileStorageLocation.resolve(newFileName).normalize();
         File file = filePath.toFile();
         file.delete();
