@@ -119,7 +119,6 @@ public class RequestController {
 
     @PostMapping("/invoicing/{id}/")
     public ResponseEntity<RequestViewDTO> addInvocing(@PathVariable(name = "id") Long id,
-                                                      @PathVariable(name = "email") String email,
                                                       @ModelAttribute EmployeeDownloadDTO employee) throws MessagingException, URISyntaxException, MalformedURLException {
         MultipartFile[] files = employee.getFiles();
         if (files == null) {
