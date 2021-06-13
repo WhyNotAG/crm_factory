@@ -13,4 +13,5 @@ public interface FileStorageService {
     void deleteFile(String filename);
     void deleteFileWithUri(String filename);
     void deleteAll(Long id);
+    void deleteInvoicing(Long id);
 }

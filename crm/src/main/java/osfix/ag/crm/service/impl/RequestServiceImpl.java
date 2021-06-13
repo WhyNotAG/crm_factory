@@ -11,6 +11,7 @@ import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.RequestRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
+import osfix.ag.crm.service.FileStorageService;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.request.RequestViewDTO;
 import osfix.ag.crm.service.mapper.RequestViewMapper;
@@ -23,13 +24,15 @@ public class RequestServiceImpl implements RequestService {
     private ClientRepo clientRepo;
     private LogRepo logRepo;
     private RequestViewMapper requestViewMapper;
+    private FileStorageService fileStorageService;
 
     public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo,
-                              RequestViewMapper requestViewMapper) {
+                              RequestViewMapper requestViewMapper, FileStorageService fileStorageService) {
         this.logRepo = logRepo;
         this.requestRepo = requestRepo;
         this.clientRepo = clientRepo;
         this.requestViewMapper = requestViewMapper;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -56,7 +59,11 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public void delete(Long id) {
         loging("Удаление", "Удаление", "request", id);
-        requestRepo.deleteById(id);
+        Request request = requestRepo.findById(id).orElse(null);
+        request.setClient(null);
+        fileStorageService.deleteInvoicing(id);
+        request.setInvoicingRequests(null);
+        requestRepo.delete(request);
     }
 
     public Request findId(Long id) {

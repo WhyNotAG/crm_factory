@@ -5,6 +5,7 @@ import osfix.ag.crm.config.FileStorageProperties;
 import osfix.ag.crm.domain.Employee;
 import osfix.ag.crm.domain.EmployeePhoto;
 import osfix.ag.crm.domain.InvoicingRequest;
+import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.exceptions.FileStorageException;
 import osfix.ag.crm.exceptions.MyFileNotFoundException;
@@ -179,5 +180,12 @@ public class FileStorageServiceImpl implements FileStorageService {
        for(EmployeePhoto employeePhoto : employee.getEmployeePhotos()) {
            deleteFileWithUri(employeePhoto.getUrl());
        }
+    }
+
+    public void deleteInvoicing(Long id) {
+        Request request = requestRepo.findById(id).orElse(null);
+        for (InvoicingRequest invoicingRequest : request.getInvoicingRequests()) {
+            deleteFileWithUri(invoicingRequest.getUrl());
+        }
     }
 }
