@@ -38,7 +38,7 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Secured("ROLE_DISPATCHER")
+    @Secured({"ROLE_DISPATCHER", "ROLE_MANAGER"})
     @GetMapping("/user")
     public ResponseEntity<List<UserDTO>> getAll() {
         return ResponseEntity.ok().body(userMapper.toDtoList(userService.getAll())) ;
