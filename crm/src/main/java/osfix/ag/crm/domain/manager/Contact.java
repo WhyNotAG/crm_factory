@@ -29,6 +29,9 @@ public class Contact {
     @Column(name = "phone_number")
     String phoneNumber;
 
+    @Column(name = "sending_mail")
+    Boolean sendingMail;
+
     @ManyToOne
     @JsonBackReference
     private Client client;

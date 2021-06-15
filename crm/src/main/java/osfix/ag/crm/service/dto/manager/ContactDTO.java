@@ -10,4 +10,5 @@ public class ContactDTO {
     String position;
     String phoneNumber;
     Long clientId;
+    Boolean sendingMail;
 }

@@ -20,6 +20,7 @@ public class RequestDTO {
     String ltd;
     String inn;
     Boolean paid;
+    String invoicingResponsible;
     List<Long> productsId;
 //    List<String> weight;
 }

@@ -36,6 +36,9 @@ public class Request {
     @Column(name = "responsible") //кто отвественный
     String responsible;
 
+    @Column(name = "invoicing_responsible") //кто отвественный
+    String invoicingResponsible;
+
     @Column(name = "comment") //кто отвественный
     String comment;
 

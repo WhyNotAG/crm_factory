@@ -38,6 +38,7 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         request.setRequestProducts(requestProductViewMapper.fromDtoList(dto.getRequestProducts()));
         request.setInvoicingRequests(dto.getInvoicingRequest());
         request.setPaid(dto.getPaid());
+        request.setInvoicingResponsible(dto.getInvoicingResponsible());
         return request;
     }
 
@@ -61,6 +62,7 @@ public class RequestViewMapper implements EntityMapper<Request, RequestViewDTO> 
         dto.setRequestProducts(requestProductViewMapper.toDtoList(entity.getRequestProducts()));
         dto.setInvoicingRequest(entity.invoicingRequests);
         dto.setPaid(entity.getPaid());
+        dto.setInvoicingResponsible(entity.getInvoicingResponsible());
         return dto;
     }
 

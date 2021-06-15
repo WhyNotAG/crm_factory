@@ -24,6 +24,7 @@ public class ContactMapper implements EntityMapper<Contact, ContactDTO> {
         contact.setName(dto.getName());
         contact.setPhoneNumber(dto.getPhoneNumber());
         contact.setPosition(dto.getPosition());
+        contact.setSendingMail(dto.getSendingMail());
         return contact;
     }
 
@@ -33,6 +34,7 @@ public class ContactMapper implements EntityMapper<Contact, ContactDTO> {
         dto.setClientId(entity.getClient().getId());
         dto.setEmail(entity.getEmail());
         dto.setId(entity.getId());
+        dto.setSendingMail(entity.getSendingMail());
         dto.setLastName(entity.getLastName());
         dto.setName(entity.getName());
         dto.setPhoneNumber(entity.getPhoneNumber());

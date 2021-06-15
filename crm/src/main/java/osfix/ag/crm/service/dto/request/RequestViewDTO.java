@@ -24,6 +24,7 @@ public class RequestViewDTO {
     String ltd;
     String inn;
     Boolean paid;
+    String invoicingResponsible;
     List<RequestProductViewDTO> requestProducts;
     List<InvoicingRequest> invoicingRequest;
 }
