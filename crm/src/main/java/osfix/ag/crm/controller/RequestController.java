@@ -133,7 +133,7 @@ public class RequestController {
     public void sendInvoicing(@PathVariable(name = "id") Long id,
                               @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
         List<InvoicingRequest> invoicingRequests = requestService.findById(id).getInvoicingRequest();
-        String path = invoicingRequests.get(invoicingRequests.size() - 1).getUrl();
+        String path = invoicingRequests.get(0).getUrl();
         URI uri = new URI(path);
         int startIndex = uri.toString().lastIndexOf('/');
         String fileName = uri.toString().substring(startIndex + 1);
