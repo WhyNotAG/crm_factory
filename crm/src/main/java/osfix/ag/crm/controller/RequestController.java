@@ -133,20 +133,16 @@ public class RequestController {
     public void sendInvoicing(@PathVariable(name = "id") Long id,
                               @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
         List<InvoicingRequest> invoicingRequests = requestService.findById(id).getInvoicingRequest();
-        String path = invoicingRequests.get(0).getUrl();
-        URI uri = new URI(path);
-        int startIndex = uri.toString().lastIndexOf('/');
-        String fileName = uri.toString().substring(startIndex + 1);
-        File file = new File(fileName);
-        System.out.println(file.getName());
+        String path = invoicingRequests.get(invoicingRequests.size() - 1).getUrl();
+        path = path.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "/");
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Счет по заявке.");
         helper.setText("Это письмо сформированно автоматически!" +
                 "\nПо вашей заявке был выставлен счет.");
-        File file1 = new File( "/uploads/" + file.getName());
-        helper.addAttachment("Счет.pdf", file1);
+        File file = new File( "/uploads/" + path);
+        helper.addAttachment("Счет.pdf", file);
         javaMailSender.send(message);
     }
 
