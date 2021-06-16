@@ -134,7 +134,7 @@ public class RequestController {
                               @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
         List<InvoicingRequest> invoicingRequests = requestService.findById(id).getInvoicingRequest();
         String path = invoicingRequests.get(invoicingRequests.size() - 1).getUrl();
-        path = path.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+        path = path.replace("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/", "/");
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
