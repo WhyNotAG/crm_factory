@@ -23,7 +23,7 @@ public class RequestViewDTO {
     Client client;
     String ltd;
     String inn;
-    Boolean paid;
+    String paid;
     String invoicingResponsible;
     List<RequestProductViewDTO> requestProducts;
     List<InvoicingRequest> invoicingRequest;

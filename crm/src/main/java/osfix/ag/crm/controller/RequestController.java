@@ -66,6 +66,12 @@ public class RequestController {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/paid/{id}/{paid}")
+    public ResponseEntity<RequestViewDTO> changePaidStatus(@PathVariable(name = "id") Long id,
+                                                           @PathVariable(name = "paid") String paid) {
+        return ResponseEntity.ok().body(requestService.changePaidStatus(id, paid));
+    }
+
     @PutMapping("/status/{id}")
     public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
         requestService.changeStatus(id, request.getStatus());

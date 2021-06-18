@@ -94,6 +94,13 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public RequestViewDTO changePaidStatus(Long id, String paidStatus) {
+        Request request = requestRepo.findById(id).orElse(null);
+        request.setPaid(paidStatus);
+        return requestViewMapper.fromEntity(requestRepo.save(request));
+    }
+
+    @Override
     public void changeStatus(Long id, String status) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);

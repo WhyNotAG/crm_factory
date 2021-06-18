@@ -61,7 +61,7 @@ public class Request {
     String inn;
 
     @Column(name = "paid")
-    Boolean paid;
+    String paid;
 
     @OneToMany(mappedBy = "request", cascade = CascadeType.REFRESH)
     @JsonManagedReference

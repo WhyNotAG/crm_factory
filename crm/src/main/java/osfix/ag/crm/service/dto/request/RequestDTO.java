@@ -19,7 +19,7 @@ public class RequestDTO {
     Double reckoning;
     String ltd;
     String inn;
-    Boolean paid;
+    String paid;
     String invoicingResponsible;
     List<Long> productsId;
 //    List<String> weight;
