@@ -135,6 +135,29 @@ public class RequestController {
         return ResponseEntity.ok().body(requestService.findById(id));
     }
 
+    @PostMapping("/shipping/{id}/{email}/")
+    public ResponseEntity<RequestViewDTO> addShipping(@PathVariable(name = "id") Long id,
+                                                      @PathVariable(name = "email") String email,
+                                                      @ModelAttribute EmployeeDownloadDTO employee) throws MessagingException, URISyntaxException, MalformedURLException {
+        MultipartFile[] files = employee.getFiles();
+        if (files == null) {
+            return null;
+        }
+        List<UploadFileResponse> response = fileControllerWithoutDB.shippingUploadMultipleFiles(id, files);
+        RequestViewDTO request = requestService.findById(id);
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject("Выставление отгрузочных документов");
+        msg.setText("Это письмо сформированно автоматически!" +
+                "\nПо заявке №" + request.getId() + " были добавлены отгрузочные документы" +
+                "\nКлиент: " + request.getClient().getName() +
+                "\nИНН: " + request.getInn() +
+                "\nООО: " + request.getLtd());
+
+        javaMailSender.send(msg);
+        return ResponseEntity.ok().body(requestService.findById(id));
+    }
+
     @GetMapping("/invoicing/{id}/{email}/")
     public void sendInvoicing(@PathVariable(name = "id") Long id,
                               @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {

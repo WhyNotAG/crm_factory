@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Log;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.ShippingDocument;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.repo.InvoicingRequestRepo;
 import osfix.ag.crm.repo.LogRepo;
 import osfix.ag.crm.repo.RequestRepo;
+import osfix.ag.crm.repo.ShippingDocumentRepo;
 import osfix.ag.crm.repo.manager.ClientRepo;
 import osfix.ag.crm.repo.product.RequestProductRepo;
 import osfix.ag.crm.service.FileStorageService;
@@ -30,10 +32,12 @@ public class RequestServiceImpl implements RequestService {
     private FileStorageService fileStorageService;
     private RequestProductRepo requestProductRepo;
     private InvoicingRequestRepo invoicingRequestRepo;
+    private ShippingDocumentRepo shippingDocumentRepo;
 
     public RequestServiceImpl(RequestRepo requestRepo, ClientRepo clientRepo, LogRepo logRepo,
                               RequestViewMapper requestViewMapper, FileStorageService fileStorageService,
-                              RequestProductRepo requestProductRepo, InvoicingRequestRepo invoicingRequestRepo) {
+                              RequestProductRepo requestProductRepo, InvoicingRequestRepo invoicingRequestRepo,
+                              ShippingDocumentRepo shippingDocumentRepo) {
         this.logRepo = logRepo;
         this.requestRepo = requestRepo;
         this.clientRepo = clientRepo;
@@ -41,6 +45,7 @@ public class RequestServiceImpl implements RequestService {
         this.fileStorageService = fileStorageService;
         this.requestProductRepo = requestProductRepo;
         this.invoicingRequestRepo = invoicingRequestRepo;
+        this.shippingDocumentRepo = shippingDocumentRepo;
     }
 
     @Override
@@ -70,6 +75,7 @@ public class RequestServiceImpl implements RequestService {
         Request request = requestRepo.findById(id).orElse(null);
         request.setClient(null);
         fileStorageService.deleteInvoicing(id);
+        //fileStorageService.deleteShipping(id);
 
         List<InvoicingRequest> invoicingRequests = request.getInvoicingRequests();
         for(InvoicingRequest invoicingRequest : invoicingRequests) {
@@ -79,6 +85,11 @@ public class RequestServiceImpl implements RequestService {
         List<RequestProduct> requestProducts = request.getRequestProducts();
         for(RequestProduct requestProduct : requestProducts) {
             requestProductRepo.delete(requestProduct);
+        }
+
+        List<ShippingDocument> shippingDocuments = request.getShippingDocuments();
+        for (ShippingDocument shippingDocument : shippingDocuments) {
+            shippingDocumentRepo.delete(shippingDocument);
         }
 
         requestRepo.delete(request);
@@ -96,7 +107,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public RequestViewDTO changePaidStatus(Long id, String paidStatus) {
         Request request = requestRepo.findById(id).orElse(null);
-        request.setPaid(paidStatus);
+        request.setPaidStatus(paidStatus);
         return requestViewMapper.fromEntity(requestRepo.save(request));
     }
 

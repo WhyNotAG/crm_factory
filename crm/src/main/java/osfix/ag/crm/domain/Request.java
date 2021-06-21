@@ -60,8 +60,8 @@ public class Request {
     @Column(name = "inn")
     String inn;
 
-    @Column(name = "paid")
-    String paid;
+    @Column(name = "paid_status")
+    String paidStatus;
 
     @OneToMany(mappedBy = "request", cascade = CascadeType.REFRESH)
     @JsonManagedReference
@@ -75,4 +75,8 @@ public class Request {
     @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
     @JsonManagedReference
     public List<InvoicingRequest> invoicingRequests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    public List<ShippingDocument> shippingDocuments = new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package osfix.ag.crm.service.dto.request;
 
 import lombok.Data;
 import osfix.ag.crm.domain.InvoicingRequest;
+import osfix.ag.crm.domain.ShippingDocument;
 import osfix.ag.crm.domain.manager.Client;
 import osfix.ag.crm.service.dto.RequestProductViewDTO;
 
@@ -27,4 +28,5 @@ public class RequestViewDTO {
     String invoicingResponsible;
     List<RequestProductViewDTO> requestProducts;
     List<InvoicingRequest> invoicingRequest;
+    List<ShippingDocument> shippingDocuments;
 }

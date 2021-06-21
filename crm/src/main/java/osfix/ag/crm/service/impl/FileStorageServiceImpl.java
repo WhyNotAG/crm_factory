@@ -2,17 +2,11 @@ package osfix.ag.crm.service.impl;
 
 import org.springframework.stereotype.Service;
 import osfix.ag.crm.config.FileStorageProperties;
-import osfix.ag.crm.domain.Employee;
-import osfix.ag.crm.domain.EmployeePhoto;
-import osfix.ag.crm.domain.InvoicingRequest;
-import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.*;
 import osfix.ag.crm.domain.manager.Prices;
 import osfix.ag.crm.exceptions.FileStorageException;
 import osfix.ag.crm.exceptions.MyFileNotFoundException;
-import osfix.ag.crm.repo.EmployeePhotoRepo;
-import osfix.ag.crm.repo.EmployeeRepo;
-import osfix.ag.crm.repo.InvoicingRequestRepo;
-import osfix.ag.crm.repo.RequestRepo;
+import osfix.ag.crm.repo.*;
 import osfix.ag.crm.repo.manager.PriceListRepo;
 import osfix.ag.crm.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +31,18 @@ public class FileStorageServiceImpl implements FileStorageService {
     private PriceListRepo priceListRepo;
     private RequestRepo requestRepo;
     private InvoicingRequestRepo invoicingRequestRepo;
+    private ShippingDocumentRepo shippingDocumentRepo;
 
     @Autowired
     public FileStorageServiceImpl(FileStorageProperties fileStorageProperties, EmployeePhotoRepo employeePhotoRepo,
                                   EmployeeRepo employeeRepo, PriceListRepo priceListRepo, RequestRepo requestRepo,
-                                  InvoicingRequestRepo invoicingRequestRepo) {
+                                  InvoicingRequestRepo invoicingRequestRepo, ShippingDocumentRepo shippingDocumentRepo) {
         this.employeePhotoRepo = employeePhotoRepo;
         this.employeeRepo = employeeRepo;
         this.priceListRepo = priceListRepo;
         this.requestRepo = requestRepo;
         this.invoicingRequestRepo = invoicingRequestRepo;
+        this.shippingDocumentRepo = shippingDocumentRepo;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
 
@@ -124,6 +120,30 @@ public class FileStorageServiceImpl implements FileStorageService {
         return fileName;
     }
 
+    @Override
+    public String storeFileShipping(MultipartFile file, Long id) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        // Check if the file's name contains invalid characters
+        if(fileName.contains("..")) {
+            throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+        }
+
+        // Copy file to the target location (Replacing existing file with the same name)
+        Path targetLocation = this.fileStorageLocation.resolve(fileName);
+        try {
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            return null;
+        }
+
+        ShippingDocument shippingDocument = new ShippingDocument();
+        shippingDocument.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        shippingDocument.setRequest(requestRepo.findById(id).orElse(null));
+        shippingDocumentRepo.save(shippingDocument);
+        return fileName;
+    }
+
     public String storeFilePrice(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -186,6 +206,14 @@ public class FileStorageServiceImpl implements FileStorageService {
         Request request = requestRepo.findById(id).orElse(null);
         for (InvoicingRequest invoicingRequest : request.getInvoicingRequests()) {
             deleteFileWithUri(invoicingRequest.getUrl());
+        }
+    }
+
+    @Override
+    public void deleteShipping(Long id) {
+        Request request = requestRepo.findById(id).orElse(null);
+        for (ShippingDocument shippingDocument : request.getShippingDocuments()) {
+            deleteFileWithUri(shippingDocument.getUrl());
         }
     }
 }

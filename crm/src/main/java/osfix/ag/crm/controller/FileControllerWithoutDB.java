@@ -95,6 +95,27 @@ public class FileControllerWithoutDB {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/uploadFile/shipping/{id}")
+    public UploadFileResponse shippingUploadFile(@PathVariable(name = "id")  long id, @RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFileShipping(file, id);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("api/v1/fileWithoutDB/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles/shipping/{id}")
+    public List<UploadFileResponse> shippingUploadMultipleFiles(@PathVariable(name = "id")  long id, @RequestParam("files") MultipartFile[] files) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> shippingUploadFile(id, file))
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/uploadFile/priceList/{id}")
     public UploadFileResponse priceListUploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFilePrice(file);
