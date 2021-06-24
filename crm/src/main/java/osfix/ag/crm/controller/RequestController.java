@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Request;
+import osfix.ag.crm.domain.ShippingDocument;
 import osfix.ag.crm.domain.UploadFileResponse;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.EmployeeDownloadDTO;
@@ -135,9 +136,8 @@ public class RequestController {
         return ResponseEntity.ok().body(requestService.findById(id));
     }
 
-    @PostMapping("/shipping/{id}/{email}/")
+    @PostMapping("/shipping/{id}/")
     public ResponseEntity<RequestViewDTO> addShipping(@PathVariable(name = "id") Long id,
-                                                      @PathVariable(name = "email") String email,
                                                       @ModelAttribute EmployeeDownloadDTO employee) throws MessagingException, URISyntaxException, MalformedURLException {
         MultipartFile[] files = employee.getFiles();
         if (files == null) {
@@ -145,16 +145,6 @@ public class RequestController {
         }
         List<UploadFileResponse> response = fileControllerWithoutDB.shippingUploadMultipleFiles(id, files);
         RequestViewDTO request = requestService.findById(id);
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(email);
-        msg.setSubject("Выставление отгрузочных документов");
-        msg.setText("Это письмо сформированно автоматически!" +
-                "\nПо заявке №" + request.getId() + " были добавлены отгрузочные документы" +
-                "\nКлиент: " + request.getClient().getName() +
-                "\nИНН: " + request.getInn() +
-                "\nООО: " + request.getLtd());
-
-        javaMailSender.send(msg);
         return ResponseEntity.ok().body(requestService.findById(id));
     }
 
@@ -175,4 +165,20 @@ public class RequestController {
         javaMailSender.send(message);
     }
 
+    @GetMapping("/shipping/{id}/{email}/")
+    public void sendShipping(@PathVariable(name = "id") Long id,
+                              @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
+        List<ShippingDocument> shippingDocuments = requestService.findById(id).getShippingDocuments();
+        String path = shippingDocuments.get(shippingDocuments.size() - 1).getUrl();
+        path = path.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(email);
+        helper.setSubject("Отгрузочные документы.");
+        helper.setText("Это письмо сформированно автоматически!" +
+                "\nПо вашей заявке были выставленны отгрузочные документы.");
+        File file = new File( "/uploads/" + path);
+        helper.addAttachment("Отгрузка.pdf", file);
+        javaMailSender.send(message);
+    }
 }
