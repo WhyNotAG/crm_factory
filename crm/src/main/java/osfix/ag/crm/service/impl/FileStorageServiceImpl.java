@@ -138,7 +138,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 
         ShippingDocument shippingDocument = new ShippingDocument();
-        shippingDocument.setUrl("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
+        shippingDocument.setUrl("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/" + fileName);
         shippingDocument.setRequest(requestRepo.findById(id).orElse(null));
         shippingDocumentRepo.save(shippingDocument);
         return fileName;
