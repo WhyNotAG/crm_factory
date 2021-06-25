@@ -75,7 +75,7 @@ public class RequestServiceImpl implements RequestService {
         Request request = requestRepo.findById(id).orElse(null);
         request.setClient(null);
         fileStorageService.deleteInvoicing(id);
-        //fileStorageService.deleteShipping(id);
+        fileStorageService.deleteShipping(id);
 
         List<InvoicingRequest> invoicingRequests = request.getInvoicingRequests();
         for(InvoicingRequest invoicingRequest : invoicingRequests) {
