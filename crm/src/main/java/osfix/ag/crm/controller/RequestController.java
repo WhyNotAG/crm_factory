@@ -12,8 +12,12 @@ import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.ShippingDocument;
 import osfix.ag.crm.domain.UploadFileResponse;
+import osfix.ag.crm.domain.product.RequestProduct;
+import osfix.ag.crm.domain.user.User;
+import osfix.ag.crm.repo.user.UserRepo;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.EmployeeDownloadDTO;
+import osfix.ag.crm.service.dto.RequestProductViewDTO;
 import osfix.ag.crm.service.dto.request.AddProductsDTO;
 import osfix.ag.crm.service.dto.request.RequestDTO;
 import osfix.ag.crm.service.dto.request.RequestViewDTO;
@@ -34,13 +38,16 @@ public class RequestController {
     private RequestMapper requestMapper;
     private FileControllerWithoutDB fileControllerWithoutDB;
     private JavaMailSender javaMailSender;
+    private UserRepo userRepo;
 
     public RequestController(RequestService requestService, RequestMapper requestMapper,
-                             FileControllerWithoutDB fileControllerWithoutDB, JavaMailSender javaMailSender) {
+                             FileControllerWithoutDB fileControllerWithoutDB, JavaMailSender javaMailSender,
+                             UserRepo userRepo) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
         this.fileControllerWithoutDB = fileControllerWithoutDB;
         this.javaMailSender = javaMailSender;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/")
@@ -75,7 +82,29 @@ public class RequestController {
 
     @PutMapping("/status/{id}")
     public void changeStatus(@PathVariable(name = "id") Long id, @RequestBody RequestDTO request) {
-        requestService.changeStatus(id, request.getStatus());
+        Request result = requestService.changeStatus(id, request.getStatus());
+
+        StringBuilder products = new StringBuilder("\n\nСостав завявки:\n");
+        for (RequestProduct product : result.getRequestProducts()) {
+            products.append(product.getName()).append(" ").append(product.getPackaging()).append(" ").append(product.getQuantity()).append("\n");
+        }
+
+        if(request.getStatus().equals("Готово к отгрузке")) {
+            User user = userRepo.findByUsername(result.getResponsible());
+            System.out.println(user.getEmail());
+            System.out.println(user.getUsername());
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(user.getEmail());
+            msg.setSubject("Изменение статуса заявки №" + result.getId());
+            msg.setText("Это письмо сформировано автоматически!" +
+                    "\nЗаявка №" + result.getId() + " готова к отгрузке" +
+                    "\nКлиент: " + result.getClient().getName() +
+                    "\nИНН: " + result.getInn() +
+                    "\nЮр.лицо: " + result.getLtd() +
+                    products);
+
+            javaMailSender.send(msg);
+        }
     }
 
     @Secured("ROLE_ADMIN")
@@ -110,15 +139,23 @@ public class RequestController {
                                                     @PathVariable(name = "inn") String inn,
                                                     @PathVariable(name = "ltd") String ltd){
         RequestViewDTO result = requestService.addClient(requestId, clientId, ltd, inn);
+
+        StringBuilder products = new StringBuilder("\n\nСостав завявки:\n ");
+
+        for (RequestProductViewDTO product : result.getRequestProducts()) {
+            products.append(product.getName()).append(" ").append(product.getPackaging()).append(" ").append(product.getQuantity());
+        }
+
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
         msg.setSubject("Создание заявки №" + result.getId());
-        msg.setText("Это письмо сформированно автоматически!" +
+        msg.setText("Это письмо сформировано автоматически!" +
                 "\nЗаявка №" + result.getId() + " была создана" +
                 "\nКлиент: " + result.getClient().getName() +
                 "\nИНН: " + inn +
-                "\nООО: " + ltd +
-                "\nНеобходимо выставить счет.");
+                "\nЮр.лицо: " + ltd +
+                "\nНеобходимо выставить счет." +
+                products);
 
         javaMailSender.send(msg);
         return ResponseEntity.ok().body(result);
@@ -158,7 +195,7 @@ public class RequestController {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Счет по заявке.");
-        helper.setText("Это письмо сформированно автоматически!" +
+        helper.setText("Это письмо сформировано автоматически!" +
                 "\nПо вашей заявке был выставлен счет.");
         File file = new File( "/uploads/" + path);
         helper.addAttachment("Счет.pdf", file);
@@ -175,7 +212,7 @@ public class RequestController {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Отгрузочные документы.");
-        helper.setText("Это письмо сформированно автоматически!" +
+        helper.setText("Это письмо сформировано автоматически!" +
                 "\nПо вашей заявке были выставленны отгрузочные документы.");
         File file = new File( "/uploads/" + path);
         helper.addAttachment("Отгрузка.pdf", file);

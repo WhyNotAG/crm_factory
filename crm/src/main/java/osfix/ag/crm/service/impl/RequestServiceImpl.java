@@ -112,11 +112,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void changeStatus(Long id, String status) {
+    public Request changeStatus(Long id, String status) {
         Request request = requestRepo.findById(id).orElse(null);
         request.setStatus(status);
         loging("Изменение статуса", "Изменение статуса на \"" + request.getStatus() + "\"", "request", request.getId());
-        requestRepo.save(request);
+        return requestRepo.save(request);
     }
 
     @Override

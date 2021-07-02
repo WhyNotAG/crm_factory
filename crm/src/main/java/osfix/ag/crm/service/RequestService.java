@@ -14,7 +14,7 @@ public interface RequestService {
     RequestViewDTO update(Long id, Request request);
     RequestViewDTO save(Request request);
     void delete(Long id);
-    void changeStatus(Long id, String status);
+    Request changeStatus(Long id, String status);
     RequestViewDTO changePaidStatus(Long id, String paidStatus);
     RequestViewDTO addProduct(Long id, List<String> products_id, List<String> quantity, List<String> packing);
     void deletePro(Long id);
