@@ -12,9 +12,11 @@ import osfix.ag.crm.domain.InvoicingRequest;
 import osfix.ag.crm.domain.Request;
 import osfix.ag.crm.domain.ShippingDocument;
 import osfix.ag.crm.domain.UploadFileResponse;
+import osfix.ag.crm.domain.admin.MessageTemplate;
 import osfix.ag.crm.domain.product.RequestProduct;
 import osfix.ag.crm.domain.user.User;
 import osfix.ag.crm.repo.user.UserRepo;
+import osfix.ag.crm.service.MessageTemplateService;
 import osfix.ag.crm.service.RequestService;
 import osfix.ag.crm.service.dto.EmployeeDownloadDTO;
 import osfix.ag.crm.service.dto.RequestProductViewDTO;
@@ -39,15 +41,17 @@ public class RequestController {
     private FileControllerWithoutDB fileControllerWithoutDB;
     private JavaMailSender javaMailSender;
     private UserRepo userRepo;
+    private MessageTemplateService messageTemplateService;
 
     public RequestController(RequestService requestService, RequestMapper requestMapper,
                              FileControllerWithoutDB fileControllerWithoutDB, JavaMailSender javaMailSender,
-                             UserRepo userRepo) {
+                             UserRepo userRepo, MessageTemplateService messageTemplateService) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
         this.fileControllerWithoutDB = fileControllerWithoutDB;
         this.javaMailSender = javaMailSender;
         this.userRepo = userRepo;
+        this.messageTemplateService = messageTemplateService;
     }
 
     @GetMapping("/")
@@ -185,35 +189,64 @@ public class RequestController {
         return ResponseEntity.ok().body(requestService.findById(id));
     }
 
-    @GetMapping("/invoicing/{id}/{email}/")
+    @GetMapping("/invoicing/{id}/{email}/{message_id}")
     public void sendInvoicing(@PathVariable(name = "id") Long id,
-                              @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
+                              @PathVariable(name = "email") String email,
+                              @PathVariable(name = "message_id") Long messageId)
+            throws URISyntaxException, MessagingException {
         List<InvoicingRequest> invoicingRequests = requestService.findById(id).getInvoicingRequest();
         String path = invoicingRequests.get(invoicingRequests.size() - 1).getUrl();
         path = path.replace("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+        path = path.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        MessageTemplate messageTemplate = messageTemplateService.findById(messageId);
+
         helper.setTo(email);
-        helper.setSubject("Счет по заявке.");
-        helper.setText("Это письмо сформировано автоматически!" +
-                "\nПо вашей заявке был выставлен счет.");
+
+        if(messageTemplate == null) {
+            helper.setSubject("Счет по заявке.");
+            helper.setText("Это письмо сформировано автоматически!" +
+                    "\nПо вашей заявке был выставлен счет.");
+        }
+        else {
+            helper.setSubject(messageTemplate.getTitle());
+            helper.setText(messageTemplate.getBody());
+        }
+
         File file = new File( "/uploads/" + path);
         helper.addAttachment("Счет.pdf", file);
         javaMailSender.send(message);
     }
 
-    @GetMapping("/shipping/{id}/{email}/")
+    @GetMapping("/shipping/{id}/{email}/{message_id}")
     public void sendShipping(@PathVariable(name = "id") Long id,
-                              @PathVariable(name = "email") String email) throws URISyntaxException, MessagingException {
+                              @PathVariable(name = "email") String email,
+                             @PathVariable(name = "message_id") Long messageId)
+            throws URISyntaxException, MessagingException {
         List<ShippingDocument> shippingDocuments = requestService.findById(id).getShippingDocuments();
         String path = shippingDocuments.get(shippingDocuments.size() - 1).getUrl();
         path = path.replace("https://194-58-104-192.ovz.vps.regruhosting.ru:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+        path = path.replace("http://localhost:8443/api/v1/fileWithoutDB/downloadFile/", "/");
+
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        MessageTemplate messageTemplate = messageTemplateService.findById(messageId);
+
         helper.setTo(email);
-        helper.setSubject("Отгрузочные документы.");
-        helper.setText("Это письмо сформировано автоматически!" +
-                "\nПо вашей заявке были выставленны отгрузочные документы.");
+
+        if(messageTemplate == null) {
+            helper.setSubject("Отгрузочные документы.");
+            helper.setText("Это письмо сформировано автоматически!" +
+                    "\nПо вашей заявке были выставлены отгрузочные документы.");
+        }
+        else {
+            helper.setSubject(messageTemplate.getTitle());
+            helper.setText(messageTemplate.getBody());
+        }
         File file = new File( "/uploads/" + path);
         helper.addAttachment("Отгрузка.pdf", file);
         javaMailSender.send(message);
